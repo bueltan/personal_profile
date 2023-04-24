@@ -1,0 +1,462 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:timeline_tile/timeline_tile.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+
+import '../controllers/PagesState.dart';
+
+class AppDrawer extends StatefulWidget {
+  final Widget child;
+
+  const AppDrawer({key, required this.child}) : super(key: key);
+
+  static AppDrawerState of(BuildContext context) =>
+      context.findAncestorStateOfType<AppDrawerState>()!;
+
+  @override
+  AppDrawerState createState() => AppDrawerState();
+}
+
+class AppDrawerState extends State<AppDrawer>
+    with SingleTickerProviderStateMixin {
+  static Duration duration = const Duration(milliseconds: 300);
+  late AnimationController _controller;
+  static const double maxSlide = 325;
+  static const dragRightStartVal = 60;
+  static const dragLeftStartVal = maxSlide - 20;
+  static bool shouldDrag = false;
+  final PageState pageState = Get.find<PageState>();
+
+  @override
+  void initState() {
+    _controller =
+        AnimationController(vsync: this, duration: AppDrawerState.duration);
+
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _controller.forward());
+  }
+
+  void close() {
+    pageState.expandPage();
+    _controller.reverse();
+  }
+
+  void open() {
+    pageState.shrinkPage();
+    _controller.forward();
+  }
+
+  void toggle() {
+    if (_controller.isCompleted) {
+      close();
+    } else {
+      open();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onDragStart(DragStartDetails startDetails) {
+    bool isDraggingFromLeft = _controller.isDismissed &&
+        startDetails.globalPosition.dx < dragRightStartVal;
+    bool isDraggingFromRight = _controller.isCompleted &&
+        startDetails.globalPosition.dx > dragLeftStartVal;
+    shouldDrag = isDraggingFromLeft || isDraggingFromRight;
+  }
+
+  void _onDragUpdate(DragUpdateDetails updateDetails) {
+    if (shouldDrag == false) {
+      return;
+    }
+    double delta = updateDetails.primaryDelta! / maxSlide;
+    _controller.value += delta;
+  }
+
+  void _onDragEnd(DragEndDetails dragEndDetails) {
+    if (_controller.isDismissed) {
+      pageState.expandPage();
+    } else {
+      pageState.shrinkPage();
+    }
+    if (_controller.isDismissed || _controller.isCompleted) {
+      return;
+    }
+
+    double kMinFlingVelocity = 365.0;
+    double dragVelocity = dragEndDetails.velocity.pixelsPerSecond.dx.abs();
+
+    if (dragVelocity >= kMinFlingVelocity) {
+      double visualVelocityInPx = dragEndDetails.velocity.pixelsPerSecond.dx /
+          MediaQuery.of(context).size.width;
+      _controller.fling(velocity: visualVelocityInPx);
+    } else if (_controller.value < 0.2) {
+      close();
+    } else {
+      open();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onHorizontalDragStart: _onDragStart,
+      onHorizontalDragUpdate: _onDragUpdate,
+      onHorizontalDragEnd: _onDragEnd,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (BuildContext context, _) {
+          double animationVal = _controller.value;
+          double translateVal = animationVal * maxSlide;
+          double scaleVal = 1 - (animationVal * 0.1);
+          return Stack(
+            children: <Widget>[
+              const CustomDrawer(),
+              Transform(
+                  alignment: Alignment.centerLeft,
+                  transform: Matrix4.identity()
+                    ..translate(translateVal)
+                    ..scale(scaleVal, 1),
+                  child: widget.child),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CustomDrawer extends StatefulWidget {
+  static const backgroundColor = Colors.black;
+
+  static const colors = [
+    Colors.orangeAccent,
+    Colors.black,
+  ];
+
+  static const durations = [
+    9000,
+    10000,
+  ];
+
+  static const heightPercentages = [
+    .11,
+    .12,
+  ];
+
+  const CustomDrawer({super.key});
+
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  final PageState pageState = Get.find<PageState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: SafeArea(
+        child: Theme(
+          data: ThemeData(
+            brightness: Brightness.dark,
+          ),
+          child: Stack(
+            children: [
+              WaveWidget(
+                config: CustomConfig(
+                  colors: CustomDrawer.colors,
+                  durations: CustomDrawer.durations,
+                  heightPercentages: CustomDrawer.heightPercentages,
+                ),
+                backgroundColor: CustomDrawer.backgroundColor,
+                size: const Size(double.infinity, double.infinity),
+                waveAmplitude: 0,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  const Header(),
+                  Expanded(
+                    child: AnimationLimiter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 100.0),
+                        child: ListView.builder(
+                          itemCount: pageState.listItemsText.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return AnimationConfiguration.staggeredList(
+                              position: index,
+                              delay: const Duration(milliseconds: 200),
+                              duration: const Duration(milliseconds: 2000),
+                              child: SlideAnimation(
+                                verticalOffset: 150.0,
+                                child: FadeInAnimation(
+                                  child: ItemTime(
+                                    itemText: pageState.listItemsText[index],
+                                    index: index,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Header extends StatefulWidget {
+  const Header({
+    super.key,
+  });
+
+  @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  bool showMainWidget = true;
+      final PageState pageState = Get.find<PageState>();
+    bool amIHovering = false;
+
+    void onHover() async {
+      setState(() {
+        amIHovering = true;
+      });
+      Future.delayed(const Duration(milliseconds: 800)).then((value) {
+        setState(() {
+          amIHovering = false;
+        });
+      });
+    }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      padding: const EdgeInsets.only(left: 10),
+      height: 160,
+      child: Padding(
+          padding: const EdgeInsets.only(left: 16.0, top: 16),
+          child: GestureDetector(
+            onTap: () {
+              pageState.jumpToPage();
+            },
+            child: Visibility(
+              visible: showMainWidget,
+              replacement: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  MouseRegion(
+              onHover: (event) => {
+                if (amIHovering == false) {onHover()}
+              },
+                    child: Text('Denis Germán\nGimenez',
+                        style: TextStyle(
+                          fontSize: 32.0,
+                          fontFamily: "NeueMetana",
+                          fontWeight: FontWeight.w100,
+                          color: Colors.white,
+                          shadows: (amIHovering &&  pageState.currentPageIndex != 0)
+                              ? [
+                                  const Shadow(
+                                    blurRadius: 3.0,
+                                    color: Colors.white,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ]
+                              : null,
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: AnimatedTextKit(
+                      isRepeatingAnimation: false,
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                          '< Full stack developer >',
+                          textAlign: TextAlign.start,
+                          textStyle: const TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "CMU",
+                              fontWeight: FontWeight.w300,
+                              color: Colors.orangeAccent),
+                          curve: Curves.decelerate,
+                          speed: const Duration(milliseconds: 180),
+                        ),
+                      ],
+                      totalRepeatCount: 1,
+                      pause: const Duration(milliseconds: 190),
+                      displayFullTextOnTap: false,
+                      stopPauseOnTap: false,
+                    ),
+                  ),
+                ],
+              ),
+              child: AnimatedTextKit(
+                isRepeatingAnimation: false,
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Denis Germán\nGimenez',
+                    textStyle: const TextStyle(
+                        fontSize: 32.0,
+                        fontFamily: "NeueMetana",
+                        fontWeight: FontWeight.w100,
+                        color: Colors.white),
+                    curve: Curves.decelerate,
+                    speed: const Duration(milliseconds: 180),
+                  ),
+                ],
+                totalRepeatCount: 1,
+                pause: const Duration(milliseconds: 190),
+                displayFullTextOnTap: false,
+                stopPauseOnTap: false,
+                onFinished: () {
+                  setState(() {
+                    showMainWidget = false;
+                  });
+                },
+              ),
+            ),
+          )),
+    );
+  }
+}
+
+class ItemTime extends StatefulWidget {
+  final Color startLine;
+  final Color endLine;
+  final Color dot;
+  final Color startLineHover;
+  final Color endLineHover;
+  final Color dotHover;
+  final Color text;
+  final Color textHover;
+  final int index;
+  final String itemText;
+
+  const ItemTime({
+    super.key,
+    this.startLine = Colors.white,
+    this.endLine = Colors.white,
+    this.dot = Colors.white,
+    this.startLineHover = Colors.yellowAccent,
+    this.endLineHover = Colors.yellowAccent,
+    this.dotHover = Colors.yellowAccent,
+    this.text = Colors.white,
+    this.textHover = Colors.yellowAccent,
+    required this.index,
+    required this.itemText,
+  });
+
+  @override
+  State<ItemTime> createState() => _ItemTimeState();
+}
+
+class _ItemTimeState extends State<ItemTime> {
+  bool amIHovering = false;
+
+  void onHover() async {
+    setState(() {
+      amIHovering = true;
+    });
+    Future.delayed(const Duration(milliseconds: 500)).then((value) {
+      setState(() {
+        amIHovering = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onHover: (event) => {
+        if (amIHovering == false) {onHover()}
+      },
+      child: GetBuilder<PageState>(
+          id: "pageIndex",
+          builder: (controller) {
+            return GestureDetector(
+              onTap: (){
+                controller.jumpToPage(nextIndex: widget.index+1);
+              },
+              child: SizedBox(
+                width: 325,
+                height: 80,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 12.0,
+                  ),
+                  child: TimelineTile(
+                    hasIndicator: true,
+                    // isFirst: widget.index == 0,
+                    isLast: widget.index == 5,
+                    axis: TimelineAxis.vertical,
+                    alignment: TimelineAlign.start,
+                    lineXY: 0.2,
+                    beforeLineStyle: LineStyle(
+                        color: (amIHovering)
+                            ? widget.startLineHover
+                            : widget.startLine,
+                        thickness: 1),
+                    afterLineStyle: LineStyle(
+                        color:
+                            (amIHovering) ? widget.endLineHover : widget.endLine,
+                        thickness: 1),
+                    indicatorStyle: IndicatorStyle(
+                      width: 12,
+                      color: (controller.currentPageIndex - 1 == widget.index)
+                          ? Colors.orangeAccent
+                          : (amIHovering)
+                              ? widget.dotHover
+                              : widget.dot,
+                    ),
+                    endChild: Padding(
+                      padding: const EdgeInsets.all(
+                        8.0,
+                      ),
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Text(
+                          widget.itemText,
+                          style: TextStyle(
+                            color:
+                                (controller.currentPageIndex - 1 == widget.index)
+                                    ? Colors.orangeAccent
+                                    : (amIHovering)
+                                        ? widget.textHover
+                                        : widget.text,
+                            fontSize:
+                                (controller.currentPageIndex - 1 == widget.index)
+                                    ? 18
+                                    : 16.0,
+                            fontFamily: "CMU",
+                            fontWeight: FontWeight.w100,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+    );
+  }
+}
