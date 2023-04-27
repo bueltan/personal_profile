@@ -24,13 +24,15 @@ class _Page0State extends State<Page0> with TickerProviderStateMixin {
     isDisposed = false;
     animationControllerBtn = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 2000));
-    animationBtn =
-        CurvedAnimation(parent: animationControllerBtn, curve: Curves.easeIn);
+
     animationControllerText = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500));
-    animationText =
+
+    animationBtn =
         CurvedAnimation(parent: animationControllerBtn, curve: Curves.easeIn);
-    
+
+    animationText =
+        CurvedAnimation(parent: animationControllerText, curve: Curves.easeIn);
   }
 
   @override
@@ -39,7 +41,6 @@ class _Page0State extends State<Page0> with TickerProviderStateMixin {
     animationControllerText.dispose();
     isDisposed = true;
     super.dispose();
-
   }
 
   void onHover() async {
@@ -47,12 +48,12 @@ class _Page0State extends State<Page0> with TickerProviderStateMixin {
       btnHover = true;
     });
     Future.delayed(const Duration(milliseconds: 800)).then((value) {
-    if(isDisposed == false){
-           setState(() {
-        btnHover = false;
+      if (isDisposed == false) {
+        setState(() {
+          btnHover = false;
+        });
+      }
     });
-    }});
- 
   }
 
   @override
@@ -60,98 +61,114 @@ class _Page0State extends State<Page0> with TickerProviderStateMixin {
     animationControllerBtn.forward();
     animationControllerText.forward();
 
-    return GetBuilder<PageState>(
+    return GetBuilder<PageStateController>(
         id: "PageState",
         builder: (controller) {
-          return Stack(
-            children: [
-              Builder(builder: (context) {
-                return Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: const AssetImage(
-                          "assets/images/background_denis_profile.png"),
-                      fit: BoxFit.cover,
-                      opacity: (controller.expanded) ? 1 : 0.5,
-                    ),
-                  ),
-                );
-              }),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FadeTransition(
-                      opacity: animationText,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: (controller.expanded)
-                                ? Colors.black.withOpacity(0.8)
-                                : Colors.black.withOpacity(0.5),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16))),
-                        padding: const EdgeInsets.only(
-                            top: 16, left: 16, right: 16, bottom: 10),
-                        child:  Text(
-                          'DENIS GERMÁN GIMENEZ',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 50,
-                              shadows:(btnHover)? [
-                                const Shadow(
-                                  blurRadius: 3.0,
-                                  color: Colors.white,
-                                  offset: Offset(0, 0),
-                                ),
-                              ]:null,
-                              fontFamily: "NeueMetana",
-                              fontWeight: FontWeight.w700),
-                          textAlign: TextAlign.center,
+          return LayoutBuilder(builder: (context, constrains) {
+            return Stack(
+              children: [
+                Builder(builder: (context) {
+                  return AnimatedOpacity(
+                    duration: const Duration(milliseconds: 1500),
+                    opacity: (controller.expanded) ? 1 : 0.7,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              "assets/images/background_denis_profile.png"),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FadeTransition(
-                        opacity: animationBtn,
-                        child: MouseRegion(
-                          onHover: (v) {
-                            setState(() {
-                              onHover();
-                            });
-                          },
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                                shadowColor: MaterialStateProperty.all(
-                                    Colors.orangeAccent),
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.black),
-                                minimumSize:
-                                    MaterialStateProperty.all(const Size(50, 50)),
-                                elevation: (btnHover)
-                                    ? MaterialStateProperty.all(5)
-                                    : MaterialStateProperty.all(1)),
-                            onPressed: () {
-                              controller.jumpToPage(nextIndex: 1);
-                            },
-
-                            child: const Text(
-                              'About Me',
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontFamily: "NeueMetana",
-                                  color: Colors.orangeAccent,
-                                  fontWeight: FontWeight.w700),
-                            ), // <-- Text
+                  );
+                }),
+                SizedBox(
+                  width: (controller.expanded)
+                      ? constrains.maxWidth
+                      : constrains.maxWidth - 365,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FadeTransition(
+                          opacity: animationText,
+                          child: Center(
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 1500),
+                              decoration: BoxDecoration(
+                                  color: (controller.expanded)
+                                      ? Colors.black.withOpacity(0.8)
+                                      : Colors.black.withOpacity(0.5),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(16))),
+                              padding: const EdgeInsets.only(
+                                  top: 16, left: 16, right: 16, bottom: 10),
+                              child: Text(
+                                'DENIS GERMÁN GIMENEZ',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 50,
+                                    shadows: (btnHover)
+                                        ? [
+                                            const Shadow(
+                                              blurRadius: 3.0,
+                                              color: Colors.white,
+                                              offset: Offset(0, 0),
+                                            ),
+                                          ]
+                                        : null,
+                                    fontFamily: "NeueMetana",
+                                    fontWeight: FontWeight.w700),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FadeTransition(
+                            opacity: animationBtn,
+                            child: MouseRegion(
+                              onHover: (v) {
+                                setState(() {
+                                  onHover();
+                                });
+                              },
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                    shadowColor: MaterialStateProperty.all(
+                                        Colors.greenAccent),
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.black),
+                                    minimumSize: MaterialStateProperty.all(
+                                        const Size(50, 50)),
+                                    elevation: (btnHover)
+                                        ? MaterialStateProperty.all(5)
+                                        : MaterialStateProperty.all(1)),
+                                onPressed: () {
+                                  controller.jumpToPage(nextIndex: 1);
+                                },
+
+                                child: const Text(
+                                  'About Me',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontFamily: "NeueMetana",
+                                      color: Colors.greenAccent,
+                                      fontWeight: FontWeight.w700),
+                                ), // <-- Text
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          );
+              ],
+            );
+          });
         });
   }
 }

@@ -28,7 +28,7 @@ class AppDrawerState extends State<AppDrawer>
   static const dragRightStartVal = 60;
   static const dragLeftStartVal = maxSlide - 20;
   static bool shouldDrag = false;
-  final PageState pageState = Get.find<PageState>();
+  final PageStateController pageState = Get.find<PageStateController>();
 
   @override
   void initState() {
@@ -89,7 +89,7 @@ class AppDrawerState extends State<AppDrawer>
       return;
     }
 
-    double kMinFlingVelocity = 365.0;
+    double kMinFlingVelocity = 500.0;
     double dragVelocity = dragEndDetails.velocity.pixelsPerSecond.dx.abs();
 
     if (dragVelocity >= kMinFlingVelocity) {
@@ -114,15 +114,15 @@ class AppDrawerState extends State<AppDrawer>
         builder: (BuildContext context, _) {
           double animationVal = _controller.value;
           double translateVal = animationVal * maxSlide;
-          double scaleVal = 1 - (animationVal * 0.1);
+          // double scaleVal = 1 - (animationVal * 0.1);
           return Stack(
             children: <Widget>[
               const CustomDrawer(),
               Transform(
                   alignment: Alignment.centerLeft,
                   transform: Matrix4.identity()
-                    ..translate(translateVal)
-                    ..scale(scaleVal, 1),
+                    ..translate(translateVal),
+                    // ..scale(scaleVal, 1),
                   child: widget.child),
             ],
           );
@@ -133,11 +133,11 @@ class AppDrawerState extends State<AppDrawer>
 }
 
 class CustomDrawer extends StatefulWidget {
-  static const backgroundColor = Colors.black;
+  static const backgroundColor = Colors.black87;
 
   static const colors = [
-    Colors.orangeAccent,
-    Colors.black,
+    Colors.deepPurple,
+    Colors.black45,
   ];
 
   static const durations = [
@@ -157,7 +157,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  final PageState pageState = Get.find<PageState>();
+  final PageStateController pageState = Get.find<PageStateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -232,7 +232,7 @@ class Header extends StatefulWidget {
 
 class _HeaderState extends State<Header> {
   bool showMainWidget = true;
-      final PageState pageState = Get.find<PageState>();
+      final PageStateController pageState = Get.find<PageStateController>();
     bool amIHovering = false;
 
     void onHover() async {
@@ -296,7 +296,7 @@ class _HeaderState extends State<Header> {
                               fontSize: 16.0,
                               fontFamily: "CMU",
                               fontWeight: FontWeight.w300,
-                              color: Colors.orangeAccent),
+                              color: Colors.green),
                           curve: Curves.decelerate,
                           speed: const Duration(milliseconds: 180),
                         ),
@@ -356,11 +356,11 @@ class ItemTime extends StatefulWidget {
     this.startLine = Colors.white,
     this.endLine = Colors.white,
     this.dot = Colors.white,
-    this.startLineHover = Colors.yellowAccent,
-    this.endLineHover = Colors.yellowAccent,
-    this.dotHover = Colors.yellowAccent,
+    this.startLineHover = Colors.green,
+    this.endLineHover = Colors.green,
+    this.dotHover = Colors.green,
     this.text = Colors.white,
-    this.textHover = Colors.yellowAccent,
+    this.textHover = Colors.green,
     required this.index,
     required this.itemText,
   });
@@ -389,7 +389,7 @@ class _ItemTimeState extends State<ItemTime> {
       onHover: (event) => {
         if (amIHovering == false) {onHover()}
       },
-      child: GetBuilder<PageState>(
+      child: GetBuilder<PageStateController>(
           id: "pageIndex",
           builder: (controller) {
             return GestureDetector(
@@ -422,7 +422,7 @@ class _ItemTimeState extends State<ItemTime> {
                     indicatorStyle: IndicatorStyle(
                       width: 12,
                       color: (controller.currentPageIndex - 1 == widget.index)
-                          ? Colors.orangeAccent
+                          ? Colors.greenAccent
                           : (amIHovering)
                               ? widget.dotHover
                               : widget.dot,
@@ -438,7 +438,7 @@ class _ItemTimeState extends State<ItemTime> {
                           style: TextStyle(
                             color:
                                 (controller.currentPageIndex - 1 == widget.index)
-                                    ? Colors.orangeAccent
+                                    ? Colors.greenAccent
                                     : (amIHovering)
                                         ? widget.textHover
                                         : widget.text,

@@ -5,12 +5,14 @@ import 'package:denis_profile/pages/page0.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'Page2.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PageState>(
+    return GetBuilder<PageStateController>(
         id: "PageState",
         builder: (controller) {
           return Scaffold(
@@ -24,11 +26,11 @@ class Home extends StatelessWidget {
                 onPressed: () {
                   AppDrawer.of(context).toggle();
                 },
-                backgroundColor: Colors.black.withOpacity(0.4),
+                backgroundColor: Colors.black.withOpacity(0.7),
                 child: Icon(
                   (controller.expanded) ? Icons.menu : Icons.aspect_ratio,
                   size: 35,
-                  color: Colors.orangeAccent,
+                  color: Colors.greenAccent,
                 ),
               ),
             ),
@@ -36,10 +38,11 @@ class Home extends StatelessWidget {
               onPageChanged: (index){
                 controller.changeIndexPage(index);
               } ,
+              allowImplicitScrolling: false,
               pageSnapping: true ,
                 scrollDirection: Axis.vertical,
                 controller: controller.pageController,
-                children: const [Page0(), Page1()]),
+                children: const [Page0(), Page1(), Page2()]),
                 
           );
         });
