@@ -6,7 +6,7 @@ import 'package:wave/wave.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-import '../controllers/PagesState.dart';
+import '../controllers/page_controller.dart';
 
 class AppDrawer extends StatefulWidget {
   final Widget child;
@@ -28,7 +28,7 @@ class AppDrawerState extends State<AppDrawer>
   static const dragRightStartVal = 60;
   static const dragLeftStartVal = maxSlide - 20;
   static bool shouldDrag = false;
-  final PageStateController pageState = Get.find<PageStateController>();
+  final PageStateController pageStateCtrl = Get.find<PageStateController>();
 
   @override
   void initState() {
@@ -40,12 +40,12 @@ class AppDrawerState extends State<AppDrawer>
   }
 
   void close() {
-    pageState.expandPage();
+    pageStateCtrl.expandPage();
     _controller.reverse();
   }
 
   void open() {
-    pageState.shrinkPage();
+    pageStateCtrl.shrinkPage();
     _controller.forward();
   }
 
@@ -81,9 +81,9 @@ class AppDrawerState extends State<AppDrawer>
 
   void _onDragEnd(DragEndDetails dragEndDetails) {
     if (_controller.isDismissed) {
-      pageState.expandPage();
+      pageStateCtrl.expandPage();
     } else {
-      pageState.shrinkPage();
+      pageStateCtrl.shrinkPage();
     }
     if (_controller.isDismissed || _controller.isCompleted) {
       return;
@@ -120,9 +120,8 @@ class AppDrawerState extends State<AppDrawer>
               const CustomDrawer(),
               Transform(
                   alignment: Alignment.centerLeft,
-                  transform: Matrix4.identity()
-                    ..translate(translateVal),
-                    // ..scale(scaleVal, 1),
+                  transform: Matrix4.identity()..translate(translateVal),
+                  // ..scale(scaleVal, 1),
                   child: widget.child),
             ],
           );
@@ -157,7 +156,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  final PageStateController pageState = Get.find<PageStateController>();
+  final PageStateController pageStateCtrl = Get.find<PageStateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +189,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 100.0),
                         child: ListView.builder(
-                          itemCount: pageState.listItemsText.length,
+                          itemCount: PageItem.values.length,
                           itemBuilder: (BuildContext context, int index) {
                             return AnimationConfiguration.staggeredList(
                               position: index,
@@ -200,7 +199,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 verticalOffset: 150.0,
                                 child: FadeInAnimation(
                                   child: ItemTime(
-                                    itemText: pageState.listItemsText[index],
+                                    pageItem: PageItem.values.firstWhere(
+                                        (item) => item.index == index),
                                     index: index,
                                   ),
                                 ),
@@ -232,23 +232,22 @@ class Header extends StatefulWidget {
 
 class _HeaderState extends State<Header> {
   bool showMainWidget = true;
-      final PageStateController pageState = Get.find<PageStateController>();
-    bool amIHovering = false;
+  final PageStateController pageStateCtrl = Get.find<PageStateController>();
+  bool amIHovering = false;
 
-    void onHover() async {
+  void onHover() async {
+    setState(() {
+      amIHovering = true;
+    });
+    Future.delayed(const Duration(milliseconds: 800)).then((value) {
       setState(() {
-        amIHovering = true;
+        amIHovering = false;
       });
-      Future.delayed(const Duration(milliseconds: 800)).then((value) {
-        setState(() {
-          amIHovering = false;
-        });
-      });
-    }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: const EdgeInsets.only(left: 10),
       height: 160,
@@ -256,24 +255,25 @@ class _HeaderState extends State<Header> {
           padding: const EdgeInsets.only(left: 16.0, top: 16),
           child: GestureDetector(
             onTap: () {
-              pageState.jumpToPage();
+              pageStateCtrl.jumpToPage();
             },
             child: Visibility(
               visible: showMainWidget,
               replacement: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MouseRegion(
-              onHover: (event) => {
-                if (amIHovering == false) {onHover()}
-              },
+                    onHover: (event) => {
+                      if (amIHovering == false) {onHover()}
+                    },
                     child: Text('Denis Germán\nGimenez',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 32.0,
                           fontFamily: "NeueMetana",
-                          fontWeight: FontWeight.w100,
                           color: Colors.white,
-                          shadows: (amIHovering &&  pageState.currentPageIndex != 0)
+                          shadows: (amIHovering &&
+                                  pageStateCtrl.currentPageIndex != 0)
                               ? [
                                   const Shadow(
                                     blurRadius: 3.0,
@@ -290,13 +290,13 @@ class _HeaderState extends State<Header> {
                       isRepeatingAnimation: false,
                       animatedTexts: [
                         TypewriterAnimatedText(
-                          '< Full stack developer >',
+                          "full_stack_developer".tr,
                           textAlign: TextAlign.start,
                           textStyle: const TextStyle(
                               fontSize: 16.0,
-                              fontFamily: "CMU",
-                              fontWeight: FontWeight.w300,
-                              color: Colors.green),
+                              fontFamily: "UbuntuMono",
+                              fontWeight: FontWeight.w600,
+                              color: Colors.greenAccent),
                           curve: Curves.decelerate,
                           speed: const Duration(milliseconds: 180),
                         ),
@@ -309,29 +309,32 @@ class _HeaderState extends State<Header> {
                   ),
                 ],
               ),
-              child: AnimatedTextKit(
-                isRepeatingAnimation: false,
-                animatedTexts: [
-                  TypewriterAnimatedText(
-                    'Denis Germán\nGimenez',
-                    textStyle: const TextStyle(
-                        fontSize: 32.0,
-                        fontFamily: "NeueMetana",
-                        fontWeight: FontWeight.w100,
-                        color: Colors.white),
-                    curve: Curves.decelerate,
-                    speed: const Duration(milliseconds: 180),
-                  ),
-                ],
-                totalRepeatCount: 1,
-                pause: const Duration(milliseconds: 190),
-                displayFullTextOnTap: false,
-                stopPauseOnTap: false,
-                onFinished: () {
-                  setState(() {
-                    showMainWidget = false;
-                  });
-                },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: AnimatedTextKit(
+                  isRepeatingAnimation: false,
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      'Denis Germán\nGimenez',
+                      textAlign: TextAlign.center,
+                      textStyle: const TextStyle(
+                          fontSize: 32.0,
+                          fontFamily: "NeueMetana",
+                          color: Colors.white),
+                      curve: Curves.decelerate,
+                      speed: const Duration(milliseconds: 180),
+                    ),
+                  ],
+                  totalRepeatCount: 1,
+                  pause: const Duration(milliseconds: 190),
+                  displayFullTextOnTap: false,
+                  stopPauseOnTap: false,
+                  onFinished: () {
+                    setState(() {
+                      showMainWidget = false;
+                    });
+                  },
+                ),
               ),
             ),
           )),
@@ -349,20 +352,20 @@ class ItemTime extends StatefulWidget {
   final Color text;
   final Color textHover;
   final int index;
-  final String itemText;
+  final PageItem pageItem;
 
   const ItemTime({
     super.key,
     this.startLine = Colors.white,
     this.endLine = Colors.white,
     this.dot = Colors.white,
-    this.startLineHover = Colors.green,
-    this.endLineHover = Colors.green,
-    this.dotHover = Colors.green,
+    this.startLineHover = Colors.greenAccent,
+    this.endLineHover = Colors.greenAccent,
+    this.dotHover = Colors.greenAccent,
     this.text = Colors.white,
-    this.textHover = Colors.green,
+    this.textHover = Colors.greenAccent,
     required this.index,
-    required this.itemText,
+    required this.pageItem,
   });
 
   @override
@@ -392,21 +395,21 @@ class _ItemTimeState extends State<ItemTime> {
       child: GetBuilder<PageStateController>(
           id: "pageIndex",
           builder: (controller) {
-            return GestureDetector(
-              onTap: (){
-                controller.jumpToPage(nextIndex: widget.index+1);
+            return InkWell(
+              onTap: () {
+                controller.jumpToPage(pageItem: widget.pageItem);
               },
               child: SizedBox(
                 width: 325,
-                height: 80,
+                height: 100,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                    left: 12.0,
+                    left: 25.0,
                   ),
                   child: TimelineTile(
                     hasIndicator: true,
                     // isFirst: widget.index == 0,
-                    isLast: widget.index == 5,
+                    isLast: widget.index == PageItem.values.length - 1,
                     axis: TimelineAxis.vertical,
                     alignment: TimelineAlign.start,
                     lineXY: 0.2,
@@ -414,13 +417,19 @@ class _ItemTimeState extends State<ItemTime> {
                         color: (amIHovering)
                             ? widget.startLineHover
                             : widget.startLine,
-                        thickness: 1),
+                        thickness: 2),
                     afterLineStyle: LineStyle(
-                        color:
-                            (amIHovering) ? widget.endLineHover : widget.endLine,
-                        thickness: 1),
+                        color: (amIHovering)
+                            ? widget.endLineHover
+                            : widget.endLine,
+                        thickness: 2),
                     indicatorStyle: IndicatorStyle(
-                      width: 12,
+                      iconStyle: IconStyle(
+                          iconData: Icons.circle,
+                          fontSize: 14,
+                          color: Colors.deepPurpleAccent),
+                      drawGap: true,
+                      width: 15,
                       color: (controller.currentPageIndex - 1 == widget.index)
                           ? Colors.greenAccent
                           : (amIHovering)
@@ -433,23 +442,57 @@ class _ItemTimeState extends State<ItemTime> {
                       ),
                       child: Container(
                         color: Colors.transparent,
-                        child: Text(
-                          widget.itemText,
-                          style: TextStyle(
-                            color:
-                                (controller.currentPageIndex - 1 == widget.index)
-                                    ? Colors.greenAccent
-                                    : (amIHovering)
-                                        ? widget.textHover
-                                        : widget.text,
-                            fontSize:
-                                (controller.currentPageIndex - 1 == widget.index)
-                                    ? 18
-                                    : 16.0,
-                            fontFamily: "CMU",
-                            fontWeight: FontWeight.w100,
-                          ),
+                        child: TweenAnimationBuilder<double>(
+                          duration: const Duration(milliseconds: 300),
+                          tween:
+                              (controller.currentPageIndex - 1 == widget.index)
+                                  ? Tween<double>(begin: 18, end: 22)
+                                  : Tween<double>(begin: 22, end: 18),
+                          builder: (_, size, __) => Text(
+                              widget.pageItem.keyName.tr,
+                              style: TextStyle(
+                                  fontSize: size,
+                                  shadows: (amIHovering)
+                                      ? [
+                                          const Shadow(
+                                            blurRadius: 3.0,
+                                            color: Colors.deepPurpleAccent,
+                                            offset: Offset(0, 0),
+                                          ),
+                                        ]
+                                      : null,
+                                  color: (controller.currentPageIndex - 1 ==
+                                          widget.index)
+                                      ? Colors.greenAccent
+                                      : Colors.white,
+                                  fontFamily: "UbuntuMono",
+                                  fontWeight: FontWeight.w700)),
                         ),
+
+                        //     color:
+                        //         (controller.currentPageIndex - 1 == widget.index)
+                        //             ? Colors.greenAccent
+                        //             : (amIHovering)
+                        //                 ? widget.textHover
+                        //                 : widget.text,
+
+                        //  Text(
+                        //   widget.pageItem.keyName.tr,
+                        //   style: TextStyle(
+                        //     color:
+                        //         (controller.currentPageIndex - 1 == widget.index)
+                        //             ? Colors.greenAccent
+                        //             : (amIHovering)
+                        //                 ? widget.textHover
+                        //                 : widget.text,
+                        //     fontSize:
+                        //         (controller.currentPageIndex - 1 == widget.index)
+                        //             ? 18
+                        //             : 16.0,
+                        //     fontFamily: "UbuntuMono",
+                        //     fontWeight: FontWeight.w600,
+                        //   ),
+                        // ),
                       ),
                     ),
                   ),

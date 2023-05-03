@@ -1,11 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:denis_profile/controllers/PagesState.dart';
+import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
-class Page1 extends StatelessWidget {
-  const Page1({
+class PageAboutMe extends StatelessWidget {
+  const PageAboutMe({
     super.key,
   });
 
@@ -18,7 +18,7 @@ class Page1 extends StatelessWidget {
             children: [
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 1500),
-                opacity: (controller.expanded) ? 1 : 0.7,
+                opacity: (controller.expanded) ? 1 : 0.5,
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -28,6 +28,9 @@ class Page1 extends StatelessWidget {
                   ),
                 ),
               ),
+               AnimatedContainer(decoration: BoxDecoration(color: (controller.expanded)
+                ? Colors.black.withOpacity(0.3)
+                : Colors.transparent,), duration: const Duration(milliseconds: 1500),),
               Content(
                 controller: controller,
               )
@@ -53,13 +56,13 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
   late AnimationController animationControllerImage;
   late Animation<double> animationTitleAboutMe;
   late AnimationController animationControllerText;
-
+  late ScrollController scrollController;
   bool isDisposed = false;
   @override
   void initState() {
     super.initState();
     isDisposed = false;
-
+    scrollController = ScrollController();
     animationControllerText = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500));
 
@@ -78,6 +81,7 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
     animationControllerImage.dispose();
     animationControllerText.dispose();
     isDisposed = true;
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -87,37 +91,47 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
     animationControllerImage.forward();
 
     return LayoutBuilder(builder: (context, constrains) {
-      return SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
+      return RawScrollbar(
+        controller: scrollController,
+        mainAxisMargin: 30,
+        crossAxisMargin: 10,
+        radius: const Radius.circular(4),
+        thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+        thumbVisibility: true,
+        child: SingleChildScrollView(
+          controller: scrollController,
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                  width: (widget.controller.expanded)
+                      ? constrains.maxWidth
+                      : constrains.maxWidth - 365,
+                  child: TitleAboutMe(
+                      animationTitleAboutMe: animationTitleAboutMe,
+                      widget: widget)),
+              SizedBox(
                 width: (widget.controller.expanded)
                     ? constrains.maxWidth
                     : constrains.maxWidth - 365,
-                child: TitleAboutMe(
-                    animationTitleAboutMe: animationTitleAboutMe,
-                    widget: widget)),
-            SizedBox(
-              width: (widget.controller.expanded)
-                  ? constrains.maxWidth
-                  : constrains.maxWidth - 365,
-              child: Wrap(
-                children: [
-                  ImageAboutMe(
-                      animationControllerImage: animationControllerImage,
-                      widget: widget),
-                  PersonalInfo(controller: widget.controller)
-                ],
+                child: Wrap(
+                  children: [
+                    ImageAboutMe(
+                        animationControllerImage: animationControllerImage,
+                        widget: widget),
+                    PersonalInfo(controller: widget.controller)
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-                width: (widget.controller.expanded)
-                    ? constrains.maxWidth
-                    : constrains.maxWidth - 365,
-                child: const TextAboutMe()),
-          ],
+              SizedBox(
+                  width: (widget.controller.expanded)
+                      ? constrains.maxWidth
+                      : constrains.maxWidth - 365,
+                  child: const TextAboutMe()),
+            ],
+          ),
         ),
       );
     });
@@ -195,10 +209,9 @@ class ItemPersonalInfo extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 1500),
         decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.black),
-            color: (controller.expanded)
-                ? Colors.black.withOpacity(0.7)
-                : Colors.black.withOpacity(0.4),
+          // border: Border.all(width: 1, color: Colors.black),
+            color: 
+                Colors.black.withOpacity(0.4),
             borderRadius: const BorderRadius.all(Radius.circular(8))),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -210,8 +223,8 @@ class ItemPersonalInfo extends StatelessWidget {
                   beforeText,
                   style: const TextStyle(
                     color: Colors.greenAccent,
-                    fontSize: 19,
-                    fontFamily: "NeueMetana",
+                    fontSize: 19 ,
+                    fontFamily: "UbuntuMono",
                   ),
                 ),
                 Text(
@@ -219,7 +232,7 @@ class ItemPersonalInfo extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 19,
-                    fontFamily: "NeueMetana",
+                    fontFamily: "UbuntuMono",
                   ),
                 ),
               ],
@@ -304,12 +317,10 @@ class TitleAboutMe extends StatelessWidget {
           opacity: animationTitleAboutMe,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 1500),
-            width: 900,
             decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.black),
-                color: (widget.controller.expanded)
-                    ? Colors.black.withOpacity(0.8)
-                    : Colors.black.withOpacity(0.6),
+              // border: Border.all(width: 1, color: Colors.black),
+                color: 
+                     Colors.black.withOpacity(0.4),
                     
                 borderRadius: const BorderRadius.all(Radius.circular(16))),
             padding:
@@ -323,8 +334,8 @@ class TitleAboutMe extends StatelessWidget {
                     style: const TextStyle(
                         color: Colors.greenAccent,
                         fontSize: 35,
-                        fontFamily: "NeueMetana",
-                        fontWeight: FontWeight.w700),
+                        fontFamily: "UbuntuMono",
+                        fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
                   Text(
@@ -332,8 +343,8 @@ class TitleAboutMe extends StatelessWidget {
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
-                        fontFamily: "NeueMetana",
-                        fontWeight: FontWeight.w700),
+                        fontFamily: "UbuntuMono",
+                        fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -377,8 +388,9 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
   @override
   void dispose() {
     isDisposed = true;
-    super.dispose();
     animationControllerBtn.dispose();
+
+    super.dispose();
   }
 
   void onHover() async {
@@ -394,7 +406,7 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
     });
   }
 
-  final PageStateController pageState = Get.find<PageStateController>();
+  final PageStateController pageStateCtrl = Get.find<PageStateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -421,7 +433,7 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
                           leadingDistribution:
                               TextLeadingDistribution.proportional,
                           color: Colors.greenAccent,
-                          fontFamily: "NeueMetana",
+                          fontFamily: "UbuntuMono",
                           fontWeight: FontWeight.w700),
                       textAlign: TextAlign.start,
                       
@@ -429,40 +441,42 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: AnimatedTextKit(
-                  isRepeatingAnimation: false,
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                      "               ~\$ ${"about_me".tr}",
-                      textAlign: TextAlign.justify,
-                      textStyle: const TextStyle(
-                          fontSize: 19,
-                          leadingDistribution:
-                              TextLeadingDistribution.proportional,
-                          color: Colors.white,
-                          fontFamily: "NeueMetana",
-                          fontWeight: FontWeight.w700),
-                      curve: Curves.decelerate,
-                      speed: const Duration(milliseconds: 40),
-                    ),
-                  ],
-                  totalRepeatCount: 1,
-                  pause: const Duration(milliseconds: 30),
-                  displayFullTextOnTap: true,
-                  onTap: () {
-                    setState(() {
-                      animationControllerBtn.forward();
-                      showEmptyWidget = false;
-                    });
-                  },
-                  onFinished: () {
-                    setState(() {
-                      animationControllerBtn.forward();
-                      showEmptyWidget = false;
-                    });
-                  },
+              Padding(
+                padding: const EdgeInsets.only(top:1.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: AnimatedTextKit(
+                    isRepeatingAnimation: false,
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        "             ~\$ ${"about_me".tr}",
+                        textAlign: TextAlign.justify,
+                        textStyle: const TextStyle(
+                            fontSize: 19,
+                            leadingDistribution:
+                                TextLeadingDistribution.proportional,
+                            color: Colors.white,
+                            fontFamily: "UbuntuMono"),
+                        curve: Curves.decelerate,
+                        speed: const Duration(milliseconds: 5),
+                      ),
+                    ],
+                    totalRepeatCount: 1,
+                    pause: const Duration(milliseconds: 10),
+                    displayFullTextOnTap: true,
+                    onTap: () {
+                      setState(() {
+                        animationControllerBtn.forward();
+                        showEmptyWidget = false;
+                      });
+                    },
+                    onFinished: () {
+                      setState(() {
+                        animationControllerBtn.forward();
+                        showEmptyWidget = false;
+                      });
+                    },
+                  ),
                 ),
               ),
             ],
@@ -491,14 +505,14 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
                             ? MaterialStateProperty.all(5)
                             : MaterialStateProperty.all(1)),
                     onPressed: () {
-                      pageState.jumpToPage(nextIndex: 2);
+                      pageStateCtrl.jumpToPage(pageItem: PageItem.knowledge);
                     },
 
-                    child: const Text(
-                      'Knowledge',
-                      style: TextStyle(
+                    child:  Text(
+                      PageItem.knowledge.keyName.tr,
+                      style: const TextStyle(
                           fontSize: 25,
-                          fontFamily: "NeueMetana",
+                          fontFamily: "UbuntuMono",
                           color: Colors.greenAccent,
                           fontWeight: FontWeight.w700),
                     ), // <-- Text

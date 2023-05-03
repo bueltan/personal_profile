@@ -43,6 +43,9 @@ dependencies:
   get: ^4.6.5
   flutter_onboarding_slider: ^1.0.9
   carousel_slider: ^4.2.1
+  avatar_glow: ^2.0.2
+  syncfusion_flutter_charts: ^21.1.41
+  multi_charts: ^0.3.0
 
 dev_dependencies:
   flutter_test:
@@ -84,14 +87,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: CMU
-      fonts:
-        - asset: assets/fonts/cmunbtl.ttf
-        - asset: assets/fonts/cmunci.ttf
-          style: italic
     - family: NeueMetana
       fonts:
         - asset: assets/fonts/NeueMetanaMono-SemiBold.otf
+    - family: UbuntuMono
+      fonts:
+        - asset: assets/fonts/UbuntuMono-Regular.ttf
+        - asset: assets/fonts/UbuntuMono-Bold.ttf
+          weight: 600
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

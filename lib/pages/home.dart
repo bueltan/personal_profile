@@ -1,11 +1,12 @@
-import 'package:denis_profile/components/AppDrawer.dart';
-import 'package:denis_profile/controllers/PagesState.dart';
-import 'package:denis_profile/pages/Page1.dart';
-import 'package:denis_profile/pages/page0.dart';
+import 'package:denis_profile/components/app_drawer.dart';
+import 'package:denis_profile/controllers/page_controller.dart';
+import 'package:denis_profile/pages/page_about_me.dart';
+import 'package:denis_profile/pages/page_experience.dart';
+import 'package:denis_profile/pages/page_welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'Page2.dart';
+import 'page_knowledge.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -34,18 +35,26 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            body: PageView(
-              onPageChanged: (index){
-                controller.changeIndexPage(index);
-              } ,
-              allowImplicitScrolling: false,
-              pageSnapping: true ,
-                scrollDirection: Axis.vertical,
-                controller: controller.pageController,
-                children: const [Page0(), Page1(), Page2()]),
-                
+            body: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomLeft: Radius.circular(16)),
+                child: PageView(
+                    onPageChanged: (index) {
+                      controller.changeIndexPage(index);
+                    },
+                    allowImplicitScrolling: false,
+                    pageSnapping: true,
+                    scrollDirection: Axis.vertical,
+                    controller: controller.pageController,
+                    children: const [
+                      PageWelcome(),
+                      PageAboutMe(),
+                      PageKnowledge(),
+                      PageExperience(),
+
+                    ])),
           );
         });
   }
 }
-
