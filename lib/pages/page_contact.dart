@@ -1,8 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:denis_profile/components/item_project.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
-import 'package:denis_profile/controllers/projects_controller.dart';
-import 'package:denis_profile/models/item_projects.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -97,7 +94,7 @@ class _PageContactState extends State<PageContact>
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: Text(
-                            '_projects'.tr,
+                            '_contact'.tr,
                             style: const TextStyle(
                                 shadows: [
                                   Shadow(color: Colors.black, blurRadius: 5)

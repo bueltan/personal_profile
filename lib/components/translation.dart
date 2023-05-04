@@ -176,6 +176,9 @@ class Dictionary extends Translations {
           "nordeste_api_name_link2":"",
           "guazuApp_name_link2":"Google PLay App",
           "myResume_name_link2":"",
+          // show More and show less
+          "show_more": "Show more",
+          "show_less": "Show less"
         },
         'es': {
           "about_me":
@@ -358,7 +361,9 @@ class Dictionary extends Translations {
           "nordeste_api_name_link2":"",
           "guazuApp_name_link2":"Google PLay App",
           "myResume_name_link2":"",
-
+          // show More and show less
+          "show_more": "Mostrar más",
+          "show_less": "Mostrar menos"
         }
       };
 }

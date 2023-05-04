@@ -142,8 +142,8 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
                                         colorClickableText:
                                             Colors.greenAccent,
                                         trimMode: TrimMode.Line,
-                                        trimCollapsedText: ' Show more',
-                                        trimExpandedText: ' Show less',
+                                        trimCollapsedText:" ${'show_more'.tr}",
+                                        trimExpandedText: " ${'show_less'.tr}",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                           color:
