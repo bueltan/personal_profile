@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:denis_profile/components/charts.dart';
 import 'package:denis_profile/controllers/chart_controller.dart';
+import 'package:denis_profile/models/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';

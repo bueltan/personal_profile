@@ -2,6 +2,7 @@ import 'package:denis_profile/components/app_drawer.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/pages/page_about_me.dart';
 import 'package:denis_profile/pages/page_experience.dart';
+import 'package:denis_profile/pages/page_projects.dart';
 import 'package:denis_profile/pages/page_welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,6 +53,7 @@ class Home extends StatelessWidget {
                       PageAboutMe(),
                       PageKnowledge(),
                       PageExperience(),
+                      PageProjects(),
 
                     ])),
           );

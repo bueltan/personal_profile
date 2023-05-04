@@ -1,6 +1,7 @@
 import 'package:denis_profile/controllers/atom_controller.dart';
 import 'package:denis_profile/components/atom_panel.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
+import 'package:denis_profile/models/item_atom.dart';
 import 'package:denis_profile/pages/frames/electronic.dart';
 import 'package:denis_profile/pages/frames/full_stack_developer.dart';
 import 'package:denis_profile/pages/frames/programming.dart';

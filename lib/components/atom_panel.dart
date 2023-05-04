@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:denis_profile/controllers/atom_controller.dart';
+import 'package:denis_profile/models/item_atom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

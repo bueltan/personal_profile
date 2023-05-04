@@ -276,9 +276,39 @@ class Dictionary extends Translations {
          "cyberlink_fourth_line":"",
          "independent_fourth_line":"",
          "guazuapp_fourth_line":"Aplicación para Android: https://play.google.com/store/apps/details?id=ar.guazuapp.guazuapp",
+          
           // Projects
           
-          
+          // title
+          "cnc_cad_title":"",
+          "quick_camerea_title":"",
+          "nordeste_api_title":"",
+          "guazuApp_title":"",
+          "myResume_title":"",
+          //subtitle
+          "cnc_cad_subtitle":"",
+          "quick_camerea_subtitle":"",
+          "nordeste_api_subtitle":"",
+          "guazuApp_subtitle":"",
+          "guazuApp_myResume":"",
+          //text
+          "cnc_cad_text":"",
+          "quick_camerea_text":"",
+          "nordeste_api_text":"",
+          "guazuApp_text":"",
+          "myResume_text":"",
+          //link1
+          "cnc_cad_name_link1":"",
+          "quick_camerea_name_link1":"",
+          "nordeste_api_name_link1":"",
+          "guazuApp_name_link1":"",
+          "myResume_name_link1":"",
+          //link2
+          "cnc_cad_name_link2":"",
+          "quick_camerea_name_link2":"",
+          "nordeste_api_name_link2":"",
+          "guazuApp_name_link2":"",
+          "myResume_name_link2":"",
 
         }
       };

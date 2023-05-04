@@ -1,3 +1,4 @@
+import 'package:denis_profile/models/item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timeline_tile/timeline_tile.dart';

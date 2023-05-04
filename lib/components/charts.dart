@@ -1,4 +1,5 @@
 import 'package:denis_profile/controllers/chart_controller.dart';
+import 'package:denis_profile/models/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_charts/multi_charts.dart';
