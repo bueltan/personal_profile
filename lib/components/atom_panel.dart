@@ -91,7 +91,7 @@ class _CanvasCircleState extends State<CanvasCircle> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(25)),
-                    border: Border.all(color: Colors.black),
+                    border: Border.all(  color: Colors.deepPurpleAccent.withOpacity(0.5)),
                     color: Colors.black.withOpacity(0.4),
                   ),
                   curve: Curves.easeIn,

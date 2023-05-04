@@ -316,40 +316,31 @@ class TitleAboutMe extends StatelessWidget {
             const EdgeInsets.only(top: 25.0, bottom: 100, left: 25, right: 25),
         child: FadeTransition(
           opacity: animationTitleAboutMe,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 1500),
-            decoration: BoxDecoration(
-              // border: Border.all(width: 1, color: Colors.black),
-                color: 
-                     Colors.black.withOpacity(0.4),
-                    
-                borderRadius: const BorderRadius.all(Radius.circular(16))),
-            padding:
-                const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 10),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  Text(
-                    'about'.tr,
-                    style: const TextStyle(
-                        color: Colors.greenAccent,
-                        fontSize: 35,
-                        fontFamily: "UbuntuMono",
-                        fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'about_me_title'.tr,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 35,
-                        fontFamily: "UbuntuMono",
-                        fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                  'about'.tr,
+                  style: const TextStyle(
+                      color: Colors.greenAccent,
+                      shadows: [Shadow(color: Colors.black,blurRadius: 5)],
+                      fontSize: 35,
+                      fontFamily: "UbuntuMono",
+                      fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'about_me_title'.tr,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      shadows: [Shadow(color: Colors.black,blurRadius: 5)],
+                      fontSize: 35,
+                      fontFamily: "UbuntuMono",
+                      fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ),
@@ -413,7 +404,7 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.black),
+          border: Border.all(width: 1, color: Colors.deepPurpleAccent.withOpacity(0.5)),
           color: Colors.black.withOpacity(0.4),
           borderRadius: const BorderRadius.all(Radius.circular(8))),
       padding: const EdgeInsets.all(25),

@@ -46,6 +46,7 @@ dependencies:
   avatar_glow: ^2.0.2
   syncfusion_flutter_charts: ^21.1.41
   multi_charts: ^0.3.0
+  readmore: ^2.2.0
 
 dev_dependencies:
   flutter_test:

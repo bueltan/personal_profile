@@ -78,7 +78,7 @@ class Dictionary extends Translations {
         "serviceOriented":"Service Oriented",
           // Drawer
          "_about_me":"About Me",
-         "_knowledge":"Knowledge",
+         "_knowledge":"Skills",
          "_experience":"Experience",
          "_projects":"Projects",
          "_contact":"Contact",
@@ -136,7 +136,46 @@ class Dictionary extends Translations {
          "cyberlink_fourth_line":"",
          "independent_fourth_line":"",
          "guazuapp_fourth_line":"Android app: https://play.google.com/store/apps/details?id=ar.guazuapp.guazuapp",
+          // Projects
+          
+          // title
+          "cnc_cad_title":"CNCAD",
+          "quick_camerea_title":"Camera Switch QuickAccess",
+          "nordeste_api_title":"Nordeste Project API",
+          "guazuApp_title":"GuazuaApp",
+          "myResume_title":"My Personal Resume",
+          //subtitle
+          "cnc_cad_subtitle":"Prototype Design Software, CNC Software Controller, and Router for Polyethylene Cutting",
+          "quick_camerea_subtitle":"The project was developed to facilitate boarding maneuvers by providing fast access to the cameras on a vessel",
+          "nordeste_api_subtitle":"Real-time Notifications and Task Creation A GraphQL API written in Python utilizing WebSockets for Push Messages",
+          "guazuApp_subtitle":"Multichannel messaging system",
+          "myResume_subtitle":"I am excited to share my work with the community and hope it will be useful for other developers",
+          //text
+          "cnc_cad_text":"The decision to develop this project was driven by a desire to learn. Initiated in early 2013, it was completed in mid-2014 due to various reasons. "
+                         "The primary motivation behind the development of this project was to gain knowledge and experience in computer-programmed machining processes, independent of software and hardware already developed by third parties. In contrast to complex industrial CNC machines and software, this project provides a more basic perspective.\n\n"
+                         "The objective of this project is to provide a foundational tool for students and individuals seeking to understand or venture into CNC machine processes.\n\n"
+                         "The material, documentation, and experience gained from this project are intended to support and serve new ideas, whether for different purposes or not. Furthermore, individuals can use this prototype project as a basis to develop more elaborate and complex CNC systems.",
+          
+          "quick_camerea_text":"In the source code repository there is a circuit schematic, 3D model (for Proteus) and the code for the microcontroller written in C. The system is 8-channel, includes a 16x2 LCD screen and a matrix keyboard. It is based on a PIC 18F4550 microcontroller, but can be downgraded to one with lower specs if needed.",
+          "nordeste_api_text":"The project I'm describing is a software that provides a GraphQL-based API written in Python for task creation and tracking, as well as product requesting and real-time notifications to their recipients. The system communicates through WebSockets, allowing for efficient and real-time push messaging.\n\n "
+                              "Users can interact with the system and receive real-time notifications about the status of their tasks and orders. Additionally, the API has been designed to be easily integrable into other applications and systems.",
+          "guazuApp_text":"GuazúApp is an app that pretends to be the next form of communication with your clients and inside your organization. "
+                          "Its an ambitious project that will integrate all your social media input in one place, redirecting your clients to the right people inside of your organization.\n\n"
+                          "Its not just that. GuazúApp is here to also boost internal communication",
 
+          "myResume_text":"This website has been developed using Dart/Flutter technology. The widget for the 'Skills' section was created from scratch to offer a personalized and engaging experience. Soon, this widget will be available in the official package repository (pub.dev).",
+          //link1
+          "cnc_cad_name_link1":"Web Page",
+          "quick_camerea_name_link1":"Source Code",
+          "nordeste_api_name_link1":"Source Code",
+          "guazuApp_name_link1":"App Web",
+          "myResume_name_link1":"Source Code",
+          //link2
+          "cnc_cad_name_link2":"Source Code",
+          "quick_camerea_name_link2":"",
+          "nordeste_api_name_link2":"",
+          "guazuApp_name_link2":"Google PLay App",
+          "myResume_name_link2":"",
         },
         'es': {
           "about_me":
@@ -217,7 +256,7 @@ class Dictionary extends Translations {
           "serviceOriented":"Orientada a Servicio",
          // Drawer
          "_about_me":"Sobre Mí",
-         "_knowledge":"Conocimientos",
+         "_knowledge":"Habilidades",
          "_experience":"Experiencia",
          "_projects":"Projectos",
          "_contact":"Contacto",
@@ -280,34 +319,44 @@ class Dictionary extends Translations {
           // Projects
           
           // title
-          "cnc_cad_title":"",
-          "quick_camerea_title":"",
-          "nordeste_api_title":"",
-          "guazuApp_title":"",
-          "myResume_title":"",
-          //subtitle
-          "cnc_cad_subtitle":"",
-          "quick_camerea_subtitle":"",
-          "nordeste_api_subtitle":"",
-          "guazuApp_subtitle":"",
-          "guazuApp_myResume":"",
+          "cnc_cad_title":"CNCAD",
+          "quick_camerea_title":"Conmutador de Camara, QuickAccess",
+          "nordeste_api_title":"Nordeste API",
+          "guazuApp_title":"GuazuaApp",
+          "myResume_title":"Mi Currículum Personal",
+           //subtitle
+          "cnc_cad_subtitle":"Software de diseño de prototipos, controlador de software CNC y enrutador para corte de polietileno",
+          "quick_camerea_subtitle":"El proyecto fue desarrollado para facilitar las maniobras de abordaje al proporcionar un acceso rápido a las cámaras en una embarcación.",
+          "nordeste_api_subtitle":"Notificaciones en tiempo real y creación de tareas Una API GraphQL escrita en Python que utiliza WebSockets para mensajes push",
+          "guazuApp_subtitle":"Sistema de mensajería multicanal",
+          "myResume_subtitle":"Estoy emocionado de compartir mi trabajo con la comunidad y espero que sea útil para otros desarrolladores.",
           //text
-          "cnc_cad_text":"",
-          "quick_camerea_text":"",
-          "nordeste_api_text":"",
-          "guazuApp_text":"",
-          "myResume_text":"",
+          "cnc_cad_text":"La decisión de desarrollar este proyecto fue impulsada por el deseo de aprender. Iniciado a principios de 2013, se completó a mediados de 2014 por diversas razones. "
+                         "La principal motivación detrás del desarrollo de este proyecto fue ganar conocimiento y experiencia en procesos de maquinado programados por computadora, independientes del software y hardware ya desarrollado por terceros. A diferencia de las complejas máquinas CNC industriales y el software, este proyecto ofrece una perspectiva más básica.\n\n"
+                         "El objetivo de este proyecto es proporcionar una herramienta fundamental para estudiantes e individuos que buscan comprender o aventurarse en los procesos de máquinas CNC.\n\n"
+                         "El material, la documentación y la experiencia obtenida de este proyecto están destinados a respaldar y servir nuevas ideas, ya sea para diferentes propósitos o no. Además, las personas pueden utilizar este proyecto prototipo como base para desarrollar sistemas CNC más elaborados y complejos.",
+          
+          "quick_camerea_text":"En el repositorio del codigo fuente se encuentra esquema de circuito, modelo 3D (para Proteus) y el código para el microcontrolador escrito en C, El sistema es de 8 canales, incluye una pantalla LCD 16x2 y un teclado de matriz. Se basa en un microcontrolador PIC 18F4550, pero puede ser reemplazado por uno que tenga especificaciones más bajas si es necesario.",
+          
+          "nordeste_api_text":"El proyecto es un software que proporciona una API basada en GraphQL escrita en Python para la creación y seguimiento de tareas, así como la solicitud de productos y notificaciones en tiempo real a sus destinatarios. El sistema se comunica a través de WebSockets, lo que permite una mensajería push eficiente y en tiempo real.\n\n "
+                              "Los usuarios pueden interactuar con el sistema y recibir notificaciones en tiempo real sobre el estado de sus tareas y pedidos. Además, la API ha sido diseñada para ser fácilmente integrable en otras aplicaciones y sistemas.",
+          
+          "guazuApp_text":"GuazúApp es una aplicación que pretende ser la próxima forma de comunicación con tus clientes y dentro de tu organización. "
+                          "Es un proyecto ambicioso que integrará todas las interacciones de tus redes sociales en un solo lugar, redirigiendo a tus clientes a las personas adecuadas dentro de tu organización.\n\n"
+                          "No es solo eso. GuazúApp también está aquí para impulsar la comunicación interna.",
+
+          "myResume_text":"Este sitio web ha sido desarrollado utilizando la tecnología de Dart/Flutter. El widget de la sección 'Habilidades' fue creado desde cero para ofrecer una experiencia personalizada y atractiva. Pronto, este widget estará disponible en el repositorio oficial de paquetes (pub.dev).",
           //link1
-          "cnc_cad_name_link1":"",
-          "quick_camerea_name_link1":"",
-          "nordeste_api_name_link1":"",
-          "guazuApp_name_link1":"",
-          "myResume_name_link1":"",
+          "cnc_cad_name_link1":"Página Web",
+          "quick_camerea_name_link1":"Código Fuente",
+          "nordeste_api_name_link1":"Código Fuente",
+          "guazuApp_name_link1":"App Web",
+          "myResume_name_link1":"Código Fuente",
           //link2
-          "cnc_cad_name_link2":"",
+          "cnc_cad_name_link2":"Código Fuente",
           "quick_camerea_name_link2":"",
           "nordeste_api_name_link2":"",
-          "guazuApp_name_link2":"",
+          "guazuApp_name_link2":"Google PLay App",
           "myResume_name_link2":"",
 
         }

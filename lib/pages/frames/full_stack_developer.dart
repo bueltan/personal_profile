@@ -243,6 +243,7 @@ class ItemToGraph extends StatelessWidget {
                 option.keyName.tr,
                 textAlign: TextAlign.start,
                 style: const TextStyle(
+                  shadows: [Shadow(color: Colors.black,blurRadius: 5)],
                     fontSize: 16,
                     fontFamily: "UbuntuMono",
                     color: Colors.greenAccent,

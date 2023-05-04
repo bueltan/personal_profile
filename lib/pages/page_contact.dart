@@ -6,16 +6,16 @@ import 'package:denis_profile/models/item_projects.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class PageProjects extends StatefulWidget {
-  const PageProjects({
+class PageContact extends StatefulWidget {
+  const PageContact({
     super.key,
   });
 
   @override
-  State<PageProjects> createState() => _PageProjectsState();
+  State<PageContact> createState() => _PageContactState();
 }
 
-class _PageProjectsState extends State<PageProjects>
+class _PageContactState extends State<PageContact>
     with TickerProviderStateMixin {
   late Animation<double> animationProjects;
   late AnimationController animationControllerProjects;
@@ -65,7 +65,7 @@ class _PageProjectsState extends State<PageProjects>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "assets/images/background_space_cupola.jpg"),
+                        "assets/images/background_space_cupula_soyus.png"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 8 : 0.5,
                   ),
@@ -114,14 +114,11 @@ class _PageProjectsState extends State<PageProjects>
                         padding: const EdgeInsets.only(top: 70.0),
                         child: FadeTransition(
                           opacity: animationProjects,
-                          child: Center(
+                          child: const Center(
                             child: Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                   left: 25.0, right: 25, bottom: 25),
-                              child: CaruselProjects(
-                                carouselController: carouselController,
-                                scrollController: scrollController,
-                              ),
+                              child:Text("")
                             ),
                           ),
                         ),
@@ -133,83 +130,5 @@ class _PageProjectsState extends State<PageProjects>
             ],
           );
         });
-  }
-}
-
-class CaruselProjects extends StatelessWidget {
-  const CaruselProjects({
-    super.key,
-    required this.carouselController,
-    required this.scrollController,
-  });
-
-  final CarouselController carouselController;
-  final ScrollController scrollController;
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<CaruselProjectsControl>(
-        id: "CaruselProjectsControl",
-        builder: (controller) {
-          return CarouselProjects(
-            carouselController: carouselController,
-            scrollController: scrollController,
-          );
-        });
-  }
-}
-
-class CarouselProjects extends StatefulWidget {
-  const CarouselProjects({
-    super.key,
-    required this.carouselController,
-    required this.scrollController,
-  });
-
-  final CarouselController carouselController;
-  final ScrollController scrollController;
-
-  @override
-  State<CarouselProjects> createState() => _CarouselProjectsState();
-}
-
-class _CarouselProjectsState extends State<CarouselProjects> {
-  CaruselProjectsControl controller = Get.find<CaruselProjectsControl>();
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.changeCurrentItem(0);
-    controller.autoPlay = true;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider(
-        carouselController: widget.carouselController,
-        items: ProjectItem.values
-            .map((e) => WidgetItemProject(
-                  carouselController: widget.carouselController,
-                  projectItem: e,
-                  scrollController: widget.scrollController,
-                ))
-            .toList(),
-        options: CarouselOptions(
-          height: 600,
-          aspectRatio: 16 / 9,
-          viewportFraction: 0.4,
-          initialPage: 0,
-          enableInfiniteScroll: true,
-          reverse: false,
-          autoPlay: controller.autoPlay,
-          autoPlayInterval: const Duration(seconds: 2),
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          enlargeCenterPage: true,
-          enlargeFactor: 0.4,
-          onPageChanged: (a, f) {
-            controller.changeCurrentItem(a);
-          },
-          scrollDirection: Axis.horizontal,
-        ));
   }
 }

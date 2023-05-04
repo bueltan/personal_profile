@@ -30,7 +30,7 @@ extension ProjectItemExtension on ProjectItem{
       case ProjectItem.guazuApp:
         return "guazuApp_subtitle";
       case ProjectItem.myResume:
-        return "guazuApp_myResume";
+        return "myResume_subtitle";
     }
   }
   String get text {
@@ -66,7 +66,7 @@ extension ProjectItemExtension on ProjectItem{
     Map<String,String> get link1 {
     switch (this) {
       case ProjectItem.cncCad:
-        return {"cnc_cad_name_link1":"https://github.com/bueltan/cnc-cad-study-project"};
+        return {"cnc_cad_name_link1":"https://cnc-project-study.github.io/"};
       case ProjectItem.quickCamerea:
         return {"quick_camerea_name_link1":"https://github.com/bueltan/camera-switch-quick-access"};
       case ProjectItem.nordesteApi:
@@ -74,13 +74,13 @@ extension ProjectItemExtension on ProjectItem{
       case ProjectItem.guazuApp:
         return {"guazuApp_name_link1":"https://app.guazuapp.com"};
       case ProjectItem.myResume:
-        return {"myResume_name_link1":"myResume_link1"};
+        return {"myResume_name_link1":"https://github.com/bueltan/personal_profile/tree/master"};
     }
   }
      Map<String,String> get link2 {
     switch (this) {
       case ProjectItem.cncCad:
-        return {"cnc_cad_name_link2":"cnc_cad_link2"};
+        return {"cnc_cad_name_link2":"https://github.com/bueltan/cnc-cad-study-project/tree/main"};
       case ProjectItem.quickCamerea:
         return {"quick_camerea_name_link2":"quick_camerea_link2"};
       case ProjectItem.nordesteApi:

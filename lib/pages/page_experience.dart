@@ -86,7 +86,7 @@ class _PageExperienceState extends State<PageExperience>
               AnimatedContainer(
                 decoration: BoxDecoration(
                   color: (controller.expanded)
-                      ? Colors.deepPurple.withOpacity(0.4)
+                      ? Colors.deepPurple.withOpacity(0.2)
                       : Colors.transparent,
                 ),
                 duration: const Duration(milliseconds: 1500),
@@ -97,7 +97,7 @@ class _PageExperienceState extends State<PageExperience>
                     ),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.4),
+                      color: Colors.black.withOpacity(0.2),
                       borderRadius:
                           const BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16))),
                   padding: const EdgeInsets.all(25),
@@ -110,6 +110,8 @@ class _PageExperienceState extends State<PageExperience>
                           child: Text(
                             '_experience'.tr,
                             style: const TextStyle(
+                                shadows:  [Shadow(color: Colors.black, blurRadius: 5)],
+
                                 color: Colors.white,
                                 fontSize: 35,
                                 fontFamily: "UbuntuMono",
