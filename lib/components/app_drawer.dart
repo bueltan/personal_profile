@@ -290,7 +290,7 @@ class _HeaderState extends State<Header> {
           padding: const EdgeInsets.only(left: 16.0, top: 16),
           child: GestureDetector(
             onTap: () {
-              pageStateCtrl.jumpToPage();
+              pageStateCtrl.jumpToPage(animate:false);
             },
             child: Visibility(
               visible: showMainWidget,
@@ -432,7 +432,7 @@ class _ItemTimeState extends State<ItemTime> {
           builder: (controller) {
             return InkWell(
               onTap: () {
-                controller.jumpToPage(pageItem: widget.pageItem);
+                controller.jumpToPage(pageItem: widget.pageItem,animate: false);
               },
               child: SizedBox(
                 width: 325,

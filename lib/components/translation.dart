@@ -178,7 +178,11 @@ class Dictionary extends Translations {
           "myResume_name_link2":"",
           // show More and show less
           "show_more": "Show more",
-          "show_less": "Show less"
+          "show_less": "Show less",
+           // Contact Page
+          "sent":"Enviar",
+          "clipboard":"Copied to clipboard",
+          "contact_to_me":"Get in touch!"
         },
         'es': {
           "about_me":
@@ -363,7 +367,11 @@ class Dictionary extends Translations {
           "myResume_name_link2":"",
           // show More and show less
           "show_more": "Mostrar más",
-          "show_less": "Mostrar menos"
+          "show_less": "Mostrar menos",
+          // Contact Page
+          "sent":"Enviar",
+          "clipboard":"Copiado al portapales",
+          "contact_to_me":"¡Contáctame!"
         }
       };
 }

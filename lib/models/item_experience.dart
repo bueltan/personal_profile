@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 
 enum TimeLineItem { guazuapp,independent,cyberlink,overUp, qualitech, }
 

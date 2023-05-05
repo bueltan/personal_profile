@@ -11,9 +11,13 @@ class PageStateController extends GetxController  {
   PageController pageController = PageController(initialPage: 0);
   int currentPageIndex = 0;
 
-  void jumpToPage({PageItem ? pageItem, Duration distanceTime = const Duration(milliseconds: 500)}){
-
+  void jumpToPage({PageItem ? pageItem, Duration distanceTime = const Duration(milliseconds: 500), animate = true}){
+    if (animate){
     pageController.animateToPage(pageItem?.indexPage??0, duration:  distanceTime, curve: Curves.ease);
+
+    }else{
+      pageController.jumpToPage(pageItem?.indexPage??0);
+    }
   }
   void expandPage(){
       expanded = true;
