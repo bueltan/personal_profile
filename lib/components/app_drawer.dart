@@ -1,5 +1,7 @@
 import 'package:denis_profile/models/item_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:wave/config.dart';
@@ -110,23 +112,40 @@ class AppDrawerState extends State<AppDrawer>
       onHorizontalDragStart: _onDragStart,
       onHorizontalDragUpdate: _onDragUpdate,
       onHorizontalDragEnd: _onDragEnd,
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (BuildContext context, _) {
-          double animationVal = _controller.value;
-          double translateVal = animationVal * maxSlide;
-          // double scaleVal = 1 - (animationVal * 0.1);
-          return Stack(
-            children: <Widget>[
-              const CustomDrawer(),
-              Transform(
-                  alignment: Alignment.centerLeft,
-                  transform: Matrix4.identity()..translate(translateVal),
-                  // ..scale(scaleVal, 1),
-                  child: widget.child),
-            ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+
+            if (pageStateCtrl.expanded ==false && (constraints.maxWidth < 1000 || isWebMobile) ){
+              setState(() {
+                close();
+              });
+            }else if (pageStateCtrl.expanded ==true && constraints.maxWidth > 1500 && !isWebMobile){
+              setState(() {
+                open();
+              });
+            }
+        });
+          return AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, _) {
+              double animationVal = _controller.value;
+              double translateVal = animationVal * maxSlide;
+              // double scaleVal = 1 - (animationVal * 0.1);
+              return Stack(
+                children: <Widget>[
+                  const CustomDrawer(),
+                  Transform(
+                      alignment: Alignment.centerLeft,
+                      transform: Matrix4.identity()..translate(translateVal),
+                      // ..scale(scaleVal, 1),
+                      child: widget.child),
+                ],
+              );
+            },
           );
-        },
+        }
       ),
     );
   }
@@ -180,40 +199,55 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 size: const Size(double.infinity, double.infinity),
                 waveAmplitude: 0,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  const Header(),
-                  Expanded(
-                    child: AnimationLimiter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 100.0),
-                        child: ListView.builder(
-                          itemCount: PageItem.values.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return AnimationConfiguration.staggeredList(
-                              position: index,
-                              delay: const Duration(milliseconds: 200),
-                              duration: const Duration(milliseconds: 2000),
-                              child: SlideAnimation(
-                                verticalOffset: 150.0,
-                                child: FadeInAnimation(
-                                  child: ItemTime(
-                                    pageItem: PageItem.values.firstWhere(
-                                        (item) => item.index == index),
-                                    index: index,
+              GetBuilder<PageStateController>(
+                  id: "PageState",
+                  builder: (pageStateCtrl) {
+                    return AnimatedOpacity(
+                      duration: const Duration(milliseconds: 500),
+                      opacity: (pageStateCtrl.expanded) ? 0 : 1,
+                      child: Builder(
+                        builder: (context) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              const Header(),
+                              Expanded(
+                                child: AnimationLimiter(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 100.0),
+                                    child: ListView.builder(
+                                      itemCount: PageItem.values.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return AnimationConfiguration.staggeredList(
+                                          position: index,
+                                          delay: const Duration(milliseconds: 200),
+                                          duration:
+                                              const Duration(milliseconds: 2000),
+                                          child: SlideAnimation(
+                                            verticalOffset: 150.0,
+                                            child: FadeInAnimation(
+                                              child: ItemTime(
+                                                pageItem: PageItem.values
+                                                    .firstWhere((item) =>
+                                                        item.index == index),
+                                                index: index,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            ],
+                          );
+                        }
                       ),
-                    ),
-                  ),
-                ],
-              ),
+                    );
+                  }),
             ],
           ),
         ),

@@ -1,7 +1,9 @@
 import 'package:denis_profile/components/atom_panel.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/models/item_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -63,12 +65,15 @@ class _PageWelcomeState extends State<PageWelcome>
         id: "PageState",
         builder: (controller) {
           return LayoutBuilder(builder: (context, constrains) {
+              double screenWidth = MediaQuery.of(context).size.width;
+              final toVerticalPosition = (kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android))|| screenWidth<1000  ;
+
             return Stack(
               children: [
                 Builder(builder: (context) {
                   return AnimatedOpacity(
                     duration: const Duration(milliseconds: 1500),
-                    opacity: (controller.expanded) ? 1 : 0.5,
+                    opacity: (controller.expanded) ? 0.4 : 0.5,
                     child: Container(
                       decoration: const BoxDecoration(
                         image: DecorationImage(
@@ -80,45 +85,52 @@ class _PageWelcomeState extends State<PageWelcome>
                     ),
                   );
                 }),
-                AnimatedContainer(
-                  decoration: BoxDecoration(
-                    color: (controller.expanded)
-                        ? Colors.black.withOpacity(0.5)
-                        : Colors.transparent,
-                  ),
-                  duration: const Duration(milliseconds: 1500),
-                ),
+                // AnimatedContainer(
+                //   decoration: BoxDecoration(
+                //     color: (controller.expanded)
+                //         ? Colors.black.withOpacity(0.5)
+                //         : Colors.transparent,
+                //   ),
+                //   duration: const Duration(milliseconds: 1500),
+                // ),
                 SizedBox(
                   width: (controller.expanded)
                       ? constrains.maxWidth
                       : constrains.maxWidth - 365,
-                  child: Center(
+                  child:  Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 25.0),
+                      padding: const EdgeInsets.only(left: 25.0, top:200),
                       child: SizedBox(
-                        height: 200,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: PageItem.values.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return AnimationConfiguration.staggeredList(
-                              position: index,
-                              delay: const Duration(milliseconds: 300),
-                              duration: const Duration(milliseconds: 2500),
-                              child: SlideAnimation(
-                                  verticalOffset: 250.0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 20.0),
-                                    child: FadeInAnimation(
-                                      child: ItemCicle(
-                                        index: index,
-                                      ),
-                                    ),
-                                  )),
-                            );
-                          },
+                        height: toVerticalPosition?600:200,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right:25.0),
+                          child: ListItems(isVertical: toVerticalPosition,),
                         ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 60,
+                  child: SizedBox(
+                  width: (controller.expanded)
+                      ? constrains.maxWidth
+                      : constrains.maxWidth - 365,
+                      child: Align(
+                      alignment: Alignment.topCenter,
+                      child: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 800),
+                        opacity:(controller.expanded)?1:0 ,
+                        child: Text(
+                                    'Denis Germán Gimenez'.tr,
+                                    style: const TextStyle(
+                          color: Colors.white,
+                          shadows: [Shadow(color: Colors.black,blurRadius: 5)],
+                          fontSize: 40,
+                          fontFamily: "NeueMetana",
+                          ),
+                                    textAlign: TextAlign.center,
+                                  ),
                       ),
                     ),
                   ),
@@ -127,6 +139,53 @@ class _PageWelcomeState extends State<PageWelcome>
             );
           });
         });
+  }
+}
+
+class ListItems extends StatelessWidget {
+  final bool isVertical;
+  const ListItems({
+    super.key, required this.isVertical,
+  });
+
+  // bool isVertical = false;
+  @override
+  Widget build(BuildContext context) {
+    //  SchedulerBinding.instance.addPostFrameCallback((_) {
+    //       if ((toVerticalPosition ) && isVertical == false){
+    //         setState(() {
+    //           isVertical = true;
+    //         });
+    //       }else if(screenWidth>1000 && isVertical == true){
+    //          setState(() {
+    //           isVertical = false;
+    //         });
+    //       }
+    //     });
+    return ListView.builder(
+      
+       physics: const ClampingScrollPhysics(),
+       scrollDirection:isVertical?Axis.vertical: Axis.horizontal,
+      shrinkWrap: true,
+      itemCount: PageItem.values.length,
+      itemBuilder: (BuildContext context, int index) {
+        return AnimationConfiguration.staggeredList(
+          position: index,
+          delay: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 2500),
+          child: SlideAnimation(
+              verticalOffset: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: FadeInAnimation(
+                  child: ItemCicle(
+                    index: index,
+                  ),
+                ),
+              )),
+        );
+      },
+    );
   }
 }
 

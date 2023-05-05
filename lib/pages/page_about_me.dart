@@ -19,19 +19,20 @@ class PageAboutMe extends StatelessWidget {
             children: [
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 1500),
-                opacity: (controller.expanded) ? 1 : 0.5,
+                opacity: (controller.expanded) ? 0.7 : 0.5,
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("images/about_me_background.png"),
+                      image: AssetImage("images/about_me_background.png",),
                       fit: BoxFit.cover,
+                      
                     ),
                   ),
                 ),
               ),
-               AnimatedContainer(decoration: BoxDecoration(color: (controller.expanded)
-                ? Colors.black.withOpacity(0.3)
-                : Colors.transparent,), duration: const Duration(milliseconds: 1500),),
+              //  AnimatedContainer(decoration: BoxDecoration(color: (controller.expanded)
+              //   ? Colors.black.withOpacity(0.3)
+              //   : Colors.transparent,), duration: const Duration(milliseconds: 1500),),
               Content(
                 controller: controller,
               )
@@ -113,17 +114,20 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
                   child: TitleAboutMe(
                       animationTitleAboutMe: animationTitleAboutMe,
                       widget: widget)),
-              SizedBox(
-                width: (widget.controller.expanded)
-                    ? constrains.maxWidth
-                    : constrains.maxWidth - 365,
-                child: Wrap(
-                  children: [
-                    ImageAboutMe(
-                        animationControllerImage: animationControllerImage,
-                        widget: widget),
-                    PersonalInfo(controller: widget.controller)
-                  ],
+              Padding(
+                padding: const EdgeInsets.only(top:25),
+                child: SizedBox(
+                  width: (widget.controller.expanded)
+                      ? constrains.maxWidth
+                      : constrains.maxWidth - 365,
+                  child: Wrap(
+                    children: [
+                      ImageAboutMe(
+                          animationControllerImage: animationControllerImage,
+                          widget: widget),
+                      PersonalInfo(controller: widget.controller)
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -318,29 +322,15 @@ class TitleAboutMe extends StatelessWidget {
           opacity: animationTitleAboutMe,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Text(
-                  'about'.tr,
-                  style: const TextStyle(
-                      color: Colors.greenAccent,
-                      shadows: [Shadow(color: Colors.black,blurRadius: 5)],
-                      fontSize: 35,
-                      fontFamily: "UbuntuMono",
-                      fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'about_me_title'.tr,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      shadows: [Shadow(color: Colors.black,blurRadius: 5)],
-                      fontSize: 35,
-                      fontFamily: "UbuntuMono",
-                      fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+            child: Text(
+              'about_me_title'.tr,
+              style: const TextStyle(
+                  color: Colors.greenAccent,
+                  shadows: [Shadow(color: Colors.black,blurRadius: 5)],
+                  fontSize: 40,
+                  fontFamily: "UbuntuMono",
+                  fontWeight: FontWeight.w600),
+              textAlign: TextAlign.center,
             ),
           ),
         ),

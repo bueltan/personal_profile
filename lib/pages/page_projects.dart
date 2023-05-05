@@ -3,7 +3,9 @@ import 'package:denis_profile/components/item_project.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/controllers/projects_controller.dart';
 import 'package:denis_profile/models/item_projects.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class PageProjects extends StatefulWidget {
@@ -67,18 +69,11 @@ class _PageProjectsState extends State<PageProjects>
                     image: const AssetImage(
                         "assets/images/background_space_cupola.jpg"),
                     fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 8 : 0.5,
+                    opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),
                 ),
               ),
-              AnimatedContainer(
-                decoration: BoxDecoration(
-                  color: (controller.expanded)
-                      ? Colors.deepPurple.withOpacity(0.2)
-                      : Colors.transparent,
-                ),
-                duration: const Duration(milliseconds: 1500),
-              ),
+              
               Padding(
                 padding: EdgeInsets.only(
                   right: (controller.expanded) ? 0 : 325,
@@ -93,7 +88,7 @@ class _PageProjectsState extends State<PageProjects>
                   child: Stack(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(25.0),
+                        padding: const EdgeInsets.only(bottom:25.0),
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: Text(
@@ -102,8 +97,8 @@ class _PageProjectsState extends State<PageProjects>
                                 shadows: [
                                   Shadow(color: Colors.black, blurRadius: 5)
                                 ],
-                                color: Colors.white,
-                                fontSize: 35,
+                                color: Colors.greenAccent,
+                                fontSize: 40,
                                 fontFamily: "UbuntuMono",
                                 fontWeight: FontWeight.w600),
                             textAlign: TextAlign.center,
@@ -174,6 +169,7 @@ class CarouselProjects extends StatefulWidget {
 
 class _CarouselProjectsState extends State<CarouselProjects> {
   CaruselProjectsControl controller = Get.find<CaruselProjectsControl>();
+  final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
 
   @override
   void dispose() {
@@ -184,32 +180,42 @@ class _CarouselProjectsState extends State<CarouselProjects> {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-        carouselController: widget.carouselController,
-        items: ProjectItem.values
-            .map((e) => WidgetItemProject(
-                  carouselController: widget.carouselController,
-                  projectItem: e,
-                  scrollController: widget.scrollController,
-                ))
-            .toList(),
-        options: CarouselOptions(
-          height: 600,
-          aspectRatio: 16 / 9,
-          viewportFraction: 0.4,
-          initialPage: 0,
-          enableInfiniteScroll: true,
-          reverse: false,
-          autoPlay: controller.autoPlay,
-          autoPlayInterval: const Duration(seconds: 2),
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          enlargeCenterPage: true,
-          enlargeFactor: 0.4,
-          onPageChanged: (a, f) {
-            controller.changeCurrentItem(a);
-          },
-          scrollDirection: Axis.horizontal,
-        ));
+    return LayoutBuilder(
+      
+      builder: (context, constraints) {
+        double viewFract = 0.4;
+        if (constraints.maxWidth < 700 || isWebMobile){
+          viewFract = 0.8;
+        }
+        
+        return CarouselSlider(
+            carouselController: widget.carouselController,
+            items: ProjectItem.values
+                .map((e) => WidgetItemProject(
+                      carouselController: widget.carouselController,
+                      projectItem: e,
+                      scrollController: widget.scrollController,
+                    ))
+                .toList(),
+            options: CarouselOptions(
+              height: 600,
+              aspectRatio: 16 / 9,
+              viewportFraction: viewFract,
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              reverse: false,
+              autoPlay: controller.autoPlay,
+              autoPlayInterval: const Duration(seconds: 4),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              enlargeFactor: 0.4,
+              onPageChanged: (a, f) {
+                controller.changeCurrentItem(a);
+              },
+              scrollDirection: Axis.horizontal,
+            ));
+      }
+    );
   }
 }

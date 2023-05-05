@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:denis_profile/controllers/atom_controller.dart';
 import 'package:denis_profile/models/item_atom.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -43,8 +44,14 @@ class CanvasCircle extends StatefulWidget {
 class _CanvasCircleState extends State<CanvasCircle> {
   @override
   Widget build(BuildContext context) {
+    final isWebMobile = kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.iOS ||
+            defaultTargetPlatform == TargetPlatform.android);
+
     AtomController atomController = Get.find<AtomController>();
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return AnimatedContainer(
         duration: const Duration(milliseconds: 500),
         color: (atomController.expanded)
@@ -60,15 +67,12 @@ class _CanvasCircleState extends State<CanvasCircle> {
                 double height = .50 * (mainConstraints.maxWidth);
                 double icrementedWidth = 0;
                 icrementedWidth = width * 1.1;
-                if (atomController.expanded ){
-                  while  (mainConstraints.maxHeight >= icrementedWidth){
+                if (atomController.expanded) {
+                  while (mainConstraints.maxHeight >= icrementedWidth) {
                     width = icrementedWidth;
                     height = width;
                     icrementedWidth = width + 1;
-
                   }
-                  
-                  
                 }
                 return AtomPanel(
                     atomController: atomController,
@@ -76,22 +80,25 @@ class _CanvasCircleState extends State<CanvasCircle> {
                     height: height);
               }),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: 25,
-                    bottom: 25,
-                    left: 25,
-                    right: (!atomController.expanded &&
-                            atomController.currentItemAtom != ItemAtom.none)
-                        ? 365
-                        : 25),
-                child: AnimatedContainer(
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 25,
+                  bottom: 25,
+                  left: 25,
+                  right: (!atomController.expanded &&
+                          atomController.currentItemAtom != ItemAtom.none)
+                      ? 365
+                      : 25),
+              child: LayoutBuilder(builder: (context, c) {
+                double factor =
+                    (width > 1000 || !isWebMobile) ? width * 0.42 : width * 0.85;
+
+                return AnimatedContainer(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(25)),
-                    border: Border.all(  color: Colors.deepPurpleAccent.withOpacity(0.5)),
+                    border: Border.all(
+                        color: Colors.deepPurpleAccent.withOpacity(0.5)),
                     color: Colors.black.withOpacity(0.4),
                   ),
                   curve: Curves.easeIn,
@@ -101,12 +108,12 @@ class _CanvasCircleState extends State<CanvasCircle> {
                       : height,
                   width: (atomController.currentItemAtom == ItemAtom.none)
                       ? 0
-                      : 800,
+                      : factor,
                   child: LayoutBuilder(builder: (context, constraints) {
                     return Visibility(
                       visible:
                           atomController.currentItemAtom != ItemAtom.none &&
-                              constraints.maxWidth > 600,
+                              constraints.maxWidth > factor * 0.9,
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
@@ -133,41 +140,19 @@ class _CanvasCircleState extends State<CanvasCircle> {
                               ),
                             ),
                           ),
-                          // Positioned(
-                          //       right: 10,
-                          //       top: 45,
-                          //       child:  Column(
-                          //     mainAxisSize: MainAxisSize.min,
-                          //     mainAxisAlignment: MainAxisAlignment.center,
-                          //     children: [
-                          //       Padding(
-                          //           padding: const EdgeInsets.all(8.0),
-                          //           child: TextButton(
-                                      
-                          //             onPressed: () {
-                          //               atomController
-                          //                   .setCurrentItemAtom(ItemAtom.none);
-                          //             }, child: Text("A", ),
-                                     
-                          //           ),
-                          //         ),
-                                
-                          //     ],
-                          //   ),
-                          // ),
                         ],
                       ),
                     );
                   }),
-                ),
-              ),
+                );
+              }),
             ),
           ],
         ));
   }
 }
 
-class AtomPanel extends StatelessWidget {
+class AtomPanel extends StatefulWidget {
   const AtomPanel({
     super.key,
     required this.atomController,
@@ -178,79 +163,112 @@ class AtomPanel extends StatelessWidget {
   final AtomController atomController;
   final double width;
   final double height;
+
+  @override
+  State<AtomPanel> createState() => _AtomPanelState();
+}
+
+class _AtomPanelState extends State<AtomPanel> {
   final double minimunWidth = 600;
   final double minimunHeight = 600;
+  late ScrollController scrollController;
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
         padding: EdgeInsets.only(
-            right: (!atomController.expanded &&
-                    atomController.currentItemAtom == ItemAtom.none)
+            right: (!widget.atomController.expanded &&
+                    widget.atomController.currentItemAtom == ItemAtom.none)
                 ? 300
                 : 0),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           dragStartBehavior: DragStartBehavior.down,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              color: Colors.transparent,
-              width: (width <= minimunWidth) ? minimunWidth : width,
-              height: (height <= minimunHeight) ? minimunHeight : height,
-              child: LayoutBuilder(builder: (context, constraints) {
-                double mainWidth = (constraints.maxWidth <= minimunWidth)
+          child: RawScrollbar(
+            controller: scrollController,
+            mainAxisMargin: 30,
+            crossAxisMargin: 10,
+            radius: const Radius.circular(4),
+            thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              controller: scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: AnimatedContainer(
+                alignment: Alignment.center,
+                duration: const Duration(milliseconds: 500),
+                color: Colors.transparent,
+                width: (widget.width <= minimunWidth)
                     ? minimunWidth
-                    : constraints.maxWidth;
-                double mainHeight = (constraints.maxHeight <= minimunHeight)
+                    : widget.width,
+                height: (widget.height <= minimunHeight)
                     ? minimunHeight
-                    : constraints.maxHeight;
-                return Center(
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      ExternalCircles(
-                        mainWidth: mainWidth,
-                        mainHeight: mainHeight,
-                        atomController: atomController,
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontFamily: "UbuntuMono",
-                          fontWeight: FontWeight.w600
-                        ),
-                      ),
-                      ElementalCircle(
-                        widthContainer: mainWidth,
-                        heightContainer: mainWidth,
-                        width: mainWidth * .25,
-                        height: mainWidth * .25,
-                        colorBackGround: Colors.transparent,
-                        colorBorde: Colors.white,
-                        onTap: () {
-                          atomController.setCurrentItemAtom(ItemAtom.fullstack);
-                        },
-                        widgetInCircle:  Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "full_stack_developer".tr,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
+                    : widget.height,
+                child: LayoutBuilder(builder: (context, constraints) {
+                  double mainWidth = (constraints.maxWidth <= minimunWidth)
+                      ? minimunWidth
+                      : constraints.maxWidth;
+                  double mainHeight = (constraints.maxHeight <= minimunHeight)
+                      ? minimunHeight
+                      : constraints.maxHeight;
+                  return Center(
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        ExternalCircles(
+                          mainWidth: mainWidth,
+                          mainHeight: mainHeight,
+                          atomController: widget.atomController,
+                          textStyle: const TextStyle(
                               color: Colors.white,
                               fontSize: 19,
                               fontFamily: "UbuntuMono",
-                              fontWeight: FontWeight.w600
+                              fontWeight: FontWeight.w600),
+                        ),
+                        ElementalCircle(
+                          widthContainer: mainWidth,
+                          heightContainer: mainWidth,
+                          width: mainWidth * .25,
+                          height: mainWidth * .25,
+                          colorBackGround: Colors.transparent,
+                          colorBorde: Colors.white,
+                          onTap: () {
+                            widget.atomController
+                                .setCurrentItemAtom(ItemAtom.fullstack);
+                          },
+                          widgetInCircle: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "full_stack_developer".tr,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                  fontFamily: "UbuntuMono",
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
+                          itemAtom: ItemAtom.fullstack,
                         ),
-                        itemAtom: ItemAtom.fullstack,
-                      ),
-                    ],
-                  ),
-                );
-              }),
+                      ],
+                    ),
+                  );
+                }),
+              ),
             ),
           ),
         ),
@@ -350,8 +368,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                 onTap: () {
                   atomController.setCurrentItemAtom(ItemAtom.sysadmin);
                 },
-                widgetInCircle:
-                 SvgPicture.asset(
+                widgetInCircle: SvgPicture.asset(
                   "icons/sysadmin_icon.svg",
                   width: widget.mainHeight * .06,
                   // ignore: deprecated_member_use
@@ -463,7 +480,8 @@ class Circle extends StatelessWidget {
     this.widgetInCircle = const SizedBox(),
     this.itemAtom,
     this.onHoverChange,
-    this.widgetReplaceText, this.bordeWidth = 2,
+    this.widgetReplaceText,
+    this.bordeWidth = 2,
   });
 
   @override
@@ -546,16 +564,15 @@ class Circle extends StatelessWidget {
                     width: widthContainer,
                     child: Center(
                       child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: (widgetReplaceText != null)
-                      ? widgetReplaceText
-                      : Text(
-                          text,
-                          style: textStyle,
-                          textAlign: TextAlign.center,
-
-                        ),
-                ),
+                        padding: const EdgeInsets.all(4.0),
+                        child: (widgetReplaceText != null)
+                            ? widgetReplaceText
+                            : Text(
+                                text,
+                                style: textStyle,
+                                textAlign: TextAlign.center,
+                              ),
+                      ),
                     ))
               ],
             ),
@@ -567,18 +584,17 @@ class Circle extends StatelessWidget {
                     width: widthContainer,
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: (widgetReplaceText != null)
-                      ? widgetReplaceText
-                      : Text(
-                          text,
-                          style: textStyle,
-                          textAlign: TextAlign.center,
-                        ),
-                )
-                      ),
+                          padding: const EdgeInsets.all(4.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: (widgetReplaceText != null)
+                                ? widgetReplaceText
+                                : Text(
+                                    text,
+                                    style: textStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
+                          )),
                     )),
                 ElementalCircle(
                   heightContainer: heightContainer ?? widthContainer,
@@ -612,7 +628,8 @@ class ElementalCircle extends StatefulWidget {
       required this.colorBorde,
       required this.colorBackGround,
       this.itemAtom,
-      this.onHoverChange, this.bordeWidth = 2});
+      this.onHoverChange,
+      this.bordeWidth = 2});
 
   final double? heightContainer;
   final double? widthContainer;
@@ -695,7 +712,8 @@ class _ElementalCircleState extends State<ElementalCircle> {
                       ? widget.width! * 1.2
                       : widget.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: widget.bordeWidth, color: widget.colorBorde),
+                    border: Border.all(
+                        width: widget.bordeWidth, color: widget.colorBorde),
                     shape: BoxShape.circle,
                     color: Colors.transparent,
                   ),

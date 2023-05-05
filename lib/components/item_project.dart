@@ -55,6 +55,7 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
               return Stack(
                 children: [
                   Container(
+                      
                       decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(25)),
@@ -69,7 +70,7 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
                           duration: const Duration(milliseconds: 500),
                           opacity: (controller.currentProjectItem !=
                                   widget.projectItem)
-                              ? 0.2
+                              ? 0.3
                               : 1,
                           child: RawScrollbar(
                               controller: scrollController,

@@ -70,7 +70,7 @@ class _FullStackDeveloperFrameState extends State<FullStackDeveloperFrame>
                   textAlign: TextAlign.start,
                 ),
               ),
-              Row(
+              Wrap(
                 children: [
                   SizedBox(
                     width: 290,

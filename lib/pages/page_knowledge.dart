@@ -81,18 +81,50 @@ class _PageKnowledgeState extends State<PageKnowledge>
                     image: const AssetImage(
                         "assets/images/background_apollo_control.png"),
                     fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 8 : 0.5,
+                    opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),
                 ),
               ),
-              
               GetBuilder<AtomController>(
                   id: "AtomController",
-                  builder: (controller) {
-                    return  CircularPanel(
-                      contentWidget: SizedBox(
-              
-                        child: ContentSwich(atomController: controller,))
+                  builder: (controllerAtom) {
+                    return CircularPanel(
+                        contentWidget: SizedBox(
+                            child: ContentSwich(
+                      atomController: controllerAtom,
+                    )));
+                  }),
+              GetBuilder<AtomController>(
+                  id: "AtomController",
+                  builder: (atomController) {
+                    return Positioned.fill(
+                      top: 25,
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              right: (controller.expanded) ? 0 : 350),
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 1000),
+                            opacity: (atomController.currentItemAtom ==
+                                    ItemAtom.none)
+                                ? 1
+                                : 0,
+                            child: Text(
+                              '_knowledge'.tr,
+                              style: const TextStyle(
+                                  shadows: [
+                                    Shadow(color: Colors.black, blurRadius: 5)
+                                  ],
+                                  color: Colors.greenAccent,
+                                  fontSize: 40,
+                                  fontFamily: "UbuntuMono",
+                                  fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
                     );
                   }),
             ],
@@ -102,28 +134,22 @@ class _PageKnowledgeState extends State<PageKnowledge>
 }
 
 class ContentSwich extends StatelessWidget {
-  final AtomController atomController ;
-  
+  final AtomController atomController;
+
   const ContentSwich({
-    super.key, required this.atomController,
+    super.key,
+    required this.atomController,
   });
 
   @override
   Widget build(BuildContext context) {
-
     return switch (atomController.currentItemAtom) {
-      ItemAtom.programming =>  const ProgrammingFrame(),
-      ItemAtom.electronic =>  const ElectronicFrame(),
-      ItemAtom.sysadmin =>  const SysAdminFrame(),
-      ItemAtom.softskills =>  const SoftSkillsFrame(),
-      ItemAtom.fullstack =>  const FullStackDeveloperFrame(),
+      ItemAtom.programming => const ProgrammingFrame(),
+      ItemAtom.electronic => const ElectronicFrame(),
+      ItemAtom.sysadmin => const SysAdminFrame(),
+      ItemAtom.softskills => const SoftSkillsFrame(),
+      ItemAtom.fullstack => const FullStackDeveloperFrame(),
       ItemAtom.none => const SizedBox(),
     };
   }
 }
-
-
-
-
-
-

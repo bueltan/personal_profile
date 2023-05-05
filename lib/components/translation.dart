@@ -50,7 +50,7 @@ class Dictionary extends Translations {
         "electronic_text":"I began my interest in electronics at the age of 9, reading the electronics section of an encyclopedia and experimenting with batteries and DC motors. I took a one-year course where I learned the fundamentals of analog electronics and experimented with components such as transistors and diodes. Then, I continued experimenting with basic integrated circuits such as the 555 timer and built circuits on PCB using components such as logic gates and shift registers. After several years, I acquired the necessary knowledge to experiment with microcontrollers, which was a major milestone in my life. The first code I wrote was in assembler and it was exciting to replicate the behavior of a 555 timer on a microcontroller.\n\n"
                           "In 2013, I built a CNC router using parts from discarded printers for my thesis project. The CNC software I developed had a graphical interface to create shapes and materialize them using my rudimentary CNC connected to the old parallel port (printer port). Although electronics started as a hobby for me, I made a camera switch for quick access that was installed on a catamaran. I also experimented with MicroPython and the Arduino IDE on embedded systems such as the ESP8266 and ATmega2560",
         
-        "about_me_title":", Personal Information",
+        "about_me_title":"Personal Information",
         "about":"About Me",
         "_age":"Age: ",
         "_profession":"Profession: ",
@@ -231,7 +231,7 @@ class Dictionary extends Translations {
           
           "electronic_text":"Comencé mi interés por la electrónica a los 9 años, leyendo la sección de electrónica de una enciclopedia y experimentando con pilas y motores DC. Tomé un curso de un año donde aprendí los fundamentos de la electrónica analógica y experimenté con componentes como transistores y diodos. Luego, seguí experimentando con circuitos integrados básicos como el CI 555 y construí circuitos en PCB utilizando componentes como compuertas lógicas y registros de desplazamiento. Después de varios años, adquirí los conocimientos necesarios para experimentar con microcontroladores, lo que fue un hito importante en mi vida. El primer código que escribí fue en Assembler y fue emocionante replicar el comportamiento de un temporizador 555 en un microcontrolador.\n\n"
                        "En 2013, construí un router CNC con partes de impresoras de descarte para mi proyecto de tesis. El software CNC que desarrollé tenía una interfaz gráfica para realizar formas y materializarlas mediante mi rudimentario CNC conectado al antiguo puerto paralelo (puerto de impresora). Aunque la electrónica comenzó como un hobby para mí, realicé un conmutador de cámaras para acceso rápido que se instaló en una embarcación (Catamarán). También he experimentado con MicroPython y la IDE de Arduino en sistemas embebidos como el ESP8266 y el ATmega2560",
-        "about_me_title":", Información personal",
+        "about_me_title":"Información Personal",
           "about":"Sobre Mí",
           "_age":"Edad: ",
           "_nationality":"Nacionalidad: ",

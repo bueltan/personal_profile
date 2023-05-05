@@ -69,7 +69,7 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
                   textAlign: TextAlign.start,
                 ),
               ),
-              Row(
+              Wrap(
                 children: [
                   SizedBox(
                     width: 290,

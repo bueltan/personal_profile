@@ -79,18 +79,12 @@ class _PageExperienceState extends State<PageExperience>
                     image: const AssetImage(
                         "assets/images/background_nasa_control.png"),
                     fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 8 : 0.5,
+                    opacity: (controller.expanded) ? 0.4 : 0.5,
                   ),
                 ),
               ),
-              AnimatedContainer(
-                decoration: BoxDecoration(
-                  color: (controller.expanded)
-                      ? Colors.deepPurple.withOpacity(0.2)
-                      : Colors.transparent,
-                ),
-                duration: const Duration(milliseconds: 1500),
-              ),
+             
+          
               Padding(
                 padding: EdgeInsets.only(
                     right: (controller.expanded) ? 0 : 325,
@@ -104,7 +98,7 @@ class _PageExperienceState extends State<PageExperience>
                   child: Stack(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(25.0),
+                        padding: const EdgeInsets.only(bottom:25.0,),
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: Text(
@@ -112,45 +106,47 @@ class _PageExperienceState extends State<PageExperience>
                             style: const TextStyle(
                                 shadows:  [Shadow(color: Colors.black, blurRadius: 5)],
 
-                                color: Colors.white,
-                                fontSize: 35,
+                                color: Colors.greenAccent,
+                                fontSize: 40,
                                 fontFamily: "UbuntuMono",
                                 fontWeight: FontWeight.w600),
                             textAlign: TextAlign.center,
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 70.0),
-                        child: RawScrollbar(
-                          controller: scrollController,
-                          mainAxisMargin: 30,
-                          crossAxisMargin: 10,
-                          radius: const Radius.circular(4),
-                          thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
-                          thumbVisibility: true,
-                          child: ListView.builder(
+                      Positioned.fill(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 70.0),
+                          child: RawScrollbar(
                             controller: scrollController,
-                            shrinkWrap: true,
-                            itemCount: TimeLineItem.values.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return AnimationConfiguration.staggeredList(
-                                position: index,
-                                delay: const Duration(milliseconds: 200),
-                                duration: const Duration(milliseconds: 2000),
-                                child: SlideAnimation(
-                                  verticalOffset: 500.0,
-                                  child: FadeInAnimation(
-                                    child: ItemTimeLineWork(
-                                      timeLineItem: TimeLineItem.values
-                                          .firstWhere(
-                                              (item) => item.index == index),
-                                      index: index,
+                            mainAxisMargin: 30,
+                            crossAxisMargin: 10,
+                            radius: const Radius.circular(4),
+                            thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+                            thumbVisibility: true,
+                            child: ListView.builder(
+                              controller: scrollController,
+                              shrinkWrap: true,
+                              itemCount: TimeLineItem.values.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  delay: const Duration(milliseconds: 200),
+                                  duration: const Duration(milliseconds: 2000),
+                                  child: SlideAnimation(
+                                    verticalOffset: 500.0,
+                                    child: FadeInAnimation(
+                                      child: ItemTimeLineWork(
+                                        timeLineItem: TimeLineItem.values
+                                            .firstWhere(
+                                                (item) => item.index == index),
+                                        index: index,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),

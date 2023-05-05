@@ -64,18 +64,11 @@ class _PageContactState extends State<PageContact>
                     image: const AssetImage(
                         "assets/images/background_space_cupula_soyus.png"),
                     fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 8 : 0.5,
+                    opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),
                 ),
               ),
-              AnimatedContainer(
-                decoration: BoxDecoration(
-                  color: (controller.expanded)
-                      ? Colors.deepPurple.withOpacity(0.2)
-                      : Colors.transparent,
-                ),
-                duration: const Duration(milliseconds: 1500),
-              ),
+            
               Padding(
                 padding: EdgeInsets.only(
                   right: (controller.expanded) ? 0 : 325,
@@ -90,7 +83,7 @@ class _PageContactState extends State<PageContact>
                   child: Stack(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(25.0),
+                        padding: const EdgeInsets.only(bottom:25.0),
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: Text(
@@ -99,8 +92,8 @@ class _PageContactState extends State<PageContact>
                                 shadows: [
                                   Shadow(color: Colors.black, blurRadius: 5)
                                 ],
-                                color: Colors.white,
-                                fontSize: 35,
+                                color: Colors.greenAccent,
+                                fontSize: 40,
                                 fontFamily: "UbuntuMono",
                                 fontWeight: FontWeight.w600),
                             textAlign: TextAlign.center,
