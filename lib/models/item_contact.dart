@@ -1,4 +1,4 @@
-enum ItemContact { phone, email }
+enum ItemContact { phone, email,github }
 
 
 extension ExtensionItemContact on ItemContact {
@@ -10,14 +10,18 @@ extension ExtensionItemContact on ItemContact {
           return "+54 9 376 512-9412 ";
       case ItemContact.email:
         return "denis@guazuapp.com";
+      case ItemContact.github:
+        return "https://github.com/bueltan";
     }
   }
       String get icon {
     switch (this) {
       case ItemContact.phone:
-          return "/icons/phone.svg";
+          return "/assets/icons/phone.svg";
       case ItemContact.email:
-        return "/icons/email.svg";
+        return "/assets/icons/email.svg";
+      case ItemContact.github:
+        return "/assets/icons/github.svg";
     }
   }
 
@@ -27,6 +31,8 @@ extension ExtensionItemContact on ItemContact {
           return "phone";
       case ItemContact.email:
         return "email";
+      case ItemContact.github:
+        return "github";
     }
   }
 

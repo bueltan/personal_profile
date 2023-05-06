@@ -128,7 +128,7 @@ class _CanvasCircleState extends State<CanvasCircle> {
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.close_rounded,
-                                  color: Colors.greenAccent,
+                                  color: ui.Color(0xFF69F0AE),
                                   size: 25,
                                 ),
                                 onPressed: () {
@@ -369,7 +369,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                   atomController.setCurrentItemAtom(ItemAtom.sysadmin);
                 },
                 widgetInCircle: SvgPicture.asset(
-                  "icons/sysadmin_icon.svg",
+                  ItemAtom.sysadmin.resource,
                   width: widget.mainHeight * .06,
                   // ignore: deprecated_member_use
                   color: Colors.greenAccent,
@@ -388,7 +388,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                   atomController.setCurrentItemAtom(ItemAtom.softskills);
                 },
                 widgetInCircle: SvgPicture.asset(
-                  "icons/soft_skills_icon.svg",
+                  ItemAtom.softskills.resource,
                   width: widget.mainHeight * .06,
                   // ignore: deprecated_member_use
                   color: Colors.greenAccent,
@@ -413,7 +413,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                   atomController.setCurrentItemAtom(ItemAtom.programming);
                 },
                 widgetInCircle: SvgPicture.asset(
-                  "icons/programming_icon.svg",
+                  ItemAtom.programming.resource,
                   width: widget.mainHeight * .06,
                   // ignore: deprecated_member_use
                   color: Colors.greenAccent,
@@ -431,7 +431,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                   atomController.setCurrentItemAtom(ItemAtom.electronic);
                 },
                 widgetInCircle: SvgPicture.asset(
-                  "icons/electronics_icon.svg",
+                  ItemAtom.electronic.resource,
                   width: widget.mainHeight * .06,
                   // ignore: deprecated_member_use
                   color: Colors.greenAccent,

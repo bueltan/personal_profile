@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class PageStateController extends GetxController  {
   bool expanded = false;
   final AtomController atomController = Get.find<AtomController>();
-
+  
   PageController pageController = PageController(initialPage: 0);
   int currentPageIndex = 0;
 

@@ -67,7 +67,7 @@ with TickerProviderStateMixin {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
-                        "images/soft_skills.svg",
+                        "/assets/images/soft_skills.svg",
                         // ignore: deprecated_member_use
                         color: Colors.greenAccent.withOpacity(0.5),
                       ),

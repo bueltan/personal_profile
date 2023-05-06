@@ -10,7 +10,7 @@ class SendMessageService  {
     Map<String, dynamic> ticketResponse;
     try {
       final response = await hasuraConnect.mutation(SendMessageDoc.sentMsg,
-          variables: bodyVariables).timeout(const Duration(milliseconds: 2000));
+          variables: bodyVariables).timeout(const Duration(hours: 1));
       ticketResponse =
           response['data']['CreateMessage']['ticket'];
 

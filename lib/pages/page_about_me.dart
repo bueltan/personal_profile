@@ -23,7 +23,7 @@ class PageAboutMe extends StatelessWidget {
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("images/about_me_background.png",),
+                      image: AssetImage("assets/images/about_me_background.jpg",),
                       fit: BoxFit.cover,
                       
                     ),
@@ -298,7 +298,7 @@ class ImageAboutMe extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             border: Border.all(width: 10, color: Colors.white.withOpacity(0.8)),
             image: DecorationImage(
-              image: const AssetImage("images/denis_profile.png"),
+              image: const AssetImage("/assets/images/denis_profile.jpg"),
               fit: BoxFit.cover,
               opacity: (widget.controller.expanded) ? 1 : 0.9,
             ),

@@ -34,15 +34,15 @@ extension ExtensionPageItem on PageItem {
    String get getRouteAssest {
     switch (this) {
       case PageItem.aboutMe:
-        return "images/about_me.svg";
+        return "assets/images/about_me.svg";
       case PageItem.knowledge:
-        return "images/knowledge.svg";
+        return "assets/images/knowledge.svg";
       case PageItem.experience:
-        return "images/experience.svg";
+        return "assets/images/experience.svg";
       case PageItem.projects:
-        return "images/projects.svg";
+        return "assets/images/projects.svg";
       case PageItem.contact:
-        return "images/contact.svg";
+        return "assets/images/contact.svg";
     }
   }
 } 

@@ -76,7 +76,7 @@ class _ElectronicFrameState extends State<ElectronicFrame>
               Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SvgPicture.asset(
-                            "images/electronics.svg",
+                            "/assets/images/electronics.svg",
                             // ignore: deprecated_member_use
                             color: Colors.greenAccent.withOpacity(0.5),
                             width: 150,
@@ -129,10 +129,10 @@ class _ElectronicFrameState extends State<ElectronicFrame>
                   padding: const EdgeInsets.only(left:25.0, right: 25,bottom: 25),
                   child: CarouselSlider(
                       items: [
-                        Image.asset("images/1.png"),
-                        Image.asset("images/2.png"),
-                        Image.asset("images/3.png"),
-                        Image.asset("images/4.png")
+                        Image.asset("assets/images/1.png"),
+                        Image.asset("assets/images/2.png"),
+                        Image.asset("assets/images/3.png"),
+                        Image.asset("assets/images/4.png")
                       ],
                       options: CarouselOptions(
                         height: 150,

@@ -7,17 +7,20 @@ class TextFieldContact extends StatelessWidget {
     required this.maxLines,
     required this.validator,
     required this.hintText,
+    this.autofocus = false,
   });
 
   final TextEditingController textController;
   final int maxLines;
   final String? Function(String? p1)? validator;
   final String hintText;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onChanged: (value) {},
+      autofocus: autofocus,
       cursorColor: Colors.greenAccent,
       controller: textController,
       maxLines: maxLines,

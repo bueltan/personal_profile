@@ -251,6 +251,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 ),
                               ),
                             ),
+                            ChangeLocate()
                           ],
                         );
                       }),
@@ -260,6 +261,66 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ChangeLocate extends StatefulWidget {
+  const ChangeLocate({
+    super.key,
+  });
+
+  @override
+  State<ChangeLocate> createState() => _ChangeLocateState();
+}
+
+class _ChangeLocateState extends State<ChangeLocate> {
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+              onPressed: () {
+                 Get.updateLocale(
+                      const Locale('en', 'US'));
+                setState(() {
+                  
+                });
+              },
+              child: Text(
+                "English",
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: "UbuntuMono",
+                    color: (Get.locale ==
+                            const Locale('en', 'US'))
+                        ? Colors.greenAccent
+                        : Colors.white),
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+              onPressed: () {
+                Get.updateLocale(const Locale('es', 'AR'));
+
+                setState(() {
+                  
+                });
+
+              },
+              child: Text("Español",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: "UbuntuMono",
+                      color: (Get.locale ==
+                              const Locale('es', 'AR'))
+                          ? Colors.greenAccent
+                          : Colors.white))),
+        ),
+      ],
     );
   }
 }

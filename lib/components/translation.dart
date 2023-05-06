@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class Dictionary extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
-        'en': {
+        'en_US': {
         "about_me": "I am passionate about technology and a self-taught individual by nature. For over 10 years, "
                     "I have been involved in the world of programming, acquiring knowledge and skills through constant practice and research. I have a keen interest in the field of digital electronics and enjoy understanding how things work.\n\n"
                     "I love staying active and exercising, so swimming and kayaking are some of my favorite activities."
@@ -192,7 +192,7 @@ class Dictionary extends Translations {
           "phone":"Phone",
 
         },
-        'es': {
+        'es_AR': {
           "about_me":
                     "Soy un apasionado de la tecnología y un autodidacta por naturaleza. Desde hace más de 10 años, "
                     "he he estado involucrado en el mundo de la programación, adquiriendo conocimientos y habilidades a través de la práctica y la investigación constante. Me interesa mucho el campo de la electrónica digital y disfruto entendiendo cómo funcionan las cosas.\n\n"
@@ -385,7 +385,7 @@ class Dictionary extends Translations {
           "email_format_incorrect": "La dirección de correo electrónico tiene un formato incorrecto.",
           "message_sent_fail": "Se produjo un error al enviar el mensaje.",
           "message_sent_success": "El mensaje fue enviado con éxito.",
-          "name":"Nombre *",
+          "name":"* Nombre",
           "phone":"Teléfono",
         }
       };

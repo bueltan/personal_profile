@@ -5,7 +5,6 @@ import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/models/item_contact.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
@@ -37,7 +36,7 @@ class _PageContactState extends State<PageContact>
     isDisposed = false;
     scrollController = ScrollController();
     animationControllerProjects = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 2000));
+        vsync: this, duration: const Duration(milliseconds: 800));
 
     animationControllerText = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500));
@@ -72,7 +71,7 @@ class _PageContactState extends State<PageContact>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "assets/images/background_space_cupula_soyus.png"),
+                        "assets/images/background_space_cupula_soyus.jpg"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),
@@ -169,8 +168,8 @@ class Content extends StatelessWidget {
                               bottom: 25),
                           child: Container(
                             constraints: BoxConstraints(
-                                maxWidth: (vertical) ? 300 : 800,
-                                maxHeight: (vertical) ? 400 : 300),
+                                maxWidth: (vertical) ? 500 : 800,
+                                maxHeight: (vertical) ? 500 : 500),
                             child: Center(
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -245,137 +244,183 @@ class _PanelCreateMessageState extends State<PanelCreateMessage> {
       autovalidateMode: autoValidate
           ? AutovalidateMode.onUserInteraction
           : AutovalidateMode.disabled,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0, top: 25, bottom: 25),
-            child: Text(
-              "contact_to_me".tr,
-              style: const TextStyle(
-                  fontSize: 26.0,
-                  fontFamily: "UbuntuMono",
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white),
-              textAlign: TextAlign.center,
+      child: FocusTraversalGroup(
+        policy: OrderedTraversalPolicy(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 25.0, top: 25, bottom: 25),
+              child: Text(
+                "contact_to_me".tr,
+                style: const TextStyle(
+                    fontSize: 26.0,
+                    fontFamily: "UbuntuMono",
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-            child: Wrap(
-              spacing: 25,
-              runSpacing: 25,
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 25),
-                      child: Container(
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
+              child: Wrap(
+                spacing: 25,
+                runSpacing: 25,
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 25),
+                        child: Container(
+                            constraints: const BoxConstraints(maxWidth: 400),
+                            child: TextFieldContact(
+                                textController: nameTextController,
+                                maxLines: 1,
+                                autofocus: true,
+                                validator: (v) {
+                                  if (v == null || v.isEmpty) {
+                                    return 'required_field'.tr;
+                                  }
+                                },
+                                hintText: "name".tr)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 25),
+                        child: Container(
                           constraints: const BoxConstraints(maxWidth: 400),
                           child: TextFieldContact(
-                              textController: nameTextController,
+                              textController: emailTextController,
                               maxLines: 1,
-                              validator: (v) {
-                                if (v == null || v.isEmpty) {
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
                                   return 'required_field'.tr;
                                 }
-                              },
-                              hintText: "name".tr)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 25),
-                      child: Container(
-                        constraints: const BoxConstraints(maxWidth: 400),
-                        child: TextFieldContact(
-                            textController: emailTextController,
-                            maxLines: 1,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'required_field'.tr;
-                              }
-                              if (emailIsValid(value) == false) {
-                                return 'email_format_incorrect'.tr;
-                              }
-                              return null;
-                            },
-                            hintText: "Email *"),
-                      ),
-                    ),
-                    Container(
-                        constraints: const BoxConstraints(maxWidth: 400),
-                        child: TextFieldContact(
-                            textController: phoneTextController,
-                            maxLines: 1,
-                            validator: (v) {},
-                            hintText: "phone".tr)),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Container(
-                      constraints:
-                          const BoxConstraints(maxWidth: 400, maxHeight: 400),
-                      child: TextFieldContact(
-                          textController: messageTextController,
-                          maxLines: 50,
-                          validator:(v) {
-                                if (v == null || v.isEmpty) {
-                                  return 'required_message'.tr;
+                                if (emailIsValid(value) == false) {
+                                  return 'email_format_incorrect'.tr;
                                 }
+                                return null;
                               },
-                          hintText: ""),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(25),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.greenAccent.withOpacity(0.7),
-                          backgroundColor: Colors.deepPurpleAccent
-                              .withOpacity(0.4), // Background Color
+                              hintText: "* Email"),
                         ),
-                        onPressed: () {
-                          sendMessage();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "send".tr,
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(
-                                shadows: [
-                                  Shadow(color: Colors.black, blurRadius: 5)
-                                ],
-                                fontSize: 22,
-                                fontFamily: "UbuntuMono",
-                                color: Colors.greenAccent,
-                                fontWeight: FontWeight.w600),
+                      ),
+                      Container(
+                          constraints: const BoxConstraints(maxWidth: 400),
+                          child: TextFieldContact(
+                              textController: phoneTextController,
+                              maxLines: 1,
+                              validator: (v) {},
+                              hintText: "phone".tr)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        constraints:
+                            const BoxConstraints(maxWidth: 400, maxHeight: 400),
+                        child: TextFieldContact(
+                            textController: messageTextController,
+                            maxLines: 50,
+                            validator: (v) {
+                              if (v == null || v.isEmpty) {
+                                return 'required_message'.tr;
+                              }
+                            },
+                            hintText: ""),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.greenAccent.withOpacity(0.7),
+                            backgroundColor: Colors.deepPurpleAccent
+                                .withOpacity(0.4), // Background Color
+                          ),
+                          onPressed: () {
+                            sendMessage();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "send".tr,
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                  shadows: [
+                                    Shadow(color: Colors.black, blurRadius: 5)
+                                  ],
+                                  fontSize: 22,
+                                  fontFamily: "UbuntuMono",
+                                  color: Colors.greenAccent,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  sendMessage()  {
+  sendMessage() async {
     if (keyForm.currentState?.validate() == true) {
       String name = nameTextController.text;
       String email = emailTextController.text;
       String phone = phoneTextController.text;
       String message = messageTextController.text;
-      
-      await SentMessageController().sendMessage("hola !!! ");
+      String fullMessage = "name: $name\n\n"
+          "email: $email\n\n"
+          "phone:$phone\n\n"
+          "$message";
+
+      bool result = await SentMessageController().sendMessage(fullMessage);
+      if (result == false) {
+        _showToast("message_sent_fail".tr, error: true);
+
+      } else {
+        messageTextController.clear();
+        _showToast("message_sent_success".tr);
+          setState(() {
+        autoValidate = false;
+      });
+      }
     } else {
       setState(() {
         autoValidate = true;
       });
     }
+  }
+
+  _showToast(String text, {bool error = false}) {
+    var snackBar = SnackBar(
+      backgroundColor: Colors.black.withOpacity(0.5),
+      duration: const Duration(seconds: 5),
+      content: AnimatedTextKit(
+        isRepeatingAnimation: false,
+        animatedTexts: [
+          TypewriterAnimatedText(
+            text,
+            textAlign: TextAlign.start,
+            textStyle: TextStyle(
+                fontSize: 22.0,
+                fontFamily: "UbuntuMono",
+                color: (error) ? Colors.redAccent : Colors.greenAccent),
+            curve: Curves.decelerate,
+            speed: const Duration(milliseconds: 20),
+          ),
+        ],
+        totalRepeatCount: 1,
+        pause: const Duration(milliseconds: 20),
+        displayFullTextOnTap: false,
+        stopPauseOnTap: false,
+      ),
+    );
+    // Step 3
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
 
@@ -394,60 +439,64 @@ class CardDataContact extends StatefulWidget {
 class _CardDataContactState extends State<CardDataContact> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Material(
-          color: Colors.transparent,
-          shape: const CircleBorder(),
-          child: InkWell(
-            customBorder: const CircleBorder(),
-            radius: 100,
-            splashColor: Colors.deepPurpleAccent.withOpacity(0.5),
-            onTap: () {
-              Clipboard.setData(ClipboardData(text: widget.itemContact.value));
-              _showToast(widget.itemContact.value);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(25),
-              // ignore: deprecated_member_use
-              child: SvgPicture.asset(
-                widget.itemContact.icon,
-                width: 80,
-                color: Colors.deepPurpleAccent,
+    return Padding(
+      padding: const EdgeInsets.only(left:16, right: 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Material(
+            color: Colors.transparent,
+            shape: const CircleBorder(),
+            child: InkWell(
+              customBorder: const CircleBorder(),
+              focusColor: Colors.greenAccent.withOpacity(0.4),
+              radius: 100,
+              splashColor: Colors.deepPurpleAccent.withOpacity(0.5),
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: widget.itemContact.value));
+                _showToast(widget.itemContact.value);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                // ignore: deprecated_member_use
+                child: SvgPicture.asset(
+                  widget.itemContact.icon,
+                  width: 80,
+                  color: Colors.deepPurpleAccent,
+                ),
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: AnimatedTextKit(
-            isRepeatingAnimation: false,
-            animatedTexts: [
-              TypewriterAnimatedText(
-                widget.itemContact.value,
-                textAlign: TextAlign.start,
-                textStyle: const TextStyle(
-                    fontSize: 22.0,
-                    fontFamily: "UbuntuMono",
-                    color: Colors.greenAccent),
-                curve: Curves.decelerate,
-                speed: const Duration(milliseconds: 180),
-              ),
-            ],
-            totalRepeatCount: 1,
-            pause: const Duration(milliseconds: 190),
-            displayFullTextOnTap: false,
-            stopPauseOnTap: false,
-            onTap: () {
-              Clipboard.setData(ClipboardData(text: widget.itemContact.value));
-              _showToast(widget.itemContact.value);
-            },
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: AnimatedTextKit(
+              isRepeatingAnimation: false,
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  widget.itemContact.value,
+                  textAlign: TextAlign.start,
+                  textStyle: const TextStyle(
+                      fontSize: 22.0,
+                      fontFamily: "UbuntuMono",
+                      color: Colors.greenAccent),
+                  curve: Curves.decelerate,
+                  speed: const Duration(milliseconds: 180),
+                ),
+              ],
+              totalRepeatCount: 1,
+              pause: const Duration(milliseconds: 190),
+              displayFullTextOnTap: false,
+              stopPauseOnTap: false,
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: widget.itemContact.value));
+                _showToast(widget.itemContact.value);
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

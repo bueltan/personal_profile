@@ -22,19 +22,23 @@ class MyApp extends StatelessWidget {
     Get.put(ChartControl());
     Get.put(CaruselProjectsControl());
 
-    return GetMaterialApp(
-      translations: Dictionary(),
-      locale: Get.deviceLocale,
-      fallbackLocale: const Locale('es', 'AR'),
-      title: 'Denis Germán Giménez',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home:  const AppDrawer(
-        child: Home(),
-      ),
-      
+    return Builder(
+      builder: (context) {
+        return GetMaterialApp(
+          translations: Dictionary(),
+          locale: Get.deviceLocale,
+          fallbackLocale: const Locale('en', 'US'),
+          title: 'Denis Germán Giménez',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home:  const AppDrawer(
+            child: Home(),
+          ),
+          
+        );
+      }
     );
   }
 }

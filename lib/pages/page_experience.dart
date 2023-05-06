@@ -29,7 +29,7 @@ class _PageExperienceState extends State<PageExperience>
     isDisposed = false;
     scrollController = ScrollController();
     animationControllerBtn = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 2000));
+        vsync: this, duration: const Duration(milliseconds: 1000));
 
     animationControllerText = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500));
@@ -77,7 +77,7 @@ class _PageExperienceState extends State<PageExperience>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "assets/images/background_nasa_control.png"),
+                        "assets/images/background_nasa_control.jpg"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.4 : 0.5,
                   ),
