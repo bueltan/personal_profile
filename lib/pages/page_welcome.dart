@@ -85,14 +85,7 @@ class _PageWelcomeState extends State<PageWelcome>
                     ),
                   );
                 }),
-                // AnimatedContainer(
-                //   decoration: BoxDecoration(
-                //     color: (controller.expanded)
-                //         ? Colors.black.withOpacity(0.5)
-                //         : Colors.transparent,
-                //   ),
-                //   duration: const Duration(milliseconds: 1500),
-                // ),
+
                 SizedBox(
                   width: (controller.expanded)
                       ? constrains.maxWidth
@@ -103,7 +96,7 @@ class _PageWelcomeState extends State<PageWelcome>
                       child: SizedBox(
                         height: toVerticalPosition?600:200,
                         child: Padding(
-                          padding: const EdgeInsets.only(right:25.0),
+                          padding:  EdgeInsets.only(right:25.0, bottom: (toVerticalPosition)?25:0),
                           child: ListItems(isVertical: toVerticalPosition,),
                         ),
                       ),
@@ -148,20 +141,9 @@ class ListItems extends StatelessWidget {
     super.key, required this.isVertical,
   });
 
-  // bool isVertical = false;
   @override
   Widget build(BuildContext context) {
-    //  SchedulerBinding.instance.addPostFrameCallback((_) {
-    //       if ((toVerticalPosition ) && isVertical == false){
-    //         setState(() {
-    //           isVertical = true;
-    //         });
-    //       }else if(screenWidth>1000 && isVertical == true){
-    //          setState(() {
-    //           isVertical = false;
-    //         });
-    //       }
-    //     });
+
     return ListView.builder(
       
        physics: const ClampingScrollPhysics(),

@@ -88,10 +88,10 @@ class _CanvasCircleState extends State<CanvasCircle> {
                   right: (!atomController.expanded &&
                           atomController.currentItemAtom != ItemAtom.none)
                       ? 365
-                      : 25),
+                      : (atomController.currentItemAtom == ItemAtom.none)?0:25),
               child: LayoutBuilder(builder: (context, c) {
                 double factor =
-                    (width > 1000 || !isWebMobile) ? width * 0.42 : width * 0.85;
+                    (width < 1000 || isWebMobile) ?width * 0.85: width * 0.42  ;
 
                 return AnimatedContainer(
                   alignment: Alignment.center,

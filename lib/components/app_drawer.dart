@@ -112,41 +112,49 @@ class AppDrawerState extends State<AppDrawer>
       onHorizontalDragStart: _onDragStart,
       onHorizontalDragUpdate: _onDragUpdate,
       onHorizontalDragEnd: _onDragEnd,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+      child: LayoutBuilder(builder: (context, constraints) {
+        final isWebMobile = kIsWeb &&
+            (defaultTargetPlatform == TargetPlatform.iOS ||
+                defaultTargetPlatform == TargetPlatform.android);
 
-            if (pageStateCtrl.expanded ==false && (constraints.maxWidth < 1000 || isWebMobile) ){
-              setState(() {
-                close();
-              });
-            }else if (pageStateCtrl.expanded ==true && constraints.maxWidth > 1500 && !isWebMobile){
-              setState(() {
-                open();
-              });
-            }
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          if (pageStateCtrl.expanded == false &&
+              (constraints.maxWidth < 1000 || isWebMobile)) {
+            setState(() {
+              close();
+            });
+          } else if (pageStateCtrl.expanded == true &&
+              constraints.maxWidth > 1500 &&
+              !isWebMobile) {
+            setState(() {
+              open();
+            });
+          }
         });
-          return AnimatedBuilder(
-            animation: _controller,
-            builder: (BuildContext context, _) {
-              double animationVal = _controller.value;
-              double translateVal = animationVal * maxSlide;
-              // double scaleVal = 1 - (animationVal * 0.1);
-              return Stack(
-                children: <Widget>[
-                  const CustomDrawer(),
-                  Transform(
-                      alignment: Alignment.centerLeft,
-                      transform: Matrix4.identity()..translate(translateVal),
-                      // ..scale(scaleVal, 1),
-                      child: widget.child),
-                ],
+        return GetBuilder<PageStateController>(
+            id: "PageState",
+            builder: (controller) {
+              return AnimatedBuilder(
+                animation: _controller,
+                builder: (BuildContext context, _) {
+                  double animationVal = _controller.value;
+                  double translateVal = animationVal * maxSlide;
+                  // double scaleVal = 1 - (animationVal * 0.1);
+                  return Stack(
+                    children: <Widget>[
+                      const CustomDrawer(),
+                      Transform(
+                          alignment: Alignment.centerLeft,
+                          transform: Matrix4.identity()
+                            ..translate(translateVal),
+                          // ..scale(scaleVal, 1),
+                          child: widget.child),
+                    ],
+                  );
+                },
               );
-            },
-          );
-        }
-      ),
+            });
+      }),
     );
   }
 }
@@ -205,47 +213,47 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     return AnimatedOpacity(
                       duration: const Duration(milliseconds: 500),
                       opacity: (pageStateCtrl.expanded) ? 0 : 1,
-                      child: Builder(
-                        builder: (context) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              const Header(),
-                              Expanded(
-                                child: AnimationLimiter(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 100.0),
-                                    child: ListView.builder(
-                                      itemCount: PageItem.values.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return AnimationConfiguration.staggeredList(
-                                          position: index,
-                                          delay: const Duration(milliseconds: 200),
-                                          duration:
-                                              const Duration(milliseconds: 2000),
-                                          child: SlideAnimation(
-                                            verticalOffset: 150.0,
-                                            child: FadeInAnimation(
-                                              child: ItemTime(
-                                                pageItem: PageItem.values
-                                                    .firstWhere((item) =>
-                                                        item.index == index),
-                                                index: index,
-                                              ),
+                      child: Builder(builder: (context) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            const Header(),
+                            Expanded(
+                              child: AnimationLimiter(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 100.0),
+                                  child: ListView.builder(
+                                    itemCount: PageItem.values.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return AnimationConfiguration
+                                          .staggeredList(
+                                        position: index,
+                                        delay:
+                                            const Duration(milliseconds: 200),
+                                        duration:
+                                            const Duration(milliseconds: 2000),
+                                        child: SlideAnimation(
+                                          verticalOffset: 150.0,
+                                          child: FadeInAnimation(
+                                            child: ItemTime(
+                                              pageItem: PageItem.values
+                                                  .firstWhere((item) =>
+                                                      item.index == index),
+                                              index: index,
                                             ),
                                           ),
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
-                            ],
-                          );
-                        }
-                      ),
+                            ),
+                          ],
+                        );
+                      }),
                     );
                   }),
             ],
@@ -283,6 +291,12 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isWebOnMobile = (kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.iOS ||
+            defaultTargetPlatform == TargetPlatform.android));
+
+    final bool hideDrawer = (isWebOnMobile || screenWidth < 600);
     return Container(
       padding: const EdgeInsets.only(left: 10),
       height: 160,
@@ -290,7 +304,8 @@ class _HeaderState extends State<Header> {
           padding: const EdgeInsets.only(left: 16.0, top: 16),
           child: GestureDetector(
             onTap: () {
-              pageStateCtrl.jumpToPage(animate:false);
+              pageStateCtrl.jumpToPage(animate: false);
+              if (hideDrawer) AppDrawer.of(context).close();
             },
             child: Visibility(
               visible: showMainWidget,
@@ -430,9 +445,18 @@ class _ItemTimeState extends State<ItemTime> {
       child: GetBuilder<PageStateController>(
           id: "pageIndex",
           builder: (controller) {
+            double screenWidth = MediaQuery.of(context).size.width;
+            bool isWebOnMobile = (kIsWeb &&
+                (defaultTargetPlatform == TargetPlatform.iOS ||
+                    defaultTargetPlatform == TargetPlatform.android));
+
+            final bool hideDrawer = (isWebOnMobile || screenWidth < 600);
+
             return InkWell(
               onTap: () {
-                controller.jumpToPage(pageItem: widget.pageItem,animate: false);
+                controller.jumpToPage(
+                    pageItem: widget.pageItem, animate: false);
+                if (hideDrawer) AppDrawer.of(context).close();
               },
               child: SizedBox(
                 width: 325,

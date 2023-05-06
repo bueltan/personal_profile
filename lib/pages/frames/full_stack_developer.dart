@@ -72,34 +72,31 @@ class _FullStackDeveloperFrameState extends State<FullStackDeveloperFrame>
               ),
               Wrap(
                 children: [
-                  SizedBox(
-                    width: 290,
-                    height: 200,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 17),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: ChartFullStack.values.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return AnimationConfiguration.staggeredList(
-                            position: index,
-                            delay: const Duration(milliseconds: 300),
-                            duration: const Duration(milliseconds: 2500),
-                            child: SlideAnimation(
-                              horizontalOffset: 250.0,
-                              child: FadeInAnimation(
-                                  child: ItemToGraph(
-                                option: ChartFullStack.values[index],
-                              )),
-                            ),
-                          );
-                        },
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 17),
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: ChartFullStack.values.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          delay: const Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 2500),
+                          child: SlideAnimation(
+                            horizontalOffset: 250.0,
+                            child: FadeInAnimation(
+                                child: ItemToGraph(
+                              option: ChartFullStack.values[index],
+                            )),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(left: 0, right: 25, top: 16),
-                    child: RadarChartFullStack(),
+                    padding: EdgeInsets.only(left: 25, right: 25, top: 16),
+                    child: Center(child: RadarChartFullStack()),
                   ),
                 ],
               ),

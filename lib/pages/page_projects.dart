@@ -112,7 +112,7 @@ class _PageProjectsState extends State<PageProjects>
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                  left: 25.0, right: 25, bottom: 25),
+                                  left: 0.0, right: 0, bottom: 25),
                               child: CaruselProjects(
                                 carouselController: carouselController,
                                 scrollController: scrollController,
@@ -185,7 +185,7 @@ class _CarouselProjectsState extends State<CarouselProjects> {
       builder: (context, constraints) {
         double viewFract = 0.4;
         if (constraints.maxWidth < 700 || isWebMobile){
-          viewFract = 0.8;
+          viewFract = 1;
         }
         
         return CarouselSlider(

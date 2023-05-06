@@ -73,10 +73,10 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
                 children: [
                   SizedBox(
                     width: 290,
-                    height: 300,
                     child: Padding(
                       padding: const EdgeInsets.only(left:17),
                       child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: ChartProgOptions.values.length,
                         itemBuilder: (BuildContext context, int index) {

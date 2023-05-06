@@ -94,7 +94,7 @@ class _PageExperienceState extends State<PageExperience>
                       color: Colors.black.withOpacity(0.2),
                       borderRadius:
                           const BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16))),
-                  padding: const EdgeInsets.all(25),
+                  padding: const EdgeInsets.only(left:0, top: 25, bottom: 25),
                   child: Stack(
                     children: [
                       Padding(

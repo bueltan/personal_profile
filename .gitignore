@@ -11,6 +11,7 @@
 migrate_working_dir/
 
 # IntelliJ related
+*.key
 *.iml
 *.ipr
 *.iws
@@ -42,3 +43,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+*.key

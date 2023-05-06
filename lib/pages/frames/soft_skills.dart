@@ -26,7 +26,6 @@ with TickerProviderStateMixin {
     scrollController = ScrollController();
     animationFrame =
         CurvedAnimation(parent: animationCrltFrame, curve: Curves.easeIn);
-
   }
 
   @override

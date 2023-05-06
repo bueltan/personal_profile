@@ -122,19 +122,25 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
                       : constrains.maxWidth - 365,
                   child: Wrap(
                     children: [
-                      ImageAboutMe(
-                          animationControllerImage: animationControllerImage,
-                          widget: widget),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 25.0),
+                        child: ImageAboutMe(
+                            animationControllerImage: animationControllerImage,
+                            widget: widget),
+                      ),
                       PersonalInfo(controller: widget.controller)
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                  width: (widget.controller.expanded)
-                      ? constrains.maxWidth
-                      : constrains.maxWidth - 365,
-                  child: const TextAboutMe()),
+              Padding(
+                padding: const EdgeInsets.only(top:25),
+                child: SizedBox(
+                    width: (widget.controller.expanded)
+                        ? constrains.maxWidth
+                        : constrains.maxWidth - 365,
+                    child: const TextAboutMe()),
+              ),
             ],
           ),
         ),
@@ -170,6 +176,7 @@ class PersonalInfo extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 650),
         child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: listInfoItems.length,
           itemBuilder: (BuildContext context, int index) {
@@ -320,18 +327,15 @@ class TitleAboutMe extends StatelessWidget {
             const EdgeInsets.only(top: 25.0, bottom: 100, left: 25, right: 25),
         child: FadeTransition(
           opacity: animationTitleAboutMe,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Text(
-              'about_me_title'.tr,
-              style: const TextStyle(
-                  color: Colors.greenAccent,
-                  shadows: [Shadow(color: Colors.black,blurRadius: 5)],
-                  fontSize: 40,
-                  fontFamily: "UbuntuMono",
-                  fontWeight: FontWeight.w600),
-              textAlign: TextAlign.center,
-            ),
+          child: Text(
+            'about_me_title'.tr,
+            style: const TextStyle(
+                color: Colors.greenAccent,
+                shadows: [Shadow(color: Colors.black,blurRadius: 5)],
+                fontSize: 40,
+                fontFamily: "UbuntuMono",
+                fontWeight: FontWeight.w600),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

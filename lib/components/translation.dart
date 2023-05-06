@@ -180,9 +180,17 @@ class Dictionary extends Translations {
           "show_more": "Show more",
           "show_less": "Show less",
            // Contact Page
-          "sent":"Enviar",
+          "send":"SEND",
           "clipboard":"Copied to clipboard",
-          "contact_to_me":"Get in touch!"
+          "contact_to_me":"Get in touch!",
+          "required_field": "This field is required",
+          "required_message": "Your message is required!",
+          "email_format_incorrect": "Email address is incorrect format",
+          "message_sent_fail": "An error occurred while sending the message.",
+          "message_sent_success": "The message was sent successfully",
+          "name":"Name",
+          "phone":"Phone",
+
         },
         'es': {
           "about_me":
@@ -369,9 +377,16 @@ class Dictionary extends Translations {
           "show_more": "Mostrar más",
           "show_less": "Mostrar menos",
           // Contact Page
-          "sent":"Enviar",
+          "send":"ENVIAR",
           "clipboard":"Copiado al portapales",
-          "contact_to_me":"¡Contáctame!"
+          "contact_to_me":"¡Contáctame!",
+          "required_field": "Este campo es necesario.",
+          "required_message": "Tú mensaje es requerido!",
+          "email_format_incorrect": "La dirección de correo electrónico tiene un formato incorrecto.",
+          "message_sent_fail": "Se produjo un error al enviar el mensaje.",
+          "message_sent_success": "El mensaje fue enviado con éxito.",
+          "name":"Nombre *",
+          "phone":"Teléfono",
         }
       };
 }
