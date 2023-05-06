@@ -70,7 +70,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "images/background_welcome.jpg",
+                                    "/assets/images/background_welcome.jpg",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -82,7 +82,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "images/about_me_background.jpg",
+                                    "/assets/images/about_me_background.jpg",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -94,7 +94,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "images/background_apollo_control.jpg",
+                                    "/assets/images/background_apollo_control.jpg",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -106,7 +106,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "images/background_nasa_control.jpg",
+                                    "/assets/images/background_nasa_control.jpg",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -118,7 +118,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "images/background_space_cupola.jpg",
+                                    "/assets/images/background_space_cupola.jpg",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -130,7 +130,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "images/background_space_cupula_soyus.jpg",
+                                    "/assets/images/background_space_cupula_soyus.jpg",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
