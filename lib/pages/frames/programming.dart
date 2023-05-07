@@ -58,7 +58,7 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(25.0),
+                padding: const EdgeInsets.only(left:25.0, right: 25),
                 child: Text(
                   'programming'.tr,
                   style: const TextStyle(
@@ -74,7 +74,7 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
                   SizedBox(
                     width: 290,
                     child: Padding(
-                      padding: const EdgeInsets.only(left:17),
+                      padding: const EdgeInsets.only(left:17, top:17),
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

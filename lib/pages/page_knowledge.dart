@@ -90,9 +90,12 @@ class _PageKnowledgeState extends State<PageKnowledge>
                   builder: (controllerAtom) {
                     return CircularPanel(
                         contentWidget: SizedBox(
-                            child: ContentSwich(
-                      atomController: controllerAtom,
-                    )));
+                            child: Padding(
+                              padding: const EdgeInsets.only(top:25, bottom: 25),
+                              child: ContentSwich(
+                                                  atomController: controllerAtom,
+                                                ),
+                            )));
                   }),
               GetBuilder<AtomController>(
                   id: "AtomController",

@@ -59,7 +59,7 @@ class _FullStackDeveloperFrameState extends State<FullStackDeveloperFrame>
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(25.0),
+                padding: const EdgeInsets.only(left:25.0, right: 25),
                 child: Text(
                   'full_stack_developer'.tr,
                   style: const TextStyle(
@@ -73,7 +73,7 @@ class _FullStackDeveloperFrameState extends State<FullStackDeveloperFrame>
               Wrap(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 17),
+                    padding: const EdgeInsets.only(left: 17, top: 17),
                     child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

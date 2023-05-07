@@ -62,7 +62,7 @@ class _ElectronicFrameState extends State<ElectronicFrame>
           child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.only(left:25.0, right: 25),
               child: Text(
                 'electronic'.tr,
                 style: const TextStyle(

@@ -75,7 +75,10 @@ class AppDrawerState extends State<AppDrawer>
   }
 
   void _onDragUpdate(DragUpdateDetails updateDetails) {
-    if (shouldDrag == false) {
+    final isWebMobile = kIsWeb &&
+            (defaultTargetPlatform == TargetPlatform.iOS ||
+                defaultTargetPlatform == TargetPlatform.android);
+    if (shouldDrag == false || isWebMobile ) {
       return;
     }
     double delta = updateDetails.primaryDelta! / maxSlide;

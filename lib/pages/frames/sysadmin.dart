@@ -53,7 +53,7 @@ with TickerProviderStateMixin {
           child: Column(
             children: [
               Padding(
-                  padding: const EdgeInsets.all(25.0),
+                padding: const EdgeInsets.only(left:25.0, right: 25),
                   child: Text(
                     'sysadmin'.tr,
                     style: const TextStyle(
