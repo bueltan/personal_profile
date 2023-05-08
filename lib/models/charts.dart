@@ -131,7 +131,7 @@ extension LanguagesExtension on ChartProgLanguages {
       case ChartProgLanguages.dart:
         return 'Dart';
       case ChartProgLanguages.c:
-        return 'C';
+        return 'C++';
       case ChartProgLanguages.rust:
         return 'Rust';
       case ChartProgLanguages.php:

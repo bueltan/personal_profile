@@ -57,6 +57,7 @@ class _FullStackDeveloperFrameState extends State<FullStackDeveloperFrame>
           controller: scrollController,
           scrollDirection: Axis.vertical,
           child: Column(
+            
             children: [
               Padding(
                 padding: const EdgeInsets.only(left:25.0, right: 25),
@@ -71,27 +72,31 @@ class _FullStackDeveloperFrameState extends State<FullStackDeveloperFrame>
                 ),
               ),
               Wrap(
+                alignment: WrapAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 17, top: 17),
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: ChartFullStack.values.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return AnimationConfiguration.staggeredList(
-                          position: index,
-                          delay: const Duration(milliseconds: 300),
-                          duration: const Duration(milliseconds: 2500),
-                          child: SlideAnimation(
-                            horizontalOffset: 250.0,
-                            child: FadeInAnimation(
-                                child: ItemToGraph(
-                              option: ChartFullStack.values[index],
-                            )),
-                          ),
-                        );
-                      },
+                    padding: const EdgeInsets.only(left: 17, top: 17, right: 17),
+                    child: SizedBox(
+                      width: 290,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: ChartFullStack.values.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            delay: const Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 2500),
+                            child: SlideAnimation(
+                              verticalOffset: 250.0,
+                              child: FadeInAnimation(
+                                  child: ItemToGraph(
+                                option: ChartFullStack.values[index],
+                              )),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   const Padding(
@@ -224,18 +229,18 @@ class ItemToGraph extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 290,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.greenAccent.withOpacity(0.7),
-                backgroundColor:
-                    Colors.deepPurpleAccent.withOpacity(0.4), // Background Color
-              ),
-              onPressed: () {
-                chartCtrl.setCurrentChartFullStack(option);
-              },
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.greenAccent.withOpacity(0.7),
+              backgroundColor:
+                  Colors.deepPurpleAccent.withOpacity(0.4), // Background Color
+            ),
+            onPressed: () {
+              chartCtrl.setCurrentChartFullStack(option);
+            },
+            child: Center(
               child: Text(
                 option.keyName.tr,
                 textAlign: TextAlign.start,
@@ -256,6 +261,8 @@ class ItemToGraph extends StatelessWidget {
                 child:  Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: IconButton(
+                  splashColor: Colors.deepPurpleAccent.withOpacity(0.5),
+                  splashRadius: 20,
                   onPressed: () {
                     chartCtrl.setChartFullStack();
                   },

@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 enum PageItem {aboutMe, knowledge ,experience, projects, contact}
 
 extension ExtensionPageItem on PageItem {
@@ -34,7 +36,7 @@ extension ExtensionPageItem on PageItem {
    String get getRouteAssest {
     switch (this) {
       case PageItem.aboutMe:
-        return "assets/images/about_me.svg";
+        return (kReleaseMode)?"/images/about_me.svg":"assets/images/about_me.svg";
       case PageItem.knowledge:
         return "assets/images/knowledge.svg";
       case PageItem.experience:
