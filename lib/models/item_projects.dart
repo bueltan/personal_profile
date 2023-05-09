@@ -56,7 +56,7 @@ extension ProjectItemExtension on ProjectItem{
       case ProjectItem.quickCamerea:
         return "assets/images/quick_camera.jpg";
       case ProjectItem.entityApi:
-        return "assets/images/entity_api_white.jpg";
+        return "assets/images/entity_api_white.png";
       case ProjectItem.guazuApp:
         return "assets/images/guazuapp.jpg";
       case ProjectItem.myResume:
