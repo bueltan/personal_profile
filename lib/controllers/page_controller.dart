@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'dart:io' show Platform;
 import 'send_message/sent_messages.dart';
+import 'dart:html' as html;
 
 class PageStateController extends GetxController {
   bool expanded = false;
@@ -35,6 +36,10 @@ class PageStateController extends GetxController {
       print(e);
     }
 
+    html.window.onBeforeUnload.listen((event) async{
+    String message = event.toString();
+    await SentMessageController().sendMessage(message);
+    });
     super.onInit();
   }
 
