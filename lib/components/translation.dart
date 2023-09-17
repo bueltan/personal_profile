@@ -56,7 +56,7 @@ class Dictionary extends Translations {
         "_profession":"Profession: ",
         "_nationality":"Nationality: ",
         "_current_residence":"City of Residence: ",
-        "age":"Age: 32 years.",
+        "age":"32 years.",
         "profession":"Full Stack Developer",
         "nationality":"Argentinian.",
         "current_residence":"Posadas, Misiones, Argentina",
