@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:denis_profile/controllers/projects_controller.dart';
 import 'package:denis_profile/models/item_projects.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class WidgetItemProject extends StatefulWidget {
     required this.scrollController,
   });
 
-  final CarouselController carouselController;
+  final CarouselSliderController carouselController;
   final ProjectItem projectItem;
   final ScrollController scrollController;
 
@@ -43,13 +43,13 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
 
   @override
   Widget build(BuildContext context) {
-    CaruselProjectsControl controller = Get.find<CaruselProjectsControl>();
+    CarouselProjectsControl controller = Get.find<CarouselProjectsControl>();
     return GestureDetector(
         onTap: () {
           widget.carouselController.animateToPage(widget.projectItem.index);
           controller.setAutoPlayOff();
         },
-        child: GetBuilder<CaruselProjectsControl>(
+        child: GetBuilder<CarouselProjectsControl>(
             id: "CaruselProjectsControlIndexChange",
             builder: (context) {
               return Stack(

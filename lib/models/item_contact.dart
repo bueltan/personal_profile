@@ -17,11 +17,11 @@ extension ExtensionItemContact on ItemContact {
       String get icon {
     switch (this) {
       case ItemContact.phone:
-          return "/assets/icons/phone.svg";
+          return "/icons/phone.svg";
       case ItemContact.email:
-        return "/assets/icons/email.svg";
+        return "/icons/email.svg";
       case ItemContact.github:
-        return "/assets/icons/github.svg";
+        return "/icons/github.svg";
     }
   }
 

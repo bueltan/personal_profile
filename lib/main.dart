@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     Get.put(AtomController());
     Get.put(PageStateController());
     Get.put(ChartControl());
-    Get.put(CaruselProjectsControl());
+    Get.put(CarouselProjectsControl());
 
     return Builder(builder: (context) {
       return GetMaterialApp(

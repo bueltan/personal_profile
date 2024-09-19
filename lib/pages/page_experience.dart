@@ -77,7 +77,7 @@ class _PageExperienceState extends State<PageExperience>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "assets/images/background_nasa_control.jpg"),
+                        "images/background_nasa_control.jpg"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.4 : 0.5,
                   ),

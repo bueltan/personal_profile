@@ -52,15 +52,15 @@ extension ProjectItemExtension on ProjectItem{
     switch (this) {
     
       case ProjectItem.cncCad:
-        return "assets/images/cncad.jpeg";
+        return "images/cncad.jpeg";
       case ProjectItem.quickCamerea:
-        return "assets/images/quick_camera.jpg";
+        return "images/quick_camera.jpg";
       case ProjectItem.entityApi:
-        return "assets/images/entity_api_white.png";
+        return "images/entity_api_white.png";
       case ProjectItem.guazuApp:
-        return "assets/images/guazuapp.jpg";
+        return "images/guazuapp.jpg";
       case ProjectItem.myResume:
-        return "assets/images/my_resume.jpg";
+        return "images/my_resume.jpg";
     }
   }
     Map<String,String> get link1 {

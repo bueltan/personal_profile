@@ -26,15 +26,15 @@ extension ItemAtomExtension on ItemAtom{
     
    
       case ItemAtom.programming:
-        return "/assets/icons/programming_icon.svg";
+        return "/icons/programming_icon.svg";
       case ItemAtom.electronic:
-        return "/assets/icons/electronics_icon.svg";
+        return "/icons/electronics_icon.svg";
       case ItemAtom.sysadmin:
-        return "/assets/icons/sysadmin_icon.svg";
+        return "/icons/sysadmin_icon.svg";
       case ItemAtom.softskills:
-        return "/assets/icons/soft_skills_icon.svg";
+        return "/icons/soft_skills_icon.svg";
       case ItemAtom.fullstack:
-        return "/assets/icons/sysadmin_icon.svg";
+        return "/icons/sysadmin_icon.svg";
       case ItemAtom.none:
         return "";
     }

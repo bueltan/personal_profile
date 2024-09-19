@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'dart:html' as html;
 
 
-class CaruselProjectsControl extends GetxController {
+class CarouselProjectsControl extends GetxController {
   bool autoPlay = true;
   ProjectItem currentProjectItem = ProjectItem.cncCad;
 

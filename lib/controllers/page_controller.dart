@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'dart:io' show Platform;
-import 'send_message/sent_messages.dart';
+// import 'send_message/sent_messages.dart';
 import 'dart:html' as html;
 
 class PageStateController extends GetxController {
@@ -31,14 +31,14 @@ class PageStateController extends GetxController {
 
     try {
       String message = "new visitor";
-      await SentMessageController().sendMessage(message);
+     // await SentMessageController().sendMessage(message);
     } catch (e) {
       print(e);
     }
 
     html.window.onBeforeUnload.listen((event) async{
     String message = event.toString();
-    await SentMessageController().sendMessage(message);
+    //await SentMessageController().sendMessage(message);
     });
     super.onInit();
   }
@@ -49,7 +49,7 @@ class PageStateController extends GetxController {
       animate = true}) async {
     try {
       String message = "change page to ${pageItem?.keyName} ";
-      await SentMessageController().sendMessage(message);
+     // await SentMessageController().sendMessage(message);
     } catch (e) {
       print(e);
     }

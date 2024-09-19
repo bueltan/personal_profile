@@ -24,7 +24,7 @@ class _PageProjectsState extends State<PageProjects>
   late Animation<double> animationText;
   late AnimationController animationControllerText;
   late ScrollController scrollController;
-  late CarouselController carouselController;
+  late CarouselSliderController carouselController;
   bool isDisposed = false;
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _PageProjectsState extends State<PageProjects>
 
     animationControllerText = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500));
-    carouselController = CarouselController();
+    carouselController = CarouselSliderController();
     animationProjects = CurvedAnimation(
         parent: animationControllerProjects, curve: Curves.easeIn);
 
@@ -67,7 +67,7 @@ class _PageProjectsState extends State<PageProjects>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "assets/images/background_space_cupola.jpg"),
+                        "/images/background_space_cupola.jpg"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),
@@ -113,7 +113,7 @@ class _PageProjectsState extends State<PageProjects>
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   left: 0.0, right: 0, bottom: 25),
-                              child: CaruselProjects(
+                              child: ClProjects(
                                 carouselController: carouselController,
                                 scrollController: scrollController,
                               ),
@@ -131,18 +131,18 @@ class _PageProjectsState extends State<PageProjects>
   }
 }
 
-class CaruselProjects extends StatelessWidget {
-  const CaruselProjects({
+class ClProjects extends StatelessWidget {
+  const ClProjects({
     super.key,
     required this.carouselController,
     required this.scrollController,
   });
 
-  final CarouselController carouselController;
+  final CarouselSliderController carouselController;
   final ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CaruselProjectsControl>(
+    return GetBuilder<CarouselProjectsControl>(
         id: "CaruselProjectsControl",
         builder: (controller) {
           return CarouselProjects(
@@ -160,7 +160,7 @@ class CarouselProjects extends StatefulWidget {
     required this.scrollController,
   });
 
-  final CarouselController carouselController;
+  final CarouselSliderController carouselController;
   final ScrollController scrollController;
 
   @override
@@ -168,7 +168,7 @@ class CarouselProjects extends StatefulWidget {
 }
 
 class _CarouselProjectsState extends State<CarouselProjects> {
-  CaruselProjectsControl controller = Get.find<CaruselProjectsControl>();
+  CarouselProjectsControl controller = Get.find<CarouselProjectsControl>();
   final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
 
   @override

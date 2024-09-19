@@ -724,7 +724,7 @@ class _ElementalCircleState extends State<ElementalCircle> {
                         AvatarGlow(
                           glowColor: widget.colorBorde,
                           duration: const Duration(seconds: 2),
-                          endRadius: widget.width ?? widget.height!,
+                          //glowBorderRadius: BorderRadius.circular(widget.width ?? widget.height!) ,
                           animate:
                               widget.itemAtom == atomController.currentItemAtom,
                           repeat: false,

@@ -36,15 +36,15 @@ extension ExtensionPageItem on PageItem {
    String get getRouteAssest {
     switch (this) {
       case PageItem.aboutMe:
-        return (kReleaseMode)?"assets/images/about_me.svg":"/images/about_me.svg";
+        return (kReleaseMode)?"/images/about_me.svg":"/images/about_me.svg";
       case PageItem.knowledge:
-        return (kReleaseMode)?"assets/images/knowledge.svg":"/images/knowledge.svg";
+        return (kReleaseMode)?"/images/knowledge.svg":"/images/knowledge.svg";
       case PageItem.experience:
-        return (kReleaseMode)?"assets/images/experience.svg":"/images/experience.svg";
+        return (kReleaseMode)?"/images/experience.svg":"/images/experience.svg";
       case PageItem.projects:
-        return (kReleaseMode)?"assets/images/projects.svg":"/images/projects.svg";
+        return (kReleaseMode)?"/images/projects.svg":"/images/projects.svg";
       case PageItem.contact:
-        return (kReleaseMode)?"assets/images/contact.svg":"/images/contact.svg";
+        return (kReleaseMode)?"/images/contact.svg":"/images/contact.svg";
     }
   }
 } 

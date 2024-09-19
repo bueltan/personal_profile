@@ -1,5 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:denis_profile/components/text_field.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/models/item_contact.dart';
@@ -10,7 +9,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../controllers/send_message/sent_messages.dart';
+// import '../controllers/send_message/sent_messages.dart';
 
 class PageContact extends StatefulWidget {
   const PageContact({
@@ -71,7 +70,7 @@ class _PageContactState extends State<PageContact>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "assets/images/background_space_cupula_soyus.jpg"),
+                        "/images/background_space_cupula_soyus.jpg"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),
@@ -377,7 +376,7 @@ class _PanelCreateMessageState extends State<PanelCreateMessage> {
           "phone:$phone\n\n"
           "$message";
 
-      bool result = await SentMessageController().sendMessage(fullMessage);
+      bool result = false; //await SentMessageController().sendMessage(fullMessage);
       if (result == false) {
         _showToast("message_sent_fail".tr, error: true);
 

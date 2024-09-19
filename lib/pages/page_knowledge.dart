@@ -79,7 +79,7 @@ class _PageKnowledgeState extends State<PageKnowledge>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "assets/images/background_apollo_control.jpg"),
+                        "/images/background_apollo_control.jpg"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),

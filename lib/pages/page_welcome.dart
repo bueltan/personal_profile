@@ -78,7 +78,7 @@ class _PageWelcomeState extends State<PageWelcome>
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                              "assets/images/background_welcome.jpg"),
+                              "images/background_welcome.jpg"),
                           fit: BoxFit.cover,
                         ),
                       ),
