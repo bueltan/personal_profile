@@ -50,7 +50,7 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
         mainAxisMargin: 30,
         crossAxisMargin: 10,
         radius: const Radius.circular(4),
-        thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+        thumbColor: Colors.greenAccent.withOpacity(0.5),
         thumbVisibility: true,
         child:  SingleChildScrollView(
           controller: scrollController,
@@ -153,9 +153,9 @@ class ItemToGraph extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: Colors.greenAccent.withOpacity(0.7),
+          foregroundColor: Colors.greenAccent,
           backgroundColor:
-              Colors.deepPurpleAccent.withOpacity(0.4), // Background Color
+              Colors.black.withOpacity(0.8), // Background Color
         ),
         onPressed: () {
           chartCtrl.setCurrentChartProgOption(option);

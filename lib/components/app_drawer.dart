@@ -166,8 +166,8 @@ class CustomDrawer extends StatefulWidget {
   static const backgroundColor = Colors.black87;
 
   static const colors = [
-    Colors.deepPurple,
-    Colors.black45,
+    Colors.grey,
+    Colors.black87,
   ];
 
   static const durations = [
@@ -550,7 +550,7 @@ class _ItemTimeState extends State<ItemTime> {
                       iconStyle: IconStyle(
                           iconData: Icons.circle,
                           fontSize: 14,
-                          color: Colors.deepPurpleAccent),
+                          color: Colors.greenAccent),
                       drawGap: true,
                       width: 15,
                       color: (controller.currentPageIndex - 1 == widget.index)
@@ -579,7 +579,7 @@ class _ItemTimeState extends State<ItemTime> {
                                       ? [
                                           const Shadow(
                                             blurRadius: 3.0,
-                                            color: Colors.deepPurpleAccent,
+                                            color: Colors.greenAccent,
                                             offset: Offset(0, 0),
                                           ),
                                         ]

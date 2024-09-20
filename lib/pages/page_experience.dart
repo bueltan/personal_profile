@@ -77,7 +77,7 @@ class _PageExperienceState extends State<PageExperience>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "images/background_nasa_control.jpg"),
+                        "images/background_nasa_control.webp"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.4 : 0.5,
                   ),
@@ -122,7 +122,7 @@ class _PageExperienceState extends State<PageExperience>
                             mainAxisMargin: 30,
                             crossAxisMargin: 10,
                             radius: const Radius.circular(4),
-                            thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+                            thumbColor: Colors.greenAccent.withOpacity(0.5),
                             thumbVisibility: true,
                             child: ListView.builder(
                               controller: scrollController,

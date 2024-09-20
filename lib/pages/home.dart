@@ -7,8 +7,6 @@ import 'package:denis_profile/pages/page_projects.dart';
 import 'package:denis_profile/pages/page_welcome.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
 import 'page_knowledge.dart';
@@ -70,7 +68,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "/images/background_welcome.jpg",
+                                    "/images/background_welcome.webp",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -82,7 +80,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "/images/about_me_background.jpg",
+                                    "/images/about_me_background.webp",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -94,7 +92,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "/images/background_apollo_control.jpg",
+                                    "/images/background_apollo_control.webp",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -106,7 +104,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "/images/background_nasa_control.jpg",
+                                    "/images/background_nasa_control.webp",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -118,7 +116,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "/images/background_space_cupola.jpg",
+                                    "/images/background_space_cupola.webp",
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -130,7 +128,7 @@ class Home extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    "/images/background_space_cupula_soyus.jpg",
+                                    "/images/background_space_cupola_soyus.webp",
                                   ),
                                   fit: BoxFit.cover,
                                 ),

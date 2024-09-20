@@ -9,7 +9,7 @@ class WidgetItemProject extends StatefulWidget {
   const WidgetItemProject({
     super.key,
     required this.carouselController,
-    required this.projectItem, 
+    required this.projectItem,
     required this.scrollController,
   });
 
@@ -36,7 +36,6 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
   void dispose() {
     isDisposed = true;
     scrollController.dispose();
-   
 
     super.dispose();
   }
@@ -55,12 +54,11 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
               return Stack(
                 children: [
                   Container(
-                      
                       decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(25)),
                         border: Border.all(
-                            color: Colors.deepPurpleAccent.withOpacity(0.5)),
+                            color: Colors.greenAccent.withOpacity(0.5)),
                         color: Colors.black.withOpacity(0.4),
                       ),
                       child: Padding(
@@ -78,7 +76,7 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
                               crossAxisMargin: 10,
                               radius: const Radius.circular(4),
                               thumbColor:
-                                  Colors.deepPurpleAccent.withOpacity(0.5),
+                                  Colors.greenAccent.withOpacity(0.5),
                               thumbVisibility: (controller.currentProjectItem ==
                                   widget.projectItem),
                               child: SingleChildScrollView(
@@ -137,32 +135,28 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
                                         ),
                                       ),
                                       ReadMoreText(
-                                        
                                         widget.projectItem.text.tr,
                                         trimLines: 2,
-                                        colorClickableText:
-                                            Colors.greenAccent,
+                                        colorClickableText: Colors.greenAccent,
                                         trimMode: TrimMode.Line,
-                                        trimCollapsedText:" ${'show_more'.tr}",
+                                        trimCollapsedText: " ${'show_more'.tr}",
                                         trimExpandedText: " ${'show_less'.tr}",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          color:
-                                              Colors.white.withOpacity(0.8),
+                                          color: Colors.white.withOpacity(0.8),
                                           fontSize: 16,
                                           fontFamily: "UbuntuMono",
                                         ),
                                         moreStyle: const TextStyle(
-                                          color: Colors.deepPurpleAccent,
+                                          color: Colors.greenAccent,
                                           fontSize: 16,
                                           fontFamily: "UbuntuMono",
                                         ),
                                         lessStyle: const TextStyle(
-                                          color: Colors.deepPurpleAccent,
+                                          color: Colors.greenAccent,
                                           fontSize: 16,
                                           fontFamily: "UbuntuMono",
                                         ),
-                                        
                                       ),
                                     ],
                                   ),
@@ -170,61 +164,82 @@ class _WidgetItemProjectState extends State<WidgetItemProject> {
                               )),
                         ),
                       )),
-                  if (controller.currentProjectItem ==
-                                  widget.projectItem && widget.projectItem.link1.keys.first.tr != "")Positioned(
-                    bottom: 25,
-                    left: 25,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.greenAccent.withOpacity(0.7),
-                              backgroundColor: Colors.deepPurpleAccent
-                                  .withOpacity(0.4), // Background Color
-                            ),
-                            onPressed: () {
-                            controller.openUrl(widget.projectItem.link1.values.first);
-
-                            },
-                            child: Text(
-                              widget.projectItem.link1.keys.first.tr,
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "UbuntuMono",
-                                  color: Colors.greenAccent,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ),
-                        if (controller.currentProjectItem ==
-                                  widget.projectItem && widget.projectItem.link2.keys.first.tr != "")Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.greenAccent.withOpacity(0.7),
-                              backgroundColor: Colors.deepPurpleAccent
-                                  .withOpacity(0.4), // Background Color
-                            ),
-                            onPressed: () {
-                              controller.openUrl(widget.projectItem.link2.values.first);
-                            },
-                            child: Text(
-                              widget.projectItem.link2.keys.first.tr,
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "UbuntuMono",
-                                  color: Colors.greenAccent,
-                                  fontWeight: FontWeight.w600),
+                  if (controller.currentProjectItem == widget.projectItem &&
+                      widget.projectItem.link1.keys.first.tr != "")
+                    Positioned(
+                      bottom: 25,
+                      left: 25,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor:
+                                    Colors.greenAccent.withOpacity(0.7),
+                                backgroundColor: Colors.greenAccent
+                                    .withOpacity(0.4), // Background Color
+                              ),
+                              onPressed: (widget.projectItem.link1.values.first
+                                      .contains("%DOWN"))
+                                  ? null
+                                  : () {
+                                      controller.openUrl(widget
+                                          .projectItem.link1.values.first);
+                                    },
+                              child: Text(
+                                widget.projectItem.link1.keys.first.tr,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: "UbuntuMono",
+                                    color: (widget
+                                            .projectItem.link1.values.first
+                                            .contains("%DOWN"))
+                                        ? Colors.grey
+                                        : Colors.greenAccent,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          if (controller.currentProjectItem ==
+                                  widget.projectItem &&
+                              widget.projectItem.link2.keys.first.tr != "")
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor:
+                                      Colors.greenAccent.withOpacity(0.7),
+                                  backgroundColor: Colors.greenAccent
+                                      .withOpacity(0.4), // Background Color
+                                ),
+                                onPressed: (widget
+                                        .projectItem.link2.values.first
+                                        .contains("%DOWN"))
+                                    ? null
+                                    : () {
+                                        controller.openUrl(widget
+                                            .projectItem.link2.values.first);
+                                      },
+                                child: Text(
+                                  widget.projectItem.link2.keys.first.tr,
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: "UbuntuMono",
+                                      color: (widget
+                                              .projectItem.link2.values.first
+                                              .contains("%DOWN"))
+                                          ? Colors.grey
+                                          : Colors.greenAccent,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
                 ],
               );
             }));

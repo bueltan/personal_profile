@@ -1,5 +1,5 @@
-enum ProjectItem {
-  cncCad, quickCamerea, entityApi, guazuApp, myResume
+enum ProjectItem { 
+  cncCad, quickCamerea, entityApi, guazuApp, myResume, foxy
 }
 
 extension ProjectItemExtension on ProjectItem{
@@ -16,6 +16,8 @@ extension ProjectItemExtension on ProjectItem{
         return "guazuApp_title";
       case ProjectItem.myResume:
         return "myResume_title";
+      case ProjectItem.foxy:
+        return "foxy_title";
     }
   }
   String get subtitle {
@@ -31,6 +33,8 @@ extension ProjectItemExtension on ProjectItem{
         return "guazuApp_subtitle";
       case ProjectItem.myResume:
         return "myResume_subtitle";
+      case ProjectItem.foxy:
+        return "foxy_subtitle";
     }
   }
   String get text {
@@ -46,21 +50,25 @@ extension ProjectItemExtension on ProjectItem{
         return "guazuApp_text";
       case ProjectItem.myResume:
         return "myResume_text";
+      case ProjectItem.foxy:
+        return "foxy_text";
     }
   }
   String get imageAssets {
     switch (this) {
     
       case ProjectItem.cncCad:
-        return "images/cncad.jpeg";
+        return "images/cncad.webp";
       case ProjectItem.quickCamerea:
-        return "images/quick_camera.jpg";
+        return "images/quick_camera.webp";
       case ProjectItem.entityApi:
-        return "images/entity_api_white.png";
+        return "images/entity_api_white.webp";
       case ProjectItem.guazuApp:
-        return "images/guazuapp.jpg";
+        return "images/guazuapp.webp";
       case ProjectItem.myResume:
-        return "images/my_resume.jpg";
+        return "images/my_resume.webp";
+      case ProjectItem.foxy:
+        return "images/foxy.webp";
     }
   }
     Map<String,String> get link1 {
@@ -70,11 +78,14 @@ extension ProjectItemExtension on ProjectItem{
       case ProjectItem.quickCamerea:
         return {"quick_camerea_name_link1":"https://github.com/bueltan/camera-switch-quick-access"};
       case ProjectItem.entityApi:
-        return {"entity_api_name_link1":""};
+        return {"entity_api_name_link1":"https://github.com/startup-entity-development/Entity.git"};
       case ProjectItem.guazuApp:
-        return {"guazuApp_name_link1":"https://app.guazuapp.com"};
+        return {"guazuApp_name_link1":"%DOWN  https://app.guazuapp.com"};
       case ProjectItem.myResume:
         return {"myResume_name_link1":"https://github.com/bueltan/personal_profile/tree/master"};
+    case ProjectItem.foxy:
+        return {"foxy_name_link1":"https://foxysoftware.github.io/"};
+    
     }
   }
      Map<String,String> get link2 {
@@ -86,9 +97,11 @@ extension ProjectItemExtension on ProjectItem{
       case ProjectItem.entityApi:
         return {"entity_api_name_link2":"entity_api_link2"};
       case ProjectItem.guazuApp:
-        return {"guazuApp_name_link2":"https://play.google.com/store/apps/details?id=ar.guazuapp.guazuapp"};
+        return {"guazuApp_name_link2":"%DOWN  https://play.google.com/store/apps/details?id=ar.guazuapp.guazuapp"};
       case ProjectItem.myResume:
         return {"myResume_name_link2":"myResume_link2"};
+      case ProjectItem.foxy:
+        return {"foxy_name_link2":"https://github.com/FoxySoftware/Foxy"};
     }
   }
 

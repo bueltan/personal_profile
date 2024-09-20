@@ -5,6 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
+   DateTime  myBirdDay = DateTime(1991, 1, 3, 13);
+
+  int calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+
+    if (currentDate.month < birthDate.month ||
+        (currentDate.month == birthDate.month &&
+            currentDate.day < birthDate.day)) {
+      age--;
+    }
+
+    return age;
+  }
 class PageAboutMe extends StatelessWidget {
   const PageAboutMe({
     super.key,
@@ -23,9 +37,10 @@ class PageAboutMe extends StatelessWidget {
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("images/about_me_background.jpg",),
+                      image: AssetImage(
+                        "images/about_me_background.webp",
+                      ),
                       fit: BoxFit.cover,
-                      
                     ),
                   ),
                 ),
@@ -98,11 +113,10 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
         mainAxisMargin: 30,
         crossAxisMargin: 10,
         radius: const Radius.circular(4),
-        thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+        thumbColor: Colors.greenAccent.withOpacity(0.5),
         thumbVisibility: true,
         child: SingleChildScrollView(
           controller: scrollController,
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +129,7 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
                       animationTitleAboutMe: animationTitleAboutMe,
                       widget: widget)),
               Padding(
-                padding: const EdgeInsets.only(top:25),
+                padding: const EdgeInsets.only(top: 25),
                 child: SizedBox(
                   width: (widget.controller.expanded)
                       ? constrains.maxWidth
@@ -134,7 +148,7 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top:25),
+                padding: const EdgeInsets.only(top: 25),
                 child: SizedBox(
                     width: (widget.controller.expanded)
                         ? constrains.maxWidth
@@ -164,8 +178,10 @@ class PersonalInfo extends StatelessWidget {
       "_current_residence".tr
     ];
 
+
+
     List<String> listInfoItems = [
-      "age".tr,
+      "age".tr.replaceFirst("%age", calculateAge(myBirdDay).toString()),
       "profession".tr,
       "nationality".tr,
       "current_residence".tr
@@ -221,9 +237,8 @@ class ItemPersonalInfo extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 1500),
         decoration: BoxDecoration(
-          // border: Border.all(width: 1, color: Colors.black),
-            color: 
-                Colors.black.withOpacity(0.4),
+            // border: Border.all(width: 1, color: Colors.black),
+            color: Colors.black.withOpacity(0.4),
             borderRadius: const BorderRadius.all(Radius.circular(8))),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -235,7 +250,7 @@ class ItemPersonalInfo extends StatelessWidget {
                   beforeText,
                   style: const TextStyle(
                     color: Colors.greenAccent,
-                    fontSize: 19 ,
+                    fontSize: 19,
                     fontFamily: "UbuntuMono",
                   ),
                 ),
@@ -298,7 +313,7 @@ class ImageAboutMe extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             border: Border.all(width: 10, color: Colors.white.withOpacity(0.8)),
             image: DecorationImage(
-              image: const AssetImage("/images/denis_profile.jpg"),
+              image: const AssetImage("/images/denis_profile.webp"),
               fit: BoxFit.cover,
               opacity: (widget.controller.expanded) ? 1 : 0.9,
             ),
@@ -331,7 +346,7 @@ class TitleAboutMe extends StatelessWidget {
             'about_me_title'.tr,
             style: const TextStyle(
                 color: Colors.greenAccent,
-                shadows: [Shadow(color: Colors.black,blurRadius: 5)],
+                shadows: [Shadow(color: Colors.black, blurRadius: 5)],
                 fontSize: 40,
                 fontFamily: "UbuntuMono",
                 fontWeight: FontWeight.w600),
@@ -398,7 +413,8 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.deepPurpleAccent.withOpacity(0.5)),
+          border: Border.all(
+              width: 1, color: Colors.greenAccent.withOpacity(0.5)),
           color: Colors.black.withOpacity(0.4),
           borderRadius: const BorderRadius.all(Radius.circular(8))),
       padding: const EdgeInsets.all(25),
@@ -422,21 +438,19 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
                           fontFamily: "UbuntuMono",
                           fontWeight: FontWeight.w700),
                       textAlign: TextAlign.start,
-                      
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top:1.0),
+                padding: const EdgeInsets.only(top: 1.0),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: AnimatedTextKit(
                     isRepeatingAnimation: false,
                     animatedTexts: [
                       TypewriterAnimatedText(
-                        "             ~\$ ${"about_me".tr}",
-                        textAlign: TextAlign.justify,
+                        "              ~\$ ${"about_me".tr}",
                         textStyle: const TextStyle(
                             fontSize: 19,
                             leadingDistribution:
@@ -494,7 +508,7 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
                       pageStateCtrl.jumpToPage(pageItem: PageItem.knowledge);
                     },
 
-                    child:  Text(
+                    child: Text(
                       PageItem.knowledge.keyName.tr,
                       style: const TextStyle(
                           fontSize: 25,

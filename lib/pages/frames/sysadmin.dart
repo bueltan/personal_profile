@@ -45,7 +45,7 @@ with TickerProviderStateMixin {
         mainAxisMargin: 30,
         crossAxisMargin: 10,
         radius: const Radius.circular(4),
-        thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+        thumbColor: Colors.greenAccent.withOpacity(0.5),
         thumbVisibility: true,
         child:  SingleChildScrollView(
           controller: scrollController,

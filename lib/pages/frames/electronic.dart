@@ -54,7 +54,7 @@ class _ElectronicFrameState extends State<ElectronicFrame>
         mainAxisMargin: 30,
         crossAxisMargin: 10,
         radius: const Radius.circular(4),
-        thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+        thumbColor: Colors.greenAccent.withOpacity(0.5),
         thumbVisibility: true,
         child:  SingleChildScrollView(
           controller: scrollController,
@@ -129,10 +129,10 @@ class _ElectronicFrameState extends State<ElectronicFrame>
                   padding: const EdgeInsets.only(left:25.0, right: 25,bottom: 25),
                   child: CarouselSlider(
                       items: [
-                        Image.asset("images/1.png"),
-                        Image.asset("images/2.png"),
-                        Image.asset("images/3.png"),
-                        Image.asset("images/4.png")
+                        Image.asset("images/1.webp"),
+                        Image.asset("images/2.webp"),
+                        Image.asset("images/3.webp"),
+                        Image.asset("images/4.webp")
                       ],
                       options: CarouselOptions(
                         height: 150,

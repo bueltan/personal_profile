@@ -9,6 +9,8 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../controllers/send_message/client.dart';
+
 // import '../controllers/send_message/sent_messages.dart';
 
 class PageContact extends StatefulWidget {
@@ -70,7 +72,7 @@ class _PageContactState extends State<PageContact>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "/images/background_space_cupula_soyus.jpg"),
+                        "/images/background_space_cupola_soyus.webp"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),
@@ -142,7 +144,7 @@ class Content extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(25)),
                     border: Border.all(
-                        color: Colors.deepPurpleAccent.withOpacity(0.8)),
+                        color: Colors.greenAccent.withOpacity(0.8)),
                     color: Colors.black.withOpacity(0.7),
                   ),
                   child: LayoutBuilder(builder: (context, constrains) {
@@ -330,8 +332,9 @@ class _PanelCreateMessageState extends State<PanelCreateMessage> {
                         padding: const EdgeInsets.all(25),
                         child: TextButton(
                           style: TextButton.styleFrom(
-                            foregroundColor: Colors.greenAccent.withOpacity(0.7),
-                            backgroundColor: Colors.deepPurpleAccent
+                            foregroundColor:
+                                Colors.greenAccent.withOpacity(0.7),
+                            backgroundColor: Colors.greenAccent
                                 .withOpacity(0.4), // Background Color
                           ),
                           onPressed: () {
@@ -371,21 +374,17 @@ class _PanelCreateMessageState extends State<PanelCreateMessage> {
       String email = emailTextController.text;
       String phone = phoneTextController.text;
       String message = messageTextController.text;
-      String fullMessage = "name: $name\n\n"
-          "email: $email\n\n"
-          "phone:$phone\n\n"
-          "$message";
+     
 
-      bool result = false; //await SentMessageController().sendMessage(fullMessage);
+      bool result = await  sendGoogleForm(name, email, phone, message);
       if (result == false) {
         _showToast("message_sent_fail".tr, error: true);
-
       } else {
         messageTextController.clear();
         _showToast("message_sent_success".tr);
-          setState(() {
-        autoValidate = false;
-      });
+        setState(() {
+          autoValidate = false;
+        });
       }
     } else {
       setState(() {
@@ -439,7 +438,7 @@ class _CardDataContactState extends State<CardDataContact> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left:16, right: 16),
+      padding: const EdgeInsets.only(left: 16, right: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -452,9 +451,10 @@ class _CardDataContactState extends State<CardDataContact> {
               customBorder: const CircleBorder(),
               focusColor: Colors.greenAccent.withOpacity(0.4),
               radius: 100,
-              splashColor: Colors.deepPurpleAccent.withOpacity(0.5),
+              splashColor: Colors.greenAccent.withOpacity(0.5),
               onTap: () {
-                Clipboard.setData(ClipboardData(text: widget.itemContact.value));
+                Clipboard.setData(
+                    ClipboardData(text: widget.itemContact.value));
                 _showToast(widget.itemContact.value);
               },
               child: Padding(
@@ -463,7 +463,7 @@ class _CardDataContactState extends State<CardDataContact> {
                 child: SvgPicture.asset(
                   widget.itemContact.icon,
                   width: 80,
-                  color: Colors.deepPurpleAccent,
+                  color: Colors.greenAccent,
                 ),
               ),
             ),
@@ -489,7 +489,8 @@ class _CardDataContactState extends State<CardDataContact> {
               displayFullTextOnTap: false,
               stopPauseOnTap: false,
               onTap: () {
-                Clipboard.setData(ClipboardData(text: widget.itemContact.value));
+                Clipboard.setData(
+                    ClipboardData(text: widget.itemContact.value));
                 _showToast(widget.itemContact.value);
               },
             ),

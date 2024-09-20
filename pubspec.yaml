@@ -47,9 +47,9 @@ dependencies:
   syncfusion_flutter_charts: ^27.1.48
   multi_charts: ^0.3.0
   readmore: ^3.0.0
-  hasura_connect: ^5.0.0+3
   uuid: ^3.0.7
   dart_ipify: ^1.1.1
+  http: ^1.0.0
   
 dev_dependencies:
   flutter_test:

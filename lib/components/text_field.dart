@@ -42,7 +42,7 @@ class TextFieldContact extends StatelessWidget {
         ),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-              color: Colors.deepPurpleAccent, width: 1.0),
+              color: Colors.greenAccent, width: 1.0),
           borderRadius: BorderRadius.all(Radius.circular(16.0)),
         ),
         focusedBorder: const OutlineInputBorder(

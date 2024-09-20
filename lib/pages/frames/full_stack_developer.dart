@@ -51,7 +51,7 @@ class _FullStackDeveloperFrameState extends State<FullStackDeveloperFrame>
         mainAxisMargin: 30,
         crossAxisMargin: 10,
         radius: const Radius.circular(4),
-        thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+        thumbColor: Colors.greenAccent.withOpacity(0.5),
         thumbVisibility: true,
         child: SingleChildScrollView(
           controller: scrollController,
@@ -233,9 +233,9 @@ class ItemToGraph extends StatelessWidget {
         children: [
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: Colors.greenAccent.withOpacity(0.7),
+              foregroundColor: Colors.greenAccent,
               backgroundColor:
-                  Colors.deepPurpleAccent.withOpacity(0.4), // Background Color
+                  Colors.black.withOpacity(.8), // Background Color
             ),
             onPressed: () {
               chartCtrl.setCurrentChartFullStack(option);
@@ -261,7 +261,7 @@ class ItemToGraph extends StatelessWidget {
                 child:  Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: IconButton(
-                  splashColor: Colors.deepPurpleAccent.withOpacity(0.5),
+                  splashColor: Colors.greenAccent.withOpacity(0.5),
                   splashRadius: 20,
                   onPressed: () {
                     chartCtrl.setChartFullStack();

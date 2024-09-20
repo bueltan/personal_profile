@@ -5,7 +5,6 @@ import 'package:denis_profile/controllers/projects_controller.dart';
 import 'package:denis_profile/models/item_projects.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class PageProjects extends StatefulWidget {
@@ -67,7 +66,7 @@ class _PageProjectsState extends State<PageProjects>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: const AssetImage(
-                        "/images/background_space_cupola.jpg"),
+                        "/images/background_space_cupola.webp"),
                     fit: BoxFit.cover,
                     opacity: (controller.expanded) ? 0.7 : 0.5,
                   ),

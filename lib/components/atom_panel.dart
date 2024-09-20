@@ -98,7 +98,7 @@ class _CanvasCircleState extends State<CanvasCircle> {
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(25)),
                     border: Border.all(
-                        color: Colors.deepPurpleAccent.withOpacity(0.5)),
+                        color: Colors.greenAccent.withOpacity(0.5)),
                     color: Colors.black.withOpacity(0.4),
                   ),
                   curve: Curves.easeIn,
@@ -136,7 +136,7 @@ class _CanvasCircleState extends State<CanvasCircle> {
                                       .setCurrentItemAtom(ItemAtom.none);
                                 },
                                 splashRadius: 20,
-                                splashColor: Colors.deepPurpleAccent,
+                                splashColor: Colors.greenAccent,
                               ),
                             ),
                           ),
@@ -202,7 +202,7 @@ class _AtomPanelState extends State<AtomPanel> {
             mainAxisMargin: 30,
             crossAxisMargin: 10,
             radius: const Radius.circular(4),
-            thumbColor: Colors.deepPurpleAccent.withOpacity(0.5),
+            thumbColor: Colors.greenAccent.withOpacity(0.5),
             thumbVisibility: true,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -732,7 +732,7 @@ class _ElementalCircleState extends State<ElementalCircle> {
                         ),
                         InkWell(
                           onTap: widget.onTap,
-                          splashColor: Colors.deepPurpleAccent,
+                          splashColor: Colors.greenAccent,
                           customBorder: const CircleBorder(),
                           autofocus: true,
                         ),

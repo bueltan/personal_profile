@@ -1,6 +1,6 @@
 enum ChartFullStack { frontend, backend, deploymentManagement}
 enum ChartFrontEnd {ux, ui, performance}
-enum ChartBackEnd {structurePlanification, databaseDesign, securityImplementation}
+enum ChartBackEnd {structurePlanning, databaseDesign, securityImplementation}
 enum ChartDeploymentManagement { deploymentStructure, ci, cd}
 
 extension FullStackExtension on ChartFullStack {
@@ -56,8 +56,8 @@ extension FrontEndExtension on ChartFrontEnd {
 extension BackendExtension on ChartBackEnd {
   String get keyName {
     switch (this) {
-      case ChartBackEnd.structurePlanification:
-        return "structure_planification";
+      case ChartBackEnd.structurePlanning:
+        return "structure_planning";
       case ChartBackEnd.databaseDesign:
         return "database_design";
       case ChartBackEnd.securityImplementation:
@@ -66,7 +66,7 @@ extension BackendExtension on ChartBackEnd {
   }
    double get level {
        switch (this) {
-         case ChartBackEnd.structurePlanification:
+         case ChartBackEnd.structurePlanning:
           return 7;
          case ChartBackEnd.databaseDesign:
           return 8;
@@ -116,7 +116,7 @@ enum ChartProgParadigms {
   concurrent,
   reactive,
   parallel,
-  funcional,
+  functional,
   declarative,
   serviceOriented,
 }
@@ -191,8 +191,8 @@ extension ParadigmsExtension on ChartProgParadigms {
         return "reactive";
       case ChartProgParadigms.parallel:
         return "parallel";
-      case ChartProgParadigms.funcional:
-        return "funcional";
+      case ChartProgParadigms.functional:
+        return "functional";
       case ChartProgParadigms.declarative:
         return "declarative";
       case ChartProgParadigms.serviceOriented:
@@ -210,7 +210,7 @@ extension ParadigmsExtension on ChartProgParadigms {
         return 8;
       case ChartProgParadigms.parallel:
         return 5;
-      case ChartProgParadigms.funcional:
+      case ChartProgParadigms.functional:
         return 6;
       case ChartProgParadigms.declarative:
         return 9;

@@ -18,23 +18,24 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Personal Webpage 2023">
+  <meta name="description" content="A new Flutter project.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="denis_profile">
+  <meta name="apple-mobile-web-app-title" content="personal_profile">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <link rel="icon" type="image/ico" href="favicon.ico"/>
 
   <title>Denis Germán Gimenez</title>
   <link rel="manifest" href="manifest.json">
-
+</head>
+<body>
   <script>
     // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
+    const serviceWorkerVersion = "{{flutter_service_worker_version}}";
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
@@ -55,7 +56,7 @@
     .wave {
       width: 5px;
       height: 100px;
-      background: linear-gradient(45deg, purple, green);
+      background: linear-gradient(45deg, black, green);
       margin: 10px;
       animation: wave 1s linear infinite;
       border-radius: 20px;
@@ -125,7 +126,7 @@
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
+      _flutter.loader.load({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
@@ -137,5 +138,6 @@
       });
     });
   </script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

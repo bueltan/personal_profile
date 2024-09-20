@@ -1,5 +1,5 @@
 
-enum TimeLineItem { guazuapp,independent,cyberlink,overUp, qualitech, }
+enum TimeLineItem {foxy, ghp, guazuapp, independent, cyberlink, overUp, qualitech}
 
 extension TimeLineItemExtension on TimeLineItem {
   String get nameTitle {
@@ -14,6 +14,10 @@ extension TimeLineItemExtension on TimeLineItem {
         return "independent_title";
       case TimeLineItem.guazuapp:
         return "guazuapp_title";
+      case TimeLineItem.ghp:
+        return "ghp_title";
+      case TimeLineItem.foxy:
+        return "foxy_title";
     }
   }
 
@@ -29,20 +33,28 @@ extension TimeLineItemExtension on TimeLineItem {
         return "independent_years";
       case TimeLineItem.guazuapp:
         return "guazuapp_years";
+      case TimeLineItem.ghp:
+        return "ghp_years";
+      case TimeLineItem.foxy:
+        return "foxy_years";
     }
   }
 
   int get index {
     switch (this) {
       case TimeLineItem.qualitech:
-        return 4;
+        return 6;
       case TimeLineItem.overUp:
-        return 3;
+        return 5;
       case TimeLineItem.cyberlink:
-        return 2;
+        return 4;
       case TimeLineItem.independent:
-        return 1;
+        return 3;
       case TimeLineItem.guazuapp:
+        return 2;
+      case TimeLineItem.ghp:
+        return 1;
+      case TimeLineItem.foxy:
         return 0;
     }
   }
@@ -59,6 +71,10 @@ extension TimeLineItemExtension on TimeLineItem {
         return "independent_right_title";
       case TimeLineItem.guazuapp:
         return "guazuapp_right_title";
+      case TimeLineItem.ghp:
+        return "ghp_right_title";
+      case TimeLineItem.foxy:
+        return "foxy_right_title";
     }
   }
 
@@ -74,6 +90,10 @@ extension TimeLineItemExtension on TimeLineItem {
         return "independent_right_subtitle";
       case TimeLineItem.guazuapp:
         return "guazuapp_right_subtitle";
+      case TimeLineItem.ghp:
+        return "ghp_right_subtitle";
+      case TimeLineItem.foxy:
+        return "foxy_right_subtitle";
     }
   }
 
@@ -89,6 +109,10 @@ extension TimeLineItemExtension on TimeLineItem {
         return "independent_third_line";
       case TimeLineItem.guazuapp:
         return "guazuapp_third_line";
+      case TimeLineItem.ghp:
+        return "ghp_third_line";
+      case TimeLineItem.foxy:
+        return "foxy_third_line";
     }
   }
 
@@ -104,6 +128,10 @@ extension TimeLineItemExtension on TimeLineItem {
         return "independent_fourth_line";
       case TimeLineItem.guazuapp:
         return "guazuapp_fourth_line";
+      case TimeLineItem.ghp:
+        return "ghp_fourth_line";
+      case TimeLineItem.foxy:
+        return "foxy_fourth_line";
     }
   }
 }

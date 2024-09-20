@@ -1,40 +1,35 @@
-// import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-// import 'package:hasura_connect/hasura_connect.dart';
-// import 'dart:async' show Future;
-// import 'package:flutter/services.dart' show rootBundle;
+Future<bool> sendGoogleForm(
+    String name, String email, String tel, String message) async {
+  String formUrl =
+      "https://docs.google.com/forms/u/0/d/e/1FAIpQLSftqGkBGI9t5pacNjP1ZEpx4qTA91C1jqPKeP1CfSTTmbkAHA/formResponse";
 
-// Future<String> loadAsset() async {
-//   return await rootBundle.loadString('assets/clave.key');
-// }
+  Map<String, String> body = {
+    'entry.1454721394': name,
+    'entry.1458621759': email,
+    'entry.1195818560': tel,
+    'entry.561337667': message,
+  };
 
-// class TokenInterceptor extends InterceptorBase {
+  try {
+    var response = await http.post(
+      Uri.parse(formUrl),
+      body: body,
+    );
+    if (response.statusCode == 404) {
+      return true;
+    }
 
-//   @override
-//   Future<Request> onRequest(Request request) async {
-//       String token = await loadAsset();
-//         request.headers["Authorization"] = "Bearer $token";
-     
-//     return request;
-//   }
-
-//     @override
-//   Future onError(HasuraError error) async {
-//     if (!error.message.contains("|\$")) {
-//       print("HasuraError ${error.message}\n"
-//           "content request: ${error.request.query}\n "
-//           "varibles: ${error.request.query.variables}\n"
-//           "${error.request.query.document}");
-//     }
-
-//     return error;
-//   }
-
-// }
-
-// class GraphQLClientHttp {
-//   HasuraConnect connect = HasuraConnect(
-//     "https://app.guazuapp.com/graphql",
-//     interceptors: [TokenInterceptor()],
-//   );
-// }
+    if (response.statusCode == 200) {
+      return true;
+    }
+  } on http.ClientException catch (e) {
+    print('ClientException: $e');
+    return true;
+  } catch (e, stacktrace) {
+    print('Stacktrace: $stacktrace');
+    return false;
+  }
+  return true;
+}

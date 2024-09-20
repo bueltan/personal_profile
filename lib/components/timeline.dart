@@ -57,26 +57,33 @@ class _ItemTimeState extends State<ItemTimeLineWork> {
         alignment: TimelineAlign.start,
         lineXY: 0.2,
         beforeLineStyle: LineStyle(
-            color: (amIHovering) ? widget.startLineHover : widget.startLine.withOpacity(0.5),
+            color: (amIHovering)
+                ? widget.startLineHover
+                : widget.startLine.withOpacity(0.5),
             thickness: 2),
         afterLineStyle: LineStyle(
-            color: (amIHovering) ? widget.endLineHover : widget.endLine.withOpacity(0.5),
+            color: (amIHovering)
+                ? widget.endLineHover
+                : widget.endLine.withOpacity(0.5),
             thickness: 2),
         indicatorStyle: IndicatorStyle(
             indicator: Column(
               children: [
-                 Padding(
-              padding: const EdgeInsets.only(bottom:16.0, top: 16),
-              child: Text(
-                widget.timeLineItem.nameTitle.tr,
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                    shadows: const [Shadow(color: Colors.black, blurRadius: 5)],
-                    color: (amIHovering) ? widget.textHover : widget.text,
-                    fontSize: 25,
-                    fontFamily: "UbuntuMono",
-                    fontWeight: FontWeight.w600),
-              ),),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0, top: 16),
+                  child: Text(
+                    widget.timeLineItem.nameTitle.tr,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                        shadows: const [
+                          Shadow(color: Colors.black, blurRadius: 5)
+                        ],
+                        color: (amIHovering) ? widget.textHover : widget.text,
+                        fontSize: 25,
+                        fontFamily: "UbuntuMono",
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
                 Text(
                   widget.timeLineItem.centerText.tr,
                   textAlign: TextAlign.center,
@@ -114,23 +121,21 @@ class _ItemTimeState extends State<ItemTimeLineWork> {
         //     ),
         //   ),
         // ),
-       
+
         endChild: Padding(
           padding: const EdgeInsets.only(right: 25.0, bottom: 25),
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 color: Colors.black.withOpacity(.5),
-                border: Border.all(width: 1, color: Colors.deepPurpleAccent.withOpacity(0.5))
-                ),
-                
+                border: Border.all(
+                    width: 1, color: Colors.greenAccent.withOpacity(0.5))),
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8),
@@ -176,25 +181,33 @@ class _ItemTimeState extends State<ItemTimeLineWork> {
                                 style: TextButton.styleFrom(
                                   foregroundColor:
                                       Colors.greenAccent.withOpacity(0.7),
-                                  backgroundColor: Colors.deepPurpleAccent
+                                  backgroundColor: Colors.greenAccent
                                       .withOpacity(0.4), // Background Color
                                 ),
-                                onPressed: () {
-                                  openUrl(
-                                      widget.timeLineItem.rightThirdLine.tr);
-                                },
+                                onPressed: (widget
+                                        .timeLineItem.rightThirdLine.tr
+                                        .contains("%DOWN"))
+                                    ? null
+                                    : () {
+                                        openUrl(widget
+                                            .timeLineItem.rightThirdLine.tr);
+                                      },
                                 child: Text(
                                   widget.timeLineItem.rightThirdLine.tr
                                       .split(":")[0],
                                   textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                      shadows: [
+                                  style: TextStyle(
+                                      shadows: const [
                                         Shadow(
                                             color: Colors.black, blurRadius: 5)
                                       ],
                                       fontSize: 16,
                                       fontFamily: "UbuntuMono",
-                                      color: Colors.greenAccent,
+                                      color: (widget
+                                              .timeLineItem.rightThirdLine.tr
+                                              .contains("%DOWN"))
+                                          ? Colors.grey
+                                          : Colors.greenAccent,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
@@ -204,25 +217,33 @@ class _ItemTimeState extends State<ItemTimeLineWork> {
                                 style: TextButton.styleFrom(
                                   foregroundColor:
                                       Colors.greenAccent.withOpacity(0.7),
-                                  backgroundColor: Colors.deepPurpleAccent
+                                  backgroundColor: Colors.greenAccent
                                       .withOpacity(0.4), // Background Color
                                 ),
-                                onPressed: () {
-                                  openUrl(
-                                      widget.timeLineItem.rightFourthLine.tr);
-                                },
+                                onPressed: (widget
+                                        .timeLineItem.rightFourthLine.tr
+                                        .contains("%DOWN"))
+                                    ? null
+                                    : () {
+                                        openUrl(widget
+                                            .timeLineItem.rightFourthLine.tr);
+                                      },
                                 child: Text(
                                   widget.timeLineItem.rightFourthLine.tr
                                       .split(":")[0],
                                   textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                      shadows: [
+                                  style:  TextStyle(
+                                      shadows: const [
                                         Shadow(
                                             color: Colors.black, blurRadius: 5)
                                       ],
                                       fontSize: 16,
                                       fontFamily: "UbuntuMono",
-                                      color: Colors.greenAccent,
+                                      color: (widget
+                                              .timeLineItem.rightFourthLine.tr
+                                              .contains("%DOWN"))
+                                          ? Colors.grey
+                                          : Colors.greenAccent,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
