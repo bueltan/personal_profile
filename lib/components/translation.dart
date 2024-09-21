@@ -307,7 +307,7 @@ class Dictionary extends Translations {
           "_about_me": "Sobre Mí",
           "_knowledge": "Habilidades",
           "_experience": "Experiencia",
-          "_projects": "Projectos",
+          "_projects": "Proyectos",
           "_contact": "Contacto",
 
           //Full stack developer Frame

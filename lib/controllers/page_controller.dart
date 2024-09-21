@@ -6,6 +6,8 @@ import 'package:dart_ipify/dart_ipify.dart';
 import 'dart:io' show Platform;
 // import 'send_message/sent_messages.dart';
 import 'dart:html' as html;
+import 'package:intl/intl.dart';
+import 'send_message/client.dart';
 
 class PageStateController extends GetxController {
   bool expanded = false;
@@ -31,14 +33,23 @@ class PageStateController extends GetxController {
 
     try {
       String message = "new visitor";
-     // await SentMessageController().sendMessage(message);
+      DateTime now = DateTime.now();
+      String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
+      message = "$message ipv4: ${ipv4??""}, hostname: ${hostname??""}, date: $formattedDate" ; 
+     sendGoogleFormLog(message);
     } catch (e) {
       print(e);
     }
 
+
+
     html.window.onBeforeUnload.listen((event) async{
     String message = event.toString();
-    //await SentMessageController().sendMessage(message);
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
+    message = "$message ipv4: ${ipv4??""}, hostname: ${hostname??""}, date: $formattedDate" ; 
+     sendGoogleFormLog(message);
+
     });
     super.onInit();
   }
@@ -49,7 +60,10 @@ class PageStateController extends GetxController {
       animate = true}) async {
     try {
       String message = "change page to ${pageItem?.keyName} ";
-     // await SentMessageController().sendMessage(message);
+      DateTime now = DateTime.now();
+      String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
+      message = "$message ipv4: ${ipv4??""}, hostname: ${hostname??""}, date: $formattedDate" ; 
+     sendGoogleFormLog(message);
     } catch (e) {
       print(e);
     }

@@ -33,3 +33,33 @@ Future<bool> sendGoogleForm(
   }
   return true;
 }
+
+Future<bool> sendGoogleFormLog(String message) async {
+  String formUrl =
+      "https://docs.google.com/forms/u/0/d/e/1FAIpQLSd5g7t7IE77mb3z5_oKoSILBOmYBuDhxjtSSlCMGYSoyXEmrA/formResponse";
+
+  Map<String, String> body = {
+    'entry.1701226609': message,
+  };
+
+  try {
+    var response = await http.post(
+      Uri.parse(formUrl),
+      body: body,
+    );
+    if (response.statusCode == 404) {
+      return true;
+    }
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+  } on http.ClientException catch (e) {
+    print('ClientException: $e');
+    return true;
+  } catch (e, stacktrace) {
+    print('Stacktrace: $stacktrace');
+    return false;
+  }
+  return true;
+}
