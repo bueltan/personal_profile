@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 Future<bool> sendGoogleForm(
     String name, String email, String tel, String message) async {
   String formUrl =
-      "https://docs.google.com/forms/u/0/d/e/1FAIpQLSftqGkBGI9t5pacNjP1ZEpx4qTA91C1jqPKeP1CfSTTmbkAHA/formResponse";
+      "https://corsproxy.io/?https://docs.google.com/forms/u/0/d/e/1FAIpQLSftqGkBGI9t5pacNjP1ZEpx4qTA91C1jqPKeP1CfSTTmbkAHA/formResponse";
 
   Map<String, String> body = {
     'entry.1454721394': name,
@@ -36,7 +36,7 @@ Future<bool> sendGoogleForm(
 
 Future<bool> sendGoogleFormLog(String message) async {
   String formUrl =
-      "https://docs.google.com/forms/u/0/d/e/1FAIpQLSd5g7t7IE77mb3z5_oKoSILBOmYBuDhxjtSSlCMGYSoyXEmrA/formResponse";
+      "https://corsproxy.io/?https://docs.google.com/forms/u/0/d/e/1FAIpQLSd5g7t7IE77mb3z5_oKoSILBOmYBuDhxjtSSlCMGYSoyXEmrA/formResponse";
 
   Map<String, String> body = {
     'entry.1701226609': message,

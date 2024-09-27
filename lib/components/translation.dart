@@ -152,7 +152,7 @@ class Dictionary extends Translations {
           "independent_fourth_line": "",
           "guazuapp_fourth_line":
               "Android app:  %DOWN  https://play.google.com/store/apps/details?id=ar.guazuapp.guazuapp",
-          "ghp_fourth_line": "Web Site: https://gilsonhousingpartners.com",
+          "ghp_fourth_line": "",
           "foxy_fourth_line":
               "Source Code: https://github.com/FoxySoftware/Foxy",
 
@@ -386,7 +386,7 @@ class Dictionary extends Translations {
           "independent_fourth_line": "",
           "guazuapp_fourth_line":
               "Aplicación para Android: %DOWN https://play.google.com/store/apps/details?id=ar.guazuapp.guazuapp",
-          "ghp_fourth_line": "Web Site: https://gilsonhousingpartners.com",
+          "ghp_fourth_line": "",
           "foxy_fourth_line":
               "Source Code: https://github.com/FoxySoftware/Foxy",
 
