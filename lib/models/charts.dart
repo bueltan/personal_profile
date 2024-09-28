@@ -107,7 +107,7 @@ extension DeploymentManagementExtension on ChartDeploymentManagement {
 enum ChartProgOptions { languages, queryLanguages, paradigms }
 
 
-enum ChartProgLanguages {python, php ,java, dart, c, rust }
+enum ChartProgLanguages {python, php ,java, dart, csharp, rust }
 
 enum ChartProgQueryLanguages { graphql, sql, others }
 
@@ -130,7 +130,7 @@ extension LanguagesExtension on ChartProgLanguages {
         return 'Java';
       case ChartProgLanguages.dart:
         return 'Dart';
-      case ChartProgLanguages.c:
+      case ChartProgLanguages.csharp:
         return 'C#';
       case ChartProgLanguages.rust:
         return 'Rust';
@@ -146,7 +146,7 @@ extension LanguagesExtension on ChartProgLanguages {
         return 3;
       case ChartProgLanguages.dart:
         return 7;
-      case ChartProgLanguages.c:
+      case ChartProgLanguages.csharp:
         return 5;
       case ChartProgLanguages.rust:
         return 2;
