@@ -131,7 +131,7 @@ extension LanguagesExtension on ChartProgLanguages {
       case ChartProgLanguages.dart:
         return 'Dart';
       case ChartProgLanguages.c:
-        return 'C++';
+        return 'C#';
       case ChartProgLanguages.rust:
         return 'Rust';
       case ChartProgLanguages.php:
@@ -147,11 +147,11 @@ extension LanguagesExtension on ChartProgLanguages {
       case ChartProgLanguages.dart:
         return 7;
       case ChartProgLanguages.c:
-        return 4;
+        return 5;
       case ChartProgLanguages.rust:
         return 2;
       case ChartProgLanguages.php:
-        return 4;
+        return 3;
     }
   }
 }
