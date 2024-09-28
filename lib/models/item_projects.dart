@@ -1,5 +1,5 @@
 enum ProjectItem { 
-  cncCad, quickCamerea, entityApi, guazuApp, myResume, foxy
+  foxy, guazuApp, myResume, quickCamerea, entityApi ,cncCad, 
 }
 
 extension ProjectItemExtension on ProjectItem{
