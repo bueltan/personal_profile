@@ -53,7 +53,7 @@ class Dictionary extends Translations {
           "age": " %age years.",
           "profession": "Full Stack Developer",
           "nationality": "Argentinian.",
-          "current_residence": "Las Grutas, Rio Negro, Argentina",
+          "current_residence": "Palermo, Aráoz 2636, Argentina",
           "programming": "Programming",
           "electronic": "Electronic",
           "sysadmin": "Systems Administrator",
@@ -286,7 +286,7 @@ class Dictionary extends Translations {
           "age": "%age años.",
           "nationality": "Argentino.",
           "profession": "Full Stack Developer",
-          "current_residence": "Las Grutas, Rio Negro, Argentina",
+          "current_residence": "Palermo, Aráoz 2636, Argentina",
           "programming": "Programación",
           "electronic": "Electrónica",
           "sysadmin": "Administrador de sistemas",
@@ -426,7 +426,7 @@ class Dictionary extends Translations {
                   "Los usuarios pueden interactuar con el sistema y recibir notificaciones en tiempo real sobre el estado de sus tareas y pedidos. Además, la API ha sido diseñada para ser fácilmente integrable en otras aplicaciones y sistemas.",
 
           "guazuApp_text":
-              "GuazúApp pretendía ser una herramienta para comunicarte con tus clientes y dentro de tu organización. Era un proyecto ambicioso diseñado para integrar todas tus interacciones en redes sociales en un solo lugar, redirigiendo a los clientes a las personas adecuadas dentro de tu organización.\n\nAdemás, GuazúApp también tenía como objetivo mejorar la comunicación interna.\n\nLamentablemente, el proyecto ha sido cancelado.",
+              "Era un proyecto ambicioso diseñado para integrar todas tus interacciones en redes sociales en un solo lugar, redirigiendo a los clientes a las personas adecuadas dentro de tu organización.\n\nAdemás, GuazúApp también tenía como objetivo mejorar la comunicación interna.\n\nLamentablemente, el proyecto ha sido cancelado.",
           "myResume_text":
               "Este sitio web ha sido desarrollado utilizando la tecnología de Dart/Flutter. El widget de la sección 'Habilidades' fue creado desde cero para ofrecer una experiencia personalizada y atractiva. Pronto, este widget estará disponible en el repositorio oficial de paquetes (pub.dev).",
 
