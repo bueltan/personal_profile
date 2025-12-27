@@ -75,16 +75,7 @@ class _PageKnowledgeState extends State<PageKnowledge>
         builder: (controller) {
           return Stack(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage(
-                        "/images/background_apollo_control.webp"),
-                    fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 0.7 : 0.5,
-                  ),
-                ),
-              ),
+           
               GetBuilder<AtomController>(
                   id: "AtomController",
                   builder: (controllerAtom) {
@@ -92,54 +83,54 @@ class _PageKnowledgeState extends State<PageKnowledge>
                         contentWidget: SizedBox(
                             child: Padding(
                               padding: const EdgeInsets.only(top:25, bottom: 25),
-                              child: ContentSwich(
+                              child: ContentSwitch(
                                                   atomController: controllerAtom,
                                                 ),
                             )));
                   }),
-              GetBuilder<AtomController>(
-                  id: "AtomController",
-                  builder: (atomController) {
-                    return Positioned.fill(
-                      top: 25,
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              right: (controller.expanded) ? 0 : 350),
-                          child: AnimatedOpacity(
-                            duration: const Duration(milliseconds: 1000),
-                            opacity: (atomController.currentItemAtom ==
-                                    ItemAtom.none)
-                                ? 1
-                                : 0,
-                            child: Text(
-                              '_knowledge'.tr,
-                              style: const TextStyle(
-                                  shadows: [
-                                    Shadow(color: Colors.black, blurRadius: 5)
-                                  ],
-                                  color: Colors.greenAccent,
-                                  fontSize: 40,
-                                  fontFamily: "UbuntuMono",
-                                  fontWeight: FontWeight.w600),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
+              // GetBuilder<AtomController>(
+              //     id: "AtomController",
+              //     builder: (atomController) {
+              //       return Positioned.fill(
+              //         top: 25,
+              //         child: Align(
+              //           alignment: Alignment.topCenter,
+              //           child: Padding(
+              //             padding: EdgeInsets.only(
+              //                 right: (controller.expanded) ? 0 : 350),
+              //             child: AnimatedOpacity(
+              //               duration: const Duration(milliseconds: 1000),
+              //               opacity: (atomController.currentItemAtom ==
+              //                       ItemAtom.none)
+              //                   ? 1
+              //                   : 0,
+              //               child: Text(
+              //                 '_knowledge'.tr,
+              //                 style: const TextStyle(
+              //                     shadows: [
+              //                       Shadow(color: Colors.black, blurRadius: 5)
+              //                     ],
+              //                     color: Colors.greenAccent,
+              //                     fontSize: 40,
+              //                     fontFamily: "UbuntuMono",
+              //                     fontWeight: FontWeight.w600),
+              //                 textAlign: TextAlign.center,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       );
+              //     }),
             ],
           );
         });
   }
 }
 
-class ContentSwich extends StatelessWidget {
+class ContentSwitch extends StatelessWidget {
   final AtomController atomController;
 
-  const ContentSwich({
+  const ContentSwitch({
     super.key,
     required this.atomController,
   });

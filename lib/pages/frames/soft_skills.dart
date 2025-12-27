@@ -14,28 +14,28 @@ class SoftSkillsFrame extends StatefulWidget {
 class _SoftSkillsFrameState extends State<SoftSkillsFrame> 
 with TickerProviderStateMixin {
   late Animation<double> animationFrame;
-  late AnimationController animationCrltFrame;
+  late AnimationController animationCtrlFrame;
   late ScrollController scrollController;
   @override
   void initState() {
     super.initState();
-    animationCrltFrame = AnimationController(
+    animationCtrlFrame = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1000));
     scrollController = ScrollController();
     animationFrame =
-        CurvedAnimation(parent: animationCrltFrame, curve: Curves.easeIn);
+        CurvedAnimation(parent: animationCtrlFrame, curve: Curves.easeIn);
   }
 
   @override
   void dispose() {
     super.dispose();
-    animationCrltFrame.dispose();
+    animationCtrlFrame.dispose();
     scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    animationCrltFrame.forward();
+    animationCtrlFrame.forward();
     return FadeTransition(
       opacity: animationFrame,
       child:  RawScrollbar(

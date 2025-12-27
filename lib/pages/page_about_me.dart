@@ -5,20 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
-   DateTime  myBirdDay = DateTime(1991, 1, 3, 13);
+DateTime myBirdDay = DateTime(1991, 1, 3, 13);
 
-  int calculateAge(DateTime birthDate) {
-    DateTime currentDate = DateTime.now();
-    int age = currentDate.year - birthDate.year;
+int calculateAge(DateTime birthDate) {
+  DateTime currentDate = DateTime.now();
+  int age = currentDate.year - birthDate.year;
 
-    if (currentDate.month < birthDate.month ||
-        (currentDate.month == birthDate.month &&
-            currentDate.day < birthDate.day)) {
-      age--;
-    }
-
-    return age;
+  if (currentDate.month < birthDate.month ||
+      (currentDate.month == birthDate.month &&
+          currentDate.day < birthDate.day)) {
+    age--;
   }
+
+  return age;
+}
+
 class PageAboutMe extends StatelessWidget {
   const PageAboutMe({
     super.key,
@@ -29,29 +30,8 @@ class PageAboutMe extends StatelessWidget {
     return GetBuilder<PageStateController>(
         id: "PageState",
         builder: (controller) {
-          return Stack(
-            children: [
-              AnimatedOpacity(
-                duration: const Duration(milliseconds: 1500),
-                opacity: (controller.expanded) ? 0.7 : 0.5,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        "images/about_me_background.webp",
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              //  AnimatedContainer(decoration: BoxDecoration(color: (controller.expanded)
-              //   ? Colors.black.withOpacity(0.3)
-              //   : Colors.transparent,), duration: const Duration(milliseconds: 1500),),
-              Content(
-                controller: controller,
-              )
-            ],
+          return Content(
+            controller: controller,
           );
         });
   }
@@ -129,7 +109,7 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
                       animationTitleAboutMe: animationTitleAboutMe,
                       widget: widget)),
               Padding(
-                padding: const EdgeInsets.only(top: 25),
+                padding: const EdgeInsets.only(top: 0),
                 child: SizedBox(
                   width: (widget.controller.expanded)
                       ? constrains.maxWidth
@@ -177,8 +157,6 @@ class PersonalInfo extends StatelessWidget {
       "_nationality".tr,
       "_current_residence".tr
     ];
-
-
 
     List<String> listInfoItems = [
       "age".tr.replaceFirst("%age", calculateAge(myBirdDay).toString()),
@@ -339,15 +317,15 @@ class TitleAboutMe extends StatelessWidget {
     return Center(
       child: Padding(
         padding:
-            const EdgeInsets.only(top: 25.0, bottom: 100, left: 25, right: 25),
+            const EdgeInsets.only(top: 25.0, bottom: 50, left: 25, right: 25),
         child: FadeTransition(
           opacity: animationTitleAboutMe,
           child: Text(
             'about_me_title'.tr,
             style: const TextStyle(
-                color: Colors.greenAccent,
+                color: Colors.white,
                 shadows: [Shadow(color: Colors.black, blurRadius: 5)],
-                fontSize: 40,
+                fontSize: 37,
                 fontFamily: "UbuntuMono",
                 fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
@@ -413,8 +391,8 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(
-              width: 1, color: Colors.greenAccent.withOpacity(0.5)),
+          border:
+              Border.all(width: 1, color: Colors.greenAccent.withOpacity(0.5)),
           color: Colors.black.withOpacity(0.4),
           borderRadius: const BorderRadius.all(Radius.circular(8))),
       padding: const EdgeInsets.all(25),

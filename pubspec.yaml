@@ -36,7 +36,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   timeline_tile: ^2.0.0
-  wave: ^0.2.2
   animated_text_kit: ^4.2.2
   flutter_staggered_animations: ^1.1.1
   flutter_svg: ^2.0.5
@@ -44,12 +43,14 @@ dependencies:
   flutter_onboarding_slider: ^1.0.9
   carousel_slider: ^5.0.0
   avatar_glow: ^3.0.1
-  syncfusion_flutter_charts: ^27.1.48
+  syncfusion_flutter_charts: ^31.2.18
   multi_charts: ^0.3.0
   readmore: ^3.0.0
-  uuid: ^3.0.7
+  uuid: ^4.5.2
   dart_ipify: ^1.1.1
   http: ^1.0.0
+  web: ^1.0.0
+  url_launcher: ^6.2.2
   
 dev_dependencies:
   flutter_test:
@@ -60,7 +61,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,7 +75,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/clave.key
+    #- assets/clave.key
     - assets/icons/
     - assets/fonts/
     

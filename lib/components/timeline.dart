@@ -1,5 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+import 'package:web/web.dart' as html;
+
 import 'package:denis_profile/models/item_experience.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

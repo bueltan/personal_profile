@@ -68,19 +68,9 @@ class _PageContactState extends State<PageContact>
         builder: (controller) {
           return Stack(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage(
-                        "/images/background_space_cupola_soyus.webp"),
-                    fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 0.7 : 0.5,
-                  ),
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.only(
-                  right: (controller.expanded) ? 0 : 325,
+                  right: (controller.expanded) ? 0 : 250,
                 ),
                 child: Stack(
                   fit: StackFit.expand,

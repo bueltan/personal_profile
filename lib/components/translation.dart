@@ -22,13 +22,13 @@ class Dictionary extends Translations {
               "While I acknowledge that there are still areas to improve in soft skills, I am confident in my ability to lead projects and achieve goals both individually and as part of a team. With a positive attitude, an open mindset, and a strong commitment, I am sure I can continue developing these skills to become a more effective and successful leader in the future.",
 
           "sysadmin_text": "My interest in system administration began in 2007 when I read the Hack x Crack notebooks. Although these documents were no longer for sale, I obtained PDF versions that still contain relevant content today.\n\n" +
-              "Although I did not specialize completely in this area as a full stack developer, my work experience between 2010 and 2012 introduced me to server environments. I performed RAID configurations on IBM and HP servers and installed and configured operating systems, remote access tools, and monitoring tools on Windows Server and Linux systems.\n\n" +
+              "Although I did not specialize completely in this area as a  Full Stack developer, my work experience between 2010 and 2012 introduced me to server environments. I performed RAID configurations on IBM and HP servers and installed and configured operating systems, remote access tools, and monitoring tools on Windows Server and Linux systems.\n\n" +
               "Additionally, I completed a networking course that provided theoretical concepts. In the workplace, I gained experience configuring Cisco routers, hardware firewalls, and VLANs on Cisco switches. I also assembled full racks, connecting UTP and fiber optic cables, and configuring and installing the corresponding operating systems.\n\n" +
               "Currently, I have expanded my knowledge in web servers and implemented a cluster in Kubernetes. I also have experience with various Google Cloud services.\n\n" +
               "My experience and interest in continuous learning have allowed me to acquire skills in system administration, giving me a broader view of the tech world and the ability to solve problems effectively.",
 
           "full_stack_text":
-              "As a full stack developer, I handle the entire lifecycle of an application, from UI design to server implementation and management. This includes both front-end and back-end development, as well as integration and deployment across various environments. My experience covers web, mobile, and embedded systems applications, ensuring complete and functional solutions for each project.",
+              "As a Full Stack developer, I handle the entire lifecycle of an application, from UI design to server implementation and management. This includes both front-end and back-end development, as well as integration and deployment across various environments. My experience covers web, mobile, and embedded systems applications, ensuring complete and functional solutions for each project.",
 
           "frontend_text":
               "As a frontend developer, my main goal is to create an engaging and efficient user experience. This involves not only designing visually appealing interfaces but also ensuring optimal performance and seamless integration with the backend.\n\nFrontend development goes beyond design. It involves building effective connections with the backend, managing data persistence, and processing and presenting information to the user accurately. It is essential to maintain a clear structure that separates user interface logic from data handling logic.\n\nAdditionally, aspects like performance, compatibility, accessibility, and testing need to be considered, along with establishing a plan for ongoing maintenance and updates.\n\nIn summary, the role of a frontend developer is to deliver a comprehensive user experience, paying attention to both design and functionality and ensuring the application's performance.",
@@ -51,7 +51,7 @@ class Dictionary extends Translations {
           "_nationality": "Nationality: ",
           "_current_residence": "City of Residence: ",
           "age": " %age years.",
-          "profession": "Full Stack Developer",
+          "profession": "Generalist Developer",
           "nationality": "Argentinian.",
           "current_residence": "Palermo, Aráoz 2636, Argentina",
           "programming": "Programming",
@@ -76,7 +76,7 @@ class Dictionary extends Translations {
           "_experience": "Experience",
           "_projects": "Projects",
           "_contact": "Contact",
-          //Full stack developer Frame
+          //Generalist developer Frame
           "full_stack_developer": "Full Stack Developer",
           "frontend": "Frontend",
           "backend": "Backend",
@@ -132,7 +132,7 @@ class Dictionary extends Translations {
           "guazuapp_right_subtitle":
               "Role: Co-founder, full-stack developer, and development leader.",
           "ghp_right_subtitle":
-              "Full Stack Developer and CareCart Lead Project",
+              "Full-stack Developer and CareCart Lead Project",
           "foxy_right_subtitle": "Role: Developer Founder",
 
           // TimeLine rightThirdLine
@@ -251,13 +251,13 @@ class Dictionary extends Translations {
               "Aunque reconozco que aún hay áreas por mejorar en habilidades blandas, confío en mi capacidad para liderar proyectos y alcanzar objetivos tanto individualmente como en equipo. Con una actitud positiva, una mentalidad abierta y un fuerte compromiso, estoy seguro de que puedo seguir desarrollando estas habilidades para ser un líder más efectivo y exitoso en el futuro.",
 
           "sysadmin_text": "Mi interés en la administración de sistemas comenzó en 2007, cuando leí los cuadernos de Hack x Crack. Aunque estos documentos ya no estaban a la venta, obtuve versiones en PDF que contenían contenido aún relevante hoy en día.\n\n"
-              "A pesar de no haberme especializado completamente en esta área como desarrollador full stack, mi experiencia laboral entre 2010 y 2012 me introdujo en el ámbito de los servidores. Realicé configuraciones de RAID en servidores IBM y HP, y llevé a cabo la instalación y configuración de sistemas operativos, herramientas de acceso remoto y monitoreo en sistemas Windows Server y Linux.\n\n"
+              "A pesar de no haberme especializado completamente en esta área como desarrollador Generalist, mi experiencia laboral entre 2010 y 2012 me introdujo en el ámbito de los servidores. Realicé configuraciones de RAID en servidores IBM y HP, y llevé a cabo la instalación y configuración de sistemas operativos, herramientas de acceso remoto y monitoreo en sistemas Windows Server y Linux.\n\n"
               "Además, completé un curso de redes que me proporcionó conceptos teóricos. En el ámbito laboral, adquirí experiencia configurando routers Cisco, hardware firewalls y VLANs en switches Cisco. También he montado racks completos, conectando cables UTP y fibra óptica, y configurando e instalando los sistemas operativos correspondientes.\n\n"
               "Actualmente, he ampliado mis conocimientos en servidores web y he implementado un clúster en Kubernetes. También tengo experiencia con varios servicios de Google Cloud.\n\n"
               "Mi experiencia y el interés por el aprendizaje continuo me han permitido adquirir habilidades en administración de sistemas, brindándome una visión más amplia del mundo tecnológico y la capacidad para resolver problemas de manera efectiva.",
 
           "full_stack_text":
-              "Como desarrollador full stack, manejo todo el ciclo de vida de una aplicación, desde el diseño de la interfaz de usuario hasta la implementación y gestión del servidor. Esto incluye el desarrollo tanto del front-end como del back-end, así como la integración y despliegue en diferentes entornos. Mi experiencia abarca aplicaciones web, móviles y sistemas embebidos, asegurando soluciones completas y funcionales en cada proyecto.",
+              "Como desarrollador Generalist, manejo todo el ciclo de vida de una aplicación, desde el diseño de la interfaz de usuario hasta la implementación y gestión del servidor. Esto incluye el desarrollo tanto del front-end como del back-end, así como la integración y despliegue en diferentes entornos. Mi experiencia abarca aplicaciones web, móviles y sistemas embebidos, asegurando soluciones completas y funcionales en cada proyecto.",
 
           "frontend_text":
               "Como desarrollador frontend, mi objetivo principal es crear una experiencia de usuario atractiva y eficiente. Esto implica no solo diseñar interfaces visualmente agradables, sino también asegurar un rendimiento óptimo y una integración fluida con el backend.\n\n"
@@ -285,7 +285,7 @@ class Dictionary extends Translations {
           "_current_residence": "Ciudad de Residencia: ",
           "age": "%age años.",
           "nationality": "Argentino.",
-          "profession": "Full Stack Developer",
+          "profession": "Generalist Developer",
           "current_residence": "Palermo, Aráoz 2636, Argentina",
           "programming": "Programación",
           "electronic": "Electrónica",
@@ -310,7 +310,7 @@ class Dictionary extends Translations {
           "_projects": "Proyectos",
           "_contact": "Contacto",
 
-          //Full stack developer Frame
+          //Generalist developer Frame
           "full_stack_developer": "Desarrollador Full Stack",
           "frontend": "Interfaz",
           "backend": "Back-end",
@@ -350,7 +350,7 @@ class Dictionary extends Translations {
           "qualitech_right_title": "Soluciones informáticas",
           "overUp_right_title": "Soluciones informáticas",
           "cyberlink_right_title": "Empresa de informática",
-          "independent_right_title": "Desarrollador full stack independiente",
+          "independent_right_title": "Desarrollador Generalist independiente",
           "guazuapp_right_title": "Sistema de mensajería multicanal",
           "ghp_right_title": "Desarrollador full-stack",
           "foxy_right_title":
@@ -364,9 +364,9 @@ class Dictionary extends Translations {
               "Rol: Técnico general en el área de soporte.",
           "independent_right_subtitle": "",
           "guazuapp_right_subtitle":
-              "Rol: Socio fundador, desarrollador full stack y líder de desarrollo.",
+              "Rol: Socio fundador, desarrollador Generalist y líder de desarrollo.",
           "ghp_right_subtitle":
-              "Desarrollador Full Stack y Líder de Proyecto en CareCart",
+              "Desarrollador Generalist y Líder de Proyecto en CareCart",
           "foxy_right_subtitle": "Rol: Desarrollador Fundador",
 
           // TimeLine rightThirdLine

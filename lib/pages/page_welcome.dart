@@ -1,4 +1,6 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:denis_profile/components/atom_panel.dart';
+import 'package:denis_profile/constants/style_theme.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/models/item_page.dart';
 import 'package:flutter/foundation.dart';
@@ -6,6 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import "package:url_launcher/url_launcher.dart";
+
+Future<void> openLink(String url) async {
+  final uri = Uri.parse(url);
+  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    throw Exception("Could not launch $url");
+  }
+}
 
 class PageWelcome extends StatefulWidget {
   const PageWelcome({
@@ -64,39 +74,26 @@ class _PageWelcomeState extends State<PageWelcome>
         id: "PageState",
         builder: (controller) {
           return LayoutBuilder(builder: (context, constrains) {
-              double screenWidth = MediaQuery.of(context).size.width;
-              final toVerticalPosition = (kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android))|| screenWidth<1000  ;
+            double screenWidth = MediaQuery.of(context).size.width;
+            final toVerticalPosition = (kIsWeb &&
+                    (defaultTargetPlatform == TargetPlatform.iOS ||
+                        defaultTargetPlatform == TargetPlatform.android)) ||
+                screenWidth < 1000;
 
             return Stack(
               children: [
-                Builder(builder: (context) {
-                  return AnimatedOpacity(
-                    duration: const Duration(milliseconds: 1500),
-                    opacity: (controller.expanded) ? 0.4 : 0.5,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              "images/background_welcome.webp"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-
                 SizedBox(
                   width: (controller.expanded)
                       ? constrains.maxWidth
                       : constrains.maxWidth - 365,
-                  child:  Center(
+                  child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 25.0, top:200),
-                      child: SizedBox(
-                        height: toVerticalPosition?600:200,
-                        child: Padding(
-                          padding:  EdgeInsets.only(right:25.0, bottom: (toVerticalPosition)?25:0),
-                          child: ListItems(isVertical: toVerticalPosition,),
+                      padding: const EdgeInsets.only(left: 25.0, top: 200),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            right: 25.0, bottom: (toVerticalPosition) ? 25 : 0),
+                        child: ListItems(
+                          isVertical: toVerticalPosition,
                         ),
                       ),
                     ),
@@ -105,27 +102,61 @@ class _PageWelcomeState extends State<PageWelcome>
                 Positioned(
                   top: 60,
                   child: SizedBox(
-                  width: (controller.expanded)
-                      ? constrains.maxWidth
-                      : constrains.maxWidth - 365,
-                      child: Align(
+                    width: (controller.expanded)
+                        ? constrains.maxWidth
+                        : constrains.maxWidth - 365,
+                    child: Align(
                       alignment: Alignment.topCenter,
                       child: AnimatedOpacity(
                         duration: const Duration(milliseconds: 800),
-                        opacity:(controller.expanded)?1:0 ,
-                        child: Text(
-                                    'Denis Germán Gimenez'.tr,
-                                    style: const TextStyle(
-                          color: Colors.white,
-                          shadows: [Shadow(color: Colors.black,blurRadius: 5)],
-                          fontSize: 40,
-                          fontFamily: "NeueMetana",
-                          ),
-                                    textAlign: TextAlign.center,
+                        opacity: (controller.expanded) ? 1 : 0,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Denis Germán Gimenez'.tr,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(color: Colors.black, blurRadius: 5)
+                                ],
+                                fontSize: 40,
+                                fontFamily: "UbuntuMono",
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: AnimatedTextKit(
+                                isRepeatingAnimation: false,
+                                animatedTexts: [
+                                  TypewriterAnimatedText(
+                                    "full_stack_developer".tr,
+                                    textAlign: TextAlign.start,
+                                    textStyle: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontFamily: "UbuntuMono",
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white),
+                                    curve: Curves.decelerate,
+                                    speed: const Duration(milliseconds: 180),
                                   ),
+                                ],
+                                totalRepeatCount: 1,
+                                pause: const Duration(milliseconds: 190),
+                                displayFullTextOnTap: false,
+                                stopPauseOnTap: false,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
+                ),
+                Positioned.fill(
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: const PersonalFooter()),
                 ),
               ],
             );
@@ -137,51 +168,54 @@ class _PageWelcomeState extends State<PageWelcome>
 class ListItems extends StatelessWidget {
   final bool isVertical;
   const ListItems({
-    super.key, required this.isVertical,
+    super.key,
+    required this.isVertical,
   });
 
   @override
   Widget build(BuildContext context) {
-
-    return ListView.builder(
-      
-       physics: const ClampingScrollPhysics(),
-       scrollDirection:isVertical?Axis.vertical: Axis.horizontal,
-      shrinkWrap: true,
-      itemCount: PageItem.values.length,
-      itemBuilder: (BuildContext context, int index) {
-        return AnimationConfiguration.staggeredList(
-          position: index,
-          delay: const Duration(milliseconds: 300),
-          duration: const Duration(milliseconds: 2500),
-          child: SlideAnimation(
-              verticalOffset: 250.0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: FadeInAnimation(
-                  child: ItemCicle(
-                    index: index,
+    return SizedBox(
+      height: (isVertical) ? double.infinity : 36,
+      child: ListView.builder(
+        physics: const ClampingScrollPhysics(),
+        scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
+        shrinkWrap: true,
+        itemCount: PageItem.values.length,
+        itemBuilder: (BuildContext context, int index) {
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            delay: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 2500),
+            child: SlideAnimation(
+                verticalOffset: 250.0,
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(left: isVertical ? 0 : 20, top: isVertical? 20 : 0),
+                  child: FadeInAnimation(
+                    child: Item(
+                      index: index,
+                    ),
                   ),
-                ),
-              )),
-        );
-      },
+                )),
+          );
+        },
+      ),
     );
   }
 }
 
-class ItemCicle extends StatefulWidget {
+class Item extends StatefulWidget {
   final int index;
-  const ItemCicle({
+  const Item({
     super.key,
     required this.index,
   });
 
   @override
-  State<ItemCicle> createState() => _ItemCicleState();
+  State<Item> createState() => _ItemState();
 }
 
-class _ItemCicleState extends State<ItemCicle> {
+class _ItemState extends State<Item> {
   bool onHover = false;
   PageStateController pageStateController = Get.find<PageStateController>();
   bool isDisposed = false;
@@ -219,67 +253,131 @@ class _ItemCicleState extends State<ItemCicle> {
 
   @override
   Widget build(BuildContext context) {
-    return Circle(
-        onHoverChange: (state) {
-          setState(() {
-            onHover = state;
-          });
-        },
-        widthContainer: 120,
-        width: 80,
-        colorBackGround: Colors.black.withOpacity(0.8),
-        colorBorde: Colors.greenAccent,
-        bordeWidth: 1,
-        onTap: () {
-          goToPage();
-        },
-        widgetInCircle: SvgPicture.asset(
-          getItemPageWithIndex().getRouteAssest,
-          width: 45,
-          // ignore: deprecated_member_use
-          color: Colors.white,
-        ),
-        widgetReplaceText: GestureDetector(
-          onTap: () {
-            goToPage();
-          },
-          child: MouseRegion(
-            onHover: (v) {
-              setState(() {
-                onHoverText();
-              });
-            },
-            child: Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  border: Border.all(color: Colors.greenAccent),
-                  
-                  boxShadow: (pageStateController.expanded)
-                      ? [
-                          const BoxShadow(
-                            blurRadius: 5.0,
-                            color: Colors.green,
-                            offset: Offset(0, 0),
-                          ),
-                        ]
-                      : null,
-                  color: Colors.black),
-              child: TweenAnimationBuilder<double>(
-                duration: const Duration(milliseconds: 300),
-                tween: (onHover)
-                    ? Tween<double>(begin: 19, end: 22)
-                    : Tween<double>(begin: 22, end: 19),
-                builder: (_, size, __) => Text(getItemPageWithIndex().keyName.tr,
-                    style: TextStyle(
-                        fontSize: size,
-                        color: (onHover) ? Colors.greenAccent : Colors.white,
-                        fontFamily: "UbuntuMono",
-                        fontWeight: FontWeight.w700)),
+    return GestureDetector(
+      onTap: () {
+        goToPage();
+      },
+      child: MouseRegion(
+        onHover: (_) => onHoverText(),
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(6),
 
-              ),
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              border: Border.all(color: Colors.white),
+              boxShadow: (pageStateController.expanded)
+                  ? [
+                      const BoxShadow(
+                        blurRadius: 2.0,
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                      ),
+                    ]
+                  : null,
+              color: Colors.black),
+          child: TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 300),
+            tween: (onHover)
+                ? Tween<double>(begin: 19, end: 22)
+                : Tween<double>(begin: 22, end: 19),
+            builder: (_, size, __) => Text(getItemPageWithIndex().keyName.tr,
+                strutStyle: StrutStyle(
+                
+                  fontSize: size,
+                  height: 1.0,
+                  forceStrutHeight: true,
+                ),
+                textHeightBehavior: const TextHeightBehavior(
+                  applyHeightToFirstAscent: false,
+                  applyHeightToLastDescent: false,
+                ),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  
+                    fontSize: size,
+                    color: (onHover)
+                        ? PageStyle.hoverColor
+                        : PageStyle.mainColor,
+                    fontFamily: "UbuntuMono",
+                    fontWeight: FontWeight.w700)),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FooterLink extends StatelessWidget {
+  final String label;
+  final String url;
+
+  const _FooterLink({
+    required this.label,
+    required this.url,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => openLink("https://github.com/bueltan"),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 13,
+          color: PageStyle.accentColor,
+        ),
+      ),
+    );
+  }
+}
+
+class PersonalFooter extends StatelessWidget {
+  const PersonalFooter({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final year = DateTime.now().year;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Colors.grey.withOpacity(0.2),
+          ),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "© $year Denis Gimenez • Full Stack Software Developer • denisgimenez.com",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey.shade500,
             ),
           ),
-        ));
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 16,
+            children: [
+              _FooterLink(
+                label: "GitHub",
+                url: "https://github.com/bueltan",
+              ),
+              _FooterLink(
+                label: "Download CV",
+                url: "/assets/Denis_Gimenez_CV.pdf",
+              ),
+              _FooterLink(
+                label: "Email",
+                url: "mailto:denis@denisgimenez.com",
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

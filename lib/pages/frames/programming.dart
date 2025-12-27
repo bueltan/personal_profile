@@ -70,6 +70,8 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
                 ),
               ),
               Wrap(
+                alignment: WrapAlignment.center,
+
                 children: [
                   SizedBox(
                     width: 290,

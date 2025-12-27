@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:denis_profile/constants/style_theme.dart';
 import 'package:denis_profile/controllers/atom_controller.dart';
 import 'package:denis_profile/models/item_atom.dart';
 import 'package:flutter/foundation.dart';
@@ -44,13 +45,14 @@ class CanvasCircle extends StatefulWidget {
 class _CanvasCircleState extends State<CanvasCircle> {
   @override
   Widget build(BuildContext context) {
+    AtomController atomController = Get.find<AtomController>();
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     final isWebMobile = kIsWeb &&
         (defaultTargetPlatform == TargetPlatform.iOS ||
             defaultTargetPlatform == TargetPlatform.android);
 
-    AtomController atomController = Get.find<AtomController>();
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
 
     return AnimatedContainer(
         duration: const Duration(milliseconds: 500),
@@ -202,7 +204,7 @@ class _AtomPanelState extends State<AtomPanel> {
             mainAxisMargin: 30,
             crossAxisMargin: 10,
             radius: const Radius.circular(4),
-            thumbColor: Colors.greenAccent.withOpacity(0.5),
+            thumbColor: Colors.white70,
             thumbVisibility: true,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -242,10 +244,11 @@ class _AtomPanelState extends State<AtomPanel> {
                         ElementalCircle(
                           widthContainer: mainWidth,
                           heightContainer: mainWidth,
-                          width: mainWidth * .25,
-                          height: mainWidth * .25,
+                          edgeWidth: 1,
+                          width: mainWidth * .22,
+                          height: mainWidth * .22,
                           colorBackGround: Colors.transparent,
-                          colorBorde: Colors.white,
+                          colorEdge: Colors.white,
                           onTap: () {
                             widget.atomController
                                 .setCurrentItemAtom(ItemAtom.fullstack);
@@ -347,8 +350,8 @@ class _ExternalCirclesState extends State<ExternalCircles>
             width: widget.mainWidth * .5,
             height: widget.mainHeight * 5,
             colorBackGround: Colors.transparent,
-            colorBorde: Colors.greenAccent,
-            hoverEfect: false,
+            colorEdge: PageStyle.mainColor,
+            hoverEffect: false,
             itemAtom: ItemAtom.none,
             onTap: () {
               atomController.setCurrentItemAtom(ItemAtom.none);
@@ -361,7 +364,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                 widthContainer: (widget.mainWidth * .5) * .33,
                 width: (widget.mainWidth * .5) * .30,
                 colorBackGround: Colors.black,
-                colorBorde: Colors.greenAccent,
+                colorEdge: PageStyle.mainColor,
                 axisDirection: AxisDirection.left,
                 text: ItemAtom.sysadmin.keyName.tr,
                 textStyle: widget.textStyle,
@@ -372,7 +375,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                   ItemAtom.sysadmin.resource,
                   width: widget.mainHeight * .06,
                   // ignore: deprecated_member_use
-                  color: Colors.greenAccent,
+                  color: PageStyle.accentColor,
                 ),
                 itemAtom: ItemAtom.sysadmin,
               ),
@@ -380,7 +383,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                 widthContainer: (widget.mainWidth * .5) * .33,
                 width: (widget.mainWidth * .5) * .30,
                 colorBackGround: Colors.black,
-                colorBorde: Colors.greenAccent,
+                colorEdge: PageStyle.mainColor,
                 axisDirection: AxisDirection.right,
                 text: ItemAtom.softskills.keyName.tr,
                 textStyle: widget.textStyle,
@@ -391,7 +394,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                   ItemAtom.softskills.resource,
                   width: widget.mainHeight * .06,
                   // ignore: deprecated_member_use
-                  color: Colors.greenAccent,
+                  color: PageStyle.accentColor,
                 ),
                 itemAtom: ItemAtom.softskills,
               ),
@@ -406,7 +409,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                 height: (widget.mainHeight * .5) * .30,
                 colorBackGround: Colors.black,
                 axisDirection: AxisDirection.up,
-                colorBorde: Colors.greenAccent,
+                colorEdge: PageStyle.mainColor,
                 text: ItemAtom.programming.keyName.tr,
                 textStyle: widget.textStyle,
                 onTap: () {
@@ -416,7 +419,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                   ItemAtom.programming.resource,
                   width: widget.mainHeight * .06,
                   // ignore: deprecated_member_use
-                  color: Colors.greenAccent,
+                  color: PageStyle.accentColor,
                 ),
                 itemAtom: ItemAtom.programming,
               ),
@@ -424,7 +427,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
                 heightContainer: (widget.mainHeight * .5) * .33,
                 height: (widget.mainHeight * .5) * .30,
                 colorBackGround: Colors.black,
-                colorBorde: Colors.greenAccent,
+                colorEdge: PageStyle.mainColor,
                 text: ItemAtom.electronic.keyName.tr,
                 textStyle: widget.textStyle,
                 onTap: () {
@@ -451,10 +454,10 @@ class Circle extends StatelessWidget {
   final double? height;
   final double? widthContainer;
   final double? width;
-  final double bordeWidth;
+  final double edgeWidth;
 
   final Color colorBackGround;
-  final Color colorBorde;
+  final Color colorEdge;
   final String text;
   final TextStyle textStyle;
   final AxisDirection axisDirection;
@@ -472,7 +475,7 @@ class Circle extends StatelessWidget {
     this.heightContainer,
     this.height,
     required this.colorBackGround,
-    this.colorBorde = Colors.white,
+    this.colorEdge = Colors.white,
     this.text = "text",
     this.textStyle = const TextStyle(color: Colors.white, fontSize: 16),
     this.axisDirection = AxisDirection.down,
@@ -481,7 +484,7 @@ class Circle extends StatelessWidget {
     this.itemAtom,
     this.onHoverChange,
     this.widgetReplaceText,
-    this.bordeWidth = 2,
+    this.edgeWidth = 1,
   });
 
   @override
@@ -497,13 +500,13 @@ class Circle extends StatelessWidget {
                   widthContainer: widthContainer ?? heightContainer,
                   width: width ?? height,
                   height: height ?? width,
-                  colorBorde: colorBorde,
+                  colorEdge: colorEdge,
                   colorBackGround: colorBackGround,
                   onTap: onTap,
                   widgetInCircle: widgetInCircle,
                   itemAtom: itemAtom,
                   onHoverChange: onHoverChange,
-                  bordeWidth: bordeWidth,
+                  edgeWidth: edgeWidth,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
@@ -533,13 +536,13 @@ class Circle extends StatelessWidget {
                   widthContainer: widthContainer ?? heightContainer,
                   width: width ?? height,
                   height: height ?? width,
-                  colorBorde: colorBorde,
+                  colorEdge: colorEdge,
                   colorBackGround: colorBackGround,
                   onTap: onTap,
                   widgetInCircle: widgetInCircle,
                   itemAtom: itemAtom,
                   onHoverChange: onHoverChange,
-                  bordeWidth: bordeWidth,
+                  edgeWidth: edgeWidth,
                 ),
               ],
             ),
@@ -552,13 +555,13 @@ class Circle extends StatelessWidget {
                   widthContainer: widthContainer ?? heightContainer,
                   width: width ?? height,
                   height: height ?? width,
-                  colorBorde: colorBorde,
+                  colorEdge: colorEdge,
                   colorBackGround: colorBackGround,
                   onTap: onTap,
                   widgetInCircle: widgetInCircle,
                   itemAtom: itemAtom,
                   onHoverChange: onHoverChange,
-                  bordeWidth: bordeWidth,
+                  edgeWidth: edgeWidth,
                 ),
                 SizedBox(
                     width: widthContainer,
@@ -601,13 +604,13 @@ class Circle extends StatelessWidget {
                   widthContainer: widthContainer ?? heightContainer,
                   width: width ?? height,
                   height: height ?? width,
-                  colorBorde: colorBorde,
+                  colorEdge: colorEdge,
                   colorBackGround: colorBackGround,
                   onTap: onTap,
                   widgetInCircle: widgetInCircle,
                   itemAtom: itemAtom,
                   onHoverChange: onHoverChange,
-                  bordeWidth: bordeWidth,
+                  edgeWidth: edgeWidth,
                 ),
               ],
             ),
@@ -623,23 +626,23 @@ class ElementalCircle extends StatefulWidget {
       this.width,
       this.height,
       this.onTap,
-      this.hoverEfect = true,
+      this.hoverEffect = true,
       this.widgetInCircle = const SizedBox(),
-      required this.colorBorde,
+      required this.colorEdge,
       required this.colorBackGround,
       this.itemAtom,
       this.onHoverChange,
-      this.bordeWidth = 2});
+      this.edgeWidth = 0.5});
 
   final double? heightContainer;
   final double? widthContainer;
   final double? width;
-  final double bordeWidth;
+  final double edgeWidth;
 
   final double? height;
-  final ui.Color colorBorde;
+  final ui.Color colorEdge;
   final ui.Color colorBackGround;
-  final bool hoverEfect;
+  final bool hoverEffect;
   final Widget widgetInCircle;
   final Enum? itemAtom;
   final Function()? onTap;
@@ -689,7 +692,7 @@ class _ElementalCircleState extends State<ElementalCircle> {
         child: Center(
             child: MouseRegion(
           onHover: (event) {
-            if (amIHovering == false && widget.hoverEfect == true) {
+            if (amIHovering == false && widget.hoverEffect == true) {
               onHover();
             }
           },
@@ -699,9 +702,9 @@ class _ElementalCircleState extends State<ElementalCircle> {
               child: Material(
                 shape: const CircleBorder(),
                 color: widget.colorBackGround,
-                elevation: (amIHovering) ? 15 : 0,
+                elevation: (amIHovering) ? 12 : 0,
                 shadowColor: (widget.colorBackGround != Colors.transparent)
-                    ? widget.colorBorde
+                    ? widget.colorEdge
                     : null,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
@@ -713,7 +716,7 @@ class _ElementalCircleState extends State<ElementalCircle> {
                       : widget.width,
                   decoration: BoxDecoration(
                     border: Border.all(
-                        width: widget.bordeWidth, color: widget.colorBorde),
+                        width: widget.edgeWidth, color: widget.colorEdge),
                     shape: BoxShape.circle,
                     color: Colors.transparent,
                   ),
@@ -722,7 +725,7 @@ class _ElementalCircleState extends State<ElementalCircle> {
                       children: [
                         Center(child: widget.widgetInCircle),
                         AvatarGlow(
-                          glowColor: widget.colorBorde,
+                          glowColor: widget.colorEdge,
                           duration: const Duration(seconds: 2),
                           //glowBorderRadius: BorderRadius.circular(widget.width ?? widget.height!) ,
                           animate:

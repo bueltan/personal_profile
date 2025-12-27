@@ -1,4 +1,5 @@
 import 'package:denis_profile/components/app_drawer.dart';
+import 'package:denis_profile/constants/style_theme.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/pages/page_about_me.dart';
 import 'package:denis_profile/pages/page_contact.dart';
@@ -19,18 +20,19 @@ class Home extends StatelessWidget {
     return GetBuilder<PageStateController>(
         id: "PageState",
         builder: (controller) {
+          
+          // This is a visual improvement for mobile devices.
           double screenWidth = MediaQuery.of(context).size.width;
           bool isWebOnMobile = (kIsWeb &&
               (defaultTargetPlatform == TargetPlatform.iOS ||
                   defaultTargetPlatform == TargetPlatform.android));
-
           final bool hidePage =
               (isWebOnMobile || screenWidth < 600) && !controller.expanded;
 
           return Scaffold(
             backgroundColor: Colors.transparent,
             floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-            floatingActionButton: Padding(
+            floatingActionButton: (controller.currentPageIndex == 0)?null: Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(
                 shape: BeveledRectangleBorder(
@@ -40,9 +42,9 @@ class Home extends StatelessWidget {
                 },
                 backgroundColor: Colors.black.withOpacity(0.7),
                 child: Icon(
-                  (controller.expanded) ? Icons.menu : Icons.aspect_ratio,
+                  (controller.expanded) ? Icons.menu_rounded : Icons.aspect_ratio_rounded,
                   size: 35,
-                  color: Colors.greenAccent,
+                  color: PageStyle.accentColor,
                 ),
               ),
             ),
@@ -56,8 +58,12 @@ class Home extends StatelessWidget {
                         : const Radius.circular(16)),
                 child: PageView(
                     onPageChanged: (index) {
-                      controller.changeIndexPage(index);
+                      print(index);
+                      controller.updateIndexPage(index);
+                     // controller.updateTimelineTile();
+
                     },
+                    physics: const NeverScrollableScrollPhysics(),
                     allowImplicitScrolling: false,
                     pageSnapping: true,
                     scrollDirection: Axis.vertical,
@@ -65,74 +71,74 @@ class Home extends StatelessWidget {
                     children: [
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_welcome.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              // decoration: const BoxDecoration(
+                              //   image: DecorationImage(
+                              //     image: AssetImage(
+                              //       "/images/background_welcome.webp",
+                              //     ),
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              // ),
                             )
                           : const PageWelcome(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/about_me_background.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              //decoration: const BoxDecoration(
+                              //   image: DecorationImage(
+                              //     image: AssetImage(
+                              //       "/images/about_me_background.webp",
+                              //     ),
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              // ),
                             )
                           : const PageAboutMe(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_apollo_control.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              // decoration: const BoxDecoration(
+                              //   image: DecorationImage(
+                              //     image: AssetImage(
+                              //       "/images/background_apollo_control.webp",
+                              //     ),
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              // ),
                             )
                           : const PageKnowledge(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_nasa_control.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              // decoration: const BoxDecoration(
+                              //   image: DecorationImage(
+                              //     image: AssetImage(
+                              //       "/images/background_nasa_control.webp",
+                              //     ),
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              // ),
                             )
                           : const PageExperience(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_space_cupola.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              // decoration: const BoxDecoration(
+                              //   image: DecorationImage(
+                              //     image: AssetImage(
+                              //       "/images/background_space_cupola.webp",
+                              //     ),
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              // ),
                             )
                           : const PageProjects(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_space_cupola_soyus.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              // decoration: const BoxDecoration(
+                              //   image: DecorationImage(
+                              //     image: AssetImage(
+                              //       "/images/background_space_cupola_soyus.webp",
+                              //     ),
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              // ),
                             )
                           : const PageContact()
                     ])),

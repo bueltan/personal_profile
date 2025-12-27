@@ -43,17 +43,19 @@ Future<bool> sendGoogleFormLog(String message) async {
   };
 
   try {
-    var response = await http.post(
-      Uri.parse(formUrl),
-      body: body,
-    );
-    if (response.statusCode == 404) {
-      return true;
-    }
+    // TODO: implement
+    // var response = await http.post(
+    //   Uri.parse(formUrl),
+    //   body: body,
+    // );
+    
+    // if (response.statusCode == 404) {
+    //   return true;
+    // }
 
-    if (response.statusCode == 200) {
-      return true;
-    }
+    // if (response.statusCode == 200) {
+    //   return true;
+    // }
   } on http.ClientException catch (e) {
     print('ClientException: $e');
     return true;
