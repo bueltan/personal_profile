@@ -94,7 +94,7 @@ class _PageContactState extends State<PageContact>
                       ),
                     ),
                     Positioned.fill(
-                        top: 70,
+                        top: 70, 
                         left: 25,
                         right: 25,
                         bottom: 25,

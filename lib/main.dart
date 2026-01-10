@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         title: 'Denis Germán Giménez',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
         ),
         home: const AppDrawer(
           child: Home(),

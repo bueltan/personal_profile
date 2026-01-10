@@ -89,7 +89,7 @@ class _CanvasCircleState extends State<CanvasCircle> {
                   left: 25,
                   right: (!atomController.expanded &&
                           atomController.currentItemAtom != ItemAtom.none)
-                      ? 365
+                      ? DrawerStyle.widthExpandedPadding16
                       : (atomController.currentItemAtom == ItemAtom.none)?0:25),
               child: LayoutBuilder(builder: (context, c) {
                 double factor =
@@ -100,7 +100,7 @@ class _CanvasCircleState extends State<CanvasCircle> {
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(25)),
                     border: Border.all(
-                        color: Colors.greenAccent.withOpacity(0.5)),
+                        color: PageStyle.edgeMainColor,width: 1),
                     color: Colors.black.withOpacity(0.4),
                   ),
                   curve: Curves.easeIn,
@@ -155,7 +155,7 @@ class _CanvasCircleState extends State<CanvasCircle> {
 }
 
 class AtomPanel extends StatefulWidget {
-  const AtomPanel({
+   AtomPanel({
     super.key,
     required this.atomController,
     required this.width,
@@ -171,7 +171,7 @@ class AtomPanel extends StatefulWidget {
 }
 
 class _AtomPanelState extends State<AtomPanel> {
-  final double minimunWidth = 600;
+  final double minimumWidth = 600;
   final double minimunHeight = 600;
   late ScrollController scrollController;
   @override
@@ -194,7 +194,7 @@ class _AtomPanelState extends State<AtomPanel> {
         padding: EdgeInsets.only(
             right: (!widget.atomController.expanded &&
                     widget.atomController.currentItemAtom == ItemAtom.none)
-                ? 300
+                ? DrawerStyle.widthExpanded -50
                 : 0),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -214,15 +214,15 @@ class _AtomPanelState extends State<AtomPanel> {
                 alignment: Alignment.center,
                 duration: const Duration(milliseconds: 500),
                 color: Colors.transparent,
-                width: (widget.width <= minimunWidth)
-                    ? minimunWidth
+                width: (widget.width <= minimumWidth)
+                    ? minimumWidth
                     : widget.width,
                 height: (widget.height <= minimunHeight)
                     ? minimunHeight
                     : widget.height,
                 child: LayoutBuilder(builder: (context, constraints) {
-                  double mainWidth = (constraints.maxWidth <= minimunWidth)
-                      ? minimunWidth
+                  double mainWidth = (constraints.maxWidth <= minimumWidth)
+                      ? minimumWidth
                       : constraints.maxWidth;
                   double mainHeight = (constraints.maxHeight <= minimunHeight)
                       ? minimunHeight

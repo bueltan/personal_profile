@@ -24,8 +24,8 @@ class AppDrawer extends StatefulWidget {
 
 class AppDrawerState extends State<AppDrawer>
     with SingleTickerProviderStateMixin {
-  static Duration duration = const Duration(milliseconds: 300);
-  static const double maxSlide = 300;
+  static Duration duration = const Duration(milliseconds: DrawerStyle.animationDuration);
+  static const double maxSlide = DrawerStyle.widthExpanded;
   static const dragRightStartVal = 60;
   static const dragLeftStartVal = maxSlide - 20;
   static bool shouldDrag = false;
@@ -541,7 +541,7 @@ class _ItemTimeState extends State<ItemTime> {
                       child: Container(
                         color: Colors.transparent,
                         child: TweenAnimationBuilder<double>(
-                          duration: const Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: DrawerStyle.animationDuration),
                           tween:
                               (controller.currentPageIndex - 1 == widget.index)
                                   ? Tween<double>(begin: 18, end: 22)

@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                 onPressed: () {
                   AppDrawer.of(context).toggle();
                 },
-                backgroundColor: Colors.black.withOpacity(0.7),
+                backgroundColor: Colors.black45,
                 child: Icon(
                   (controller.expanded) ? Icons.menu_rounded : Icons.aspect_ratio_rounded,
                   size: 35,

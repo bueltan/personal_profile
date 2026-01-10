@@ -85,7 +85,8 @@ class _PageWelcomeState extends State<PageWelcome>
                 SizedBox(
                   width: (controller.expanded)
                       ? constrains.maxWidth
-                      : constrains.maxWidth - 365,
+                      : constrains.maxWidth - DrawerStyle.widthExpanded,
+                
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 25.0, top: 200),

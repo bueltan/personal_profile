@@ -1,4 +1,5 @@
 import 'package:denis_profile/components/timeline.dart';
+import 'package:denis_profile/constants/style_theme.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/models/item_experience.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,7 @@ class _PageExperienceState extends State<PageExperience>
           
               Padding(
                 padding: EdgeInsets.only(
-                    right: (controller.expanded) ? 0 : 325,
+                    right: (controller.expanded) ? 0 : DrawerStyle.widthExpandedPadding8
                     ),
                 child: Container(
                   decoration: BoxDecoration(

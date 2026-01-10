@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:denis_profile/constants/style_theme.dart';
 import 'package:denis_profile/controllers/page_controller.dart';
 import 'package:denis_profile/models/item_page.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,7 @@ class _ContentState extends State<Content> with TickerProviderStateMixin {
         mainAxisMargin: 30,
         crossAxisMargin: 10,
         radius: const Radius.circular(4),
-        thumbColor: Colors.greenAccent.withOpacity(0.5),
+        thumbColor: PageStyle.edgeMainColor,
         thumbVisibility: true,
         child: SingleChildScrollView(
           controller: scrollController,
@@ -289,7 +290,7 @@ class ImageAboutMe extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 450, maxHeight: 235),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            border: Border.all(width: 10, color: Colors.white.withOpacity(0.8)),
+            border: Border.all(width: 1, color: PageStyle.edgeMainColor),
             image: DecorationImage(
               image: const AssetImage("/images/denis_profile.webp"),
               fit: BoxFit.cover,
@@ -392,7 +393,7 @@ class _ContainerTextAboutMeState extends State<ContainerTextAboutMe>
     return Container(
       decoration: BoxDecoration(
           border:
-              Border.all(width: 1, color: Colors.greenAccent.withOpacity(0.5)),
+              Border.all(width: 1, color: PageStyle.edgeMainColor),
           color: Colors.black.withOpacity(0.4),
           borderRadius: const BorderRadius.all(Radius.circular(8))),
       padding: const EdgeInsets.all(25),

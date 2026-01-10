@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:denis_profile/components/charts.dart';
+import 'package:denis_profile/constants/style_theme.dart';
 import 'package:denis_profile/controllers/chart_controller.dart';
 import 'package:denis_profile/models/charts.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
 class ProgrammingFrame extends StatefulWidget {
-   const ProgrammingFrame({
+  const ProgrammingFrame({
     super.key,
   });
 
@@ -33,9 +34,9 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
 
   @override
   void dispose() {
-    super.dispose();
     animationCrltFrame.dispose();
     scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,21 +45,20 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
     animationCrltFrame.forward();
     return FadeTransition(
       opacity: animationFrame,
-      
       child: RawScrollbar(
         controller: scrollController,
         mainAxisMargin: 30,
         crossAxisMargin: 10,
         radius: const Radius.circular(4),
-        thumbColor: Colors.greenAccent.withOpacity(0.5),
+        thumbColor: PageStyle.scrollbarThumbColor,
         thumbVisibility: true,
-        child:  SingleChildScrollView(
+        child: SingleChildScrollView(
           controller: scrollController,
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left:25.0, right: 25),
+                padding: const EdgeInsets.only(left: 25.0, right: 25),
                 child: Text(
                   'programming'.tr,
                   style: const TextStyle(
@@ -71,12 +71,11 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
               ),
               Wrap(
                 alignment: WrapAlignment.center,
-
                 children: [
                   SizedBox(
                     width: 290,
                     child: Padding(
-                      padding: const EdgeInsets.only(left:17, top:17),
+                      padding: const EdgeInsets.only(left: 17, top: 17),
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -87,7 +86,7 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
                             delay: const Duration(milliseconds: 300),
                             duration: const Duration(milliseconds: 2500),
                             child: SlideAnimation(
-                              horizontalOffset: 250.0,
+                              horizontalOffset: DrawerStyle.widthExpanded,
                               child: FadeInAnimation(
                                   child: ItemToGraph(
                                 option: ChartProgOptions.values[index],
@@ -99,13 +98,13 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(left:25,right: 25,top: 16),
+                    padding: EdgeInsets.only(left: 25, right: 25, top: 16),
                     child: RadarChartProgramming(),
                   ),
                 ],
               ),
               Padding(
-                    padding: const EdgeInsets.only(left:25,right: 25, bottom: 25),
+                padding: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: AnimatedTextKit(
@@ -156,8 +155,7 @@ class ItemToGraph extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
           foregroundColor: Colors.greenAccent,
-          backgroundColor:
-              Colors.black.withOpacity(0.8), // Background Color
+          backgroundColor: Colors.black.withOpacity(0.8), // Background Color
         ),
         onPressed: () {
           chartCtrl.setCurrentChartProgOption(option);
@@ -166,7 +164,7 @@ class ItemToGraph extends StatelessWidget {
           option.name.tr,
           textAlign: TextAlign.start,
           style: const TextStyle(
-            shadows: [Shadow(color: Colors.black,blurRadius: 5)],
+              shadows: [Shadow(color: Colors.black, blurRadius: 5)],
               fontSize: 16,
               fontFamily: "UbuntuMono",
               color: Colors.greenAccent,
