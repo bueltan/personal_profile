@@ -98,8 +98,8 @@ class _PageContactState extends State<PageContact>
                     ),
                     Positioned.fill(
                         top: 70,
-                        left: 0,
-                        right: 0,
+                        left: 25,
+                        right: 25,
                         bottom: 25,
                         child: Content(animationProjects: animationProjects)),
                   ],
@@ -162,7 +162,7 @@ class Content extends StatelessWidget {
                               bottom: 25),
                           child: Container(
                             constraints: BoxConstraints(
-                                maxWidth: (vertical) ? 250 : 800,
+                                maxWidth: (vertical) ? 360 : 800,
                                 maxHeight: (vertical) ? 500 : 500),
                             child: Center(
                               child: ListView.builder(
@@ -388,7 +388,12 @@ class _PanelCreateMessageState extends State<PanelCreateMessage> {
 
   _showToast(String text, {bool error = false}) {
     var snackBar = SnackBar(
-      backgroundColor: Colors.black.withOpacity(0.5),
+        behavior: SnackBarBehavior.floating,
+  margin: const EdgeInsets.all(12),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20),
+  ),
+      backgroundColor: Colors.black.withOpacity(0.7),
       duration: const Duration(seconds: 5),
       content: AnimatedTextKit(
         isRepeatingAnimation: false,
@@ -495,7 +500,12 @@ class _CardDataContactState extends State<CardDataContact> {
 
   _showToast(String text, {bool clipboard = true}) {
     var snackBar = SnackBar(
-      backgroundColor: Colors.black.withOpacity(0.5),
+              behavior: SnackBarBehavior.floating,
+  margin: const EdgeInsets.all(12),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20),
+  ),
+      backgroundColor: Colors.black.withOpacity(0.7),
       duration: const Duration(seconds: 1),
       content: AnimatedTextKit(
         isRepeatingAnimation: false,
