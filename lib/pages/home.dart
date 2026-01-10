@@ -63,36 +63,12 @@ class Home extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     controller: controller.pageController,
                     children: [
-                      (hidePage)
-                          ? Container(
-                              
-                            )
-                          : const PageWelcome(),
-                      (hidePage)
-                          ? Container(
-                          
-                            )
-                          : const PageAboutMe(),
-                      (hidePage)
-                          ? Container(
-                            
-                            )
-                          : const PageKnowledge(),
-                      (hidePage)
-                          ? Container(
-                           
-                            )
-                          : const PageExperience(),
-                      (hidePage)
-                          ? Container(
-                             
-                            )
-                          : const PageProjects(),
-                      (hidePage)
-                          ? Container(
-                             
-                            )
-                          : const PageContact()
+                      (hidePage) ? Container() : const PageWelcome(),
+                      (hidePage) ? Container() : const PageAboutMe(),
+                      (hidePage) ? Container() : const PageKnowledge(),
+                      (hidePage) ? Container() : const PageExperience(),
+                      (hidePage) ? Container() : const PageProjects(),
+                      (hidePage) ? Container() : const PageContact()
                     ])),
           );
         });

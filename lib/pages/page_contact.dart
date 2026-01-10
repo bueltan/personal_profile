@@ -98,8 +98,8 @@ class _PageContactState extends State<PageContact>
                     ),
                     Positioned.fill(
                         top: 70,
-                        left: 25,
-                        right: 25,
+                        left: 0,
+                        right: 0,
                         bottom: 25,
                         child: Content(animationProjects: animationProjects)),
                   ],
@@ -162,7 +162,7 @@ class Content extends StatelessWidget {
                               bottom: 25),
                           child: Container(
                             constraints: BoxConstraints(
-                                maxWidth: (vertical) ? 500 : 800,
+                                maxWidth: (vertical) ? 250 : 800,
                                 maxHeight: (vertical) ? 500 : 500),
                             child: Center(
                               child: ListView.builder(
