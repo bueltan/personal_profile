@@ -74,13 +74,7 @@ class _PageWelcomeState extends State<PageWelcome>
                     duration: const Duration(milliseconds: 1500),
                     opacity: (controller.expanded) ? 0.4 : 0.5,
                     child: Container(
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              "images/background_welcome.webp"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                     
                     ),
                   );
                 }),

@@ -76,15 +76,7 @@ class _PageKnowledgeState extends State<PageKnowledge>
           return Stack(
             children: [
               Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage(
-                        "/images/background_apollo_control.webp"),
-                    fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 0.7 : 0.5,
-                  ),
-                ),
-              ),
+                    ),
               GetBuilder<AtomController>(
                   id: "AtomController",
                   builder: (controllerAtom) {

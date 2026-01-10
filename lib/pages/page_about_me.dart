@@ -35,15 +35,9 @@ class PageAboutMe extends StatelessWidget {
                 duration: const Duration(milliseconds: 1500),
                 opacity: (controller.expanded) ? 0.7 : 0.5,
                 child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        "images/about_me_background.webp",
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                  
                   ),
-                ),
+              
               ),
               //  AnimatedContainer(decoration: BoxDecoration(color: (controller.expanded)
               //   ? Colors.black.withOpacity(0.3)

@@ -63,14 +63,6 @@ class _PageProjectsState extends State<PageProjects>
           return Stack(
             children: [
               Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage(
-                        "/images/background_space_cupola.webp"),
-                    fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 0.7 : 0.5,
-                  ),
-                ),
               ),
               
               Padding(

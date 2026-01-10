@@ -65,74 +65,32 @@ class Home extends StatelessWidget {
                     children: [
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_welcome.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              
                             )
                           : const PageWelcome(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/about_me_background.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                          
                             )
                           : const PageAboutMe(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_apollo_control.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                            
                             )
                           : const PageKnowledge(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_nasa_control.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                           
                             )
                           : const PageExperience(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_space_cupola.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                             
                             )
                           : const PageProjects(),
                       (hidePage)
                           ? Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "/images/background_space_cupola_soyus.webp",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                             
                             )
                           : const PageContact()
                     ])),

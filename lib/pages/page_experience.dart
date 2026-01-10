@@ -74,14 +74,7 @@ class _PageExperienceState extends State<PageExperience>
           return Stack(
             children: [
               Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage(
-                        "images/background_nasa_control.webp"),
-                    fit: BoxFit.cover,
-                    opacity: (controller.expanded) ? 0.4 : 0.5,
-                  ),
-                ),
+               
               ),
              
           
