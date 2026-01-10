@@ -1,8 +1,7 @@
 import 'package:denis_profile/models/item_projects.dart';
 import 'package:get/get.dart';
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
-
+import 'package:web/web.dart' as web;
 
 class CarouselProjectsControl extends GetxController {
   bool autoPlay = true;
@@ -28,7 +27,7 @@ class CarouselProjectsControl extends GetxController {
       url = textWithUrl.replaceAll(' ', '');
     }
     if (url != null) {
-      html.window.open(url, "_blank");
+       web.window.open(url, '_blank');
     }
   }
 }

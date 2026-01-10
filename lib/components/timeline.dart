@@ -1,4 +1,4 @@
-import 'dart:html' as html;
+import 'package:web/web.dart' as web;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -251,7 +251,7 @@ class _ItemTimeState extends State<ItemTimeLineWork> {
       url = textWithUrl.split(": ")[1].replaceAll(' ', '');
     }
     if (url != null) {
-      html.window.open(url, "_blank");
+       web.window.open(url, '_blank');
     }
   }
 }
