@@ -28,9 +28,9 @@ with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     animationCrltFrame.dispose();
     scrollController.dispose();
+        super.dispose();
   }
 
   @override

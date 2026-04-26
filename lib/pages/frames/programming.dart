@@ -33,9 +33,10 @@ class _ProgrammingFrameState extends State<ProgrammingFrame>
 
   @override
   void dispose() {
-    super.dispose();
     animationCrltFrame.dispose();
     scrollController.dispose();
+        super.dispose();
+
   }
 
   @override

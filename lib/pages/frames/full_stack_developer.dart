@@ -34,10 +34,11 @@ class _FullStackDeveloperFrameState extends State<FullStackDeveloperFrame>
 
   @override
   void dispose() {
-    super.dispose();
 
     animationCrltFrame.dispose();
     scrollController.dispose();
+      super.dispose();
+
   }
 
   @override

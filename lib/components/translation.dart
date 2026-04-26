@@ -207,7 +207,7 @@ class Dictionary extends Translations {
           "name": "Name",
           "phone": "Phone",
         },
-        'es_ES': {
+        'es_AR': {
           "about_me":
               "Soy Ingeniero de Software con más de 12 años de experiencia, especializado en desarrollo backend con Python, microservicios y diseño de APIs. Cuento con más de 8 años de experiencia práctica en Python construyendo plataformas robustas, frameworks de automatización y sistemas listos para producción.\n\nActualmente me enfoco en el desarrollo de herramientas de automatización y pipelines de producción para entornos de Creación de Contenido Digital (DCC). He trabajado tanto dentro de organizaciones como en proyectos independientes, entregando soluciones orientadas a flujos de trabajo que se utilizan activamente en producción. Me apasiona transformar procesos técnicos complejos en sistemas estables y bien testeados en los que los equipos puedan confiar.",
 

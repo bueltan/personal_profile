@@ -327,7 +327,7 @@ class _ExternalCirclesState extends State<ExternalCircles>
   void dispose() {
     animationControllerRotate.dispose();
     animationControllerText.dispose();
-    atomController.setCurrentItemAtom(ItemAtom.none);
+    //atomController.setCurrentItemAtom(ItemAtom.none);
 
     isDisposed = true;
     super.dispose();

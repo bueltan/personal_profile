@@ -1,7 +1,6 @@
 import 'package:denis_profile/models/item_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:wave/config.dart';
@@ -14,7 +13,10 @@ import '../controllers/page_controller.dart';
 class AppDrawer extends StatefulWidget {
   final Widget child;
 
-  const AppDrawer({key, required this.child}) : super(key: key);
+  const AppDrawer({
+    super.key,
+    required this.child,
+  });
 
   static AppDrawerState of(BuildContext context) =>
       context.findAncestorStateOfType<AppDrawerState>()!;
@@ -25,21 +27,40 @@ class AppDrawer extends StatefulWidget {
 
 class AppDrawerState extends State<AppDrawer>
     with SingleTickerProviderStateMixin {
-  static Duration duration = const Duration(milliseconds: 300);
-  late AnimationController _controller;
+  static const Duration duration = Duration(milliseconds: 300);
   static const double maxSlide = 325;
-  static const dragRightStartVal = 60;
-  static const dragLeftStartVal = maxSlide - 20;
+  static const double dragRightStartVal = 60;
+  static const double dragLeftStartVal = maxSlide - 20;
+
+  late final AnimationController _controller;
+
   static bool shouldDrag = false;
+
   final PageStateController pageStateCtrl = Get.find<PageStateController>();
+
+  bool get isWebMobile =>
+      kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.android);
 
   @override
   void initState() {
-    _controller =
-        AnimationController(vsync: this, duration: AppDrawerState.duration);
-
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _controller.forward());
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: AppDrawerState.duration,
+      value: 0.0,
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      // Regression-safe drawer fix:
+      // start closed, without shifting the page to the right.
+      pageStateCtrl.expandPage();
+      _controller.value = 0.0;
+    });
   }
 
   void close() {
@@ -67,21 +88,26 @@ class AppDrawerState extends State<AppDrawer>
   }
 
   void _onDragStart(DragStartDetails startDetails) {
-    bool isDraggingFromLeft = _controller.isDismissed &&
+    final bool isDraggingFromLeft =
+        _controller.isDismissed &&
         startDetails.globalPosition.dx < dragRightStartVal;
-    bool isDraggingFromRight = _controller.isCompleted &&
+
+    final bool isDraggingFromRight =
+        _controller.isCompleted &&
         startDetails.globalPosition.dx > dragLeftStartVal;
+
     shouldDrag = isDraggingFromLeft || isDraggingFromRight;
   }
 
   void _onDragUpdate(DragUpdateDetails updateDetails) {
-    final isWebMobile = kIsWeb &&
-            (defaultTargetPlatform == TargetPlatform.iOS ||
-                defaultTargetPlatform == TargetPlatform.android);
-    if (shouldDrag == false || isWebMobile ) {
+    if (shouldDrag == false || isWebMobile) {
       return;
     }
-    double delta = updateDetails.primaryDelta! / maxSlide;
+
+    final double? primaryDelta = updateDetails.primaryDelta;
+    if (primaryDelta == null) return;
+
+    final double delta = primaryDelta / maxSlide;
     _controller.value += delta;
   }
 
@@ -91,21 +117,35 @@ class AppDrawerState extends State<AppDrawer>
     } else {
       pageStateCtrl.shrinkPage();
     }
+
     if (_controller.isDismissed || _controller.isCompleted) {
       return;
     }
 
-    double kMinFlingVelocity = 500.0;
-    double dragVelocity = dragEndDetails.velocity.pixelsPerSecond.dx.abs();
+    const double kMinFlingVelocity = 500.0;
+    final double dragVelocity =
+        dragEndDetails.velocity.pixelsPerSecond.dx.abs();
 
     if (dragVelocity >= kMinFlingVelocity) {
-      double visualVelocityInPx = dragEndDetails.velocity.pixelsPerSecond.dx /
-          MediaQuery.of(context).size.width;
+      final double visualVelocityInPx =
+          dragEndDetails.velocity.pixelsPerSecond.dx /
+              MediaQuery.of(context).size.width;
+
       _controller.fling(velocity: visualVelocityInPx);
     } else if (_controller.value < 0.2) {
       close();
     } else {
       open();
+    }
+  }
+
+  void _closeOnSmallScreensIfNeeded(BoxConstraints constraints) {
+    if (pageStateCtrl.expanded == false &&
+        (constraints.maxWidth < 1000 || isWebMobile)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        close();
+      });
     }
   }
 
@@ -115,49 +155,35 @@ class AppDrawerState extends State<AppDrawer>
       onHorizontalDragStart: _onDragStart,
       onHorizontalDragUpdate: _onDragUpdate,
       onHorizontalDragEnd: _onDragEnd,
-      child: LayoutBuilder(builder: (context, constraints) {
-        final isWebMobile = kIsWeb &&
-            (defaultTargetPlatform == TargetPlatform.iOS ||
-                defaultTargetPlatform == TargetPlatform.android);
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          _closeOnSmallScreensIfNeeded(constraints);
 
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          if (pageStateCtrl.expanded == false &&
-              (constraints.maxWidth < 1000 || isWebMobile)) {
-            setState(() {
-              close();
-            });
-          } else if (pageStateCtrl.expanded == true &&
-              constraints.maxWidth > 1500 &&
-              !isWebMobile) {
-            setState(() {
-              open();
-            });
-          }
-        });
-        return GetBuilder<PageStateController>(
+          return GetBuilder<PageStateController>(
             id: "PageState",
             builder: (controller) {
               return AnimatedBuilder(
                 animation: _controller,
                 builder: (BuildContext context, _) {
-                  double animationVal = _controller.value;
-                  double translateVal = animationVal * maxSlide;
-                  // double scaleVal = 1 - (animationVal * 0.1);
+                  final double animationVal = _controller.value;
+                  final double translateVal = animationVal * maxSlide;
+
                   return Stack(
                     children: <Widget>[
                       const CustomDrawer(),
                       Transform(
-                          alignment: Alignment.centerLeft,
-                          transform: Matrix4.identity()
-                            ..translate(translateVal),
-                          // ..scale(scaleVal, 1),
-                          child: widget.child),
+                        alignment: Alignment.centerLeft,
+                        transform: Matrix4.identity()..translate(translateVal),
+                        child: widget.child,
+                      ),
                     ],
                   );
                 },
               );
-            });
-      }),
+            },
+          );
+        },
+      ),
     );
   }
 }
@@ -180,7 +206,9 @@ class CustomDrawer extends StatefulWidget {
     .12,
   ];
 
-  const CustomDrawer({super.key});
+  const CustomDrawer({
+    super.key,
+  });
 
   @override
   State<CustomDrawer> createState() => _CustomDrawerState();
@@ -211,12 +239,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 waveAmplitude: 0,
               ),
               GetBuilder<PageStateController>(
-                  id: "PageState",
-                  builder: (pageStateCtrl) {
-                    return AnimatedOpacity(
-                      duration: const Duration(milliseconds: 500),
-                      opacity: (pageStateCtrl.expanded) ? 0 : 1,
-                      child: Builder(builder: (context) {
+                id: "PageState",
+                builder: (pageStateCtrl) {
+                  return AnimatedOpacity(
+                    duration: const Duration(milliseconds: 500),
+                    opacity: pageStateCtrl.expanded ? 0 : 1,
+                    child: Builder(
+                      builder: (context) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -228,8 +257,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                   padding: const EdgeInsets.only(top: 100.0),
                                   child: ListView.builder(
                                     itemCount: PageItem.values.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
+                                    itemBuilder: (
+                                      BuildContext context,
+                                      int index,
+                                    ) {
                                       return AnimationConfiguration
                                           .staggeredList(
                                         position: index,
@@ -241,9 +272,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                           verticalOffset: 150.0,
                                           child: FadeInAnimation(
                                             child: ItemTime(
-                                              pageItem: PageItem.values
-                                                  .firstWhere((item) =>
-                                                      item.index == index),
+                                              pageItem:
+                                                  PageItem.values.firstWhere(
+                                                (item) => item.index == index,
+                                              ),
                                               index: index,
                                             ),
                                           ),
@@ -254,12 +286,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 ),
                               ),
                             ),
-                            ChangeLocate()
+                            const ChangeLocate(),
                           ],
                         );
-                      }),
-                    );
-                  }),
+                      },
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -278,6 +312,13 @@ class ChangeLocate extends StatefulWidget {
 }
 
 class _ChangeLocateState extends State<ChangeLocate> {
+  void _changeLocale(Locale locale) {
+    Get.updateLocale(locale);
+
+    if (!mounted) return;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -285,43 +326,38 @@ class _ChangeLocateState extends State<ChangeLocate> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
-              onPressed: () {
-                 Get.updateLocale(
-                      const Locale('en', 'US'));
-                setState(() {
-                  
-                });
-              },
-              child: Text(
-                "English",
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontFamily: "UbuntuMono",
-                    color: (Get.locale ==
-                            const Locale('en', 'US'))
-                        ? Colors.greenAccent
-                        : Colors.white),
-              )),
+            onPressed: () {
+              _changeLocale(const Locale('en', 'US'));
+            },
+            child: Text(
+              "English",
+              style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: "UbuntuMono",
+                color: Get.locale == const Locale('en', 'US')
+                    ? Colors.greenAccent
+                    : Colors.white,
+              ),
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
-              onPressed: () {
-                Get.updateLocale(const Locale('es', 'AR'));
-
-                setState(() {
-                  
-                });
-
-              },
-              child: Text("Español",
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontFamily: "UbuntuMono",
-                      color: (Get.locale ==
-                              const Locale('es', 'AR'))
-                          ? Colors.greenAccent
-                          : Colors.white))),
+            onPressed: () {
+              _changeLocale(const Locale('es', 'AR'));
+            },
+            child: Text(
+              "Español",
+              style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: "UbuntuMono",
+                color: Get.locale == const Locale('es', 'AR')
+                    ? Colors.greenAccent
+                    : Colors.white,
+              ),
+            ),
+          ),
         ),
       ],
     );
@@ -342,11 +378,16 @@ class _HeaderState extends State<Header> {
   final PageStateController pageStateCtrl = Get.find<PageStateController>();
   bool amIHovering = false;
 
-  void onHover() async {
+  void onHover() {
+    if (!mounted) return;
+
     setState(() {
       amIHovering = true;
     });
+
     Future.delayed(const Duration(milliseconds: 800)).then((value) {
+      if (!mounted) return;
+
       setState(() {
         amIHovering = false;
       });
@@ -355,103 +396,114 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isWebOnMobile = (kIsWeb &&
-        (defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.android));
+    final double screenWidth = MediaQuery.of(context).size.width;
 
-    final bool hideDrawer = (isWebOnMobile || screenWidth < 600);
+    final bool isWebOnMobile = kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.iOS ||
+            defaultTargetPlatform == TargetPlatform.android);
+
+    final bool hideDrawer = isWebOnMobile || screenWidth < 600;
+
     return Container(
       padding: const EdgeInsets.only(left: 10),
       height: 160,
       child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16),
-          child: GestureDetector(
-            onTap: () {
-              pageStateCtrl.jumpToPage(animate: false);
-              if (hideDrawer) AppDrawer.of(context).close();
-            },
-            child: Visibility(
-              visible: showMainWidget,
-              replacement: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  MouseRegion(
-                    onHover: (event) => {
-                      if (amIHovering == false) {onHover()}
-                    },
-                    child: Text('Denis Germán\nGimenez',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 32.0,
-                          fontFamily: "NeueMetana",
-                          color: Colors.white,
-                          shadows: (amIHovering &&
-                                  pageStateCtrl.currentPageIndex != 0)
-                              ? [
-                                  const Shadow(
-                                    blurRadius: 3.0,
-                                    color: Colors.white,
-                                    offset: Offset(0, 0),
-                                  ),
-                                ]
-                              : null,
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: AnimatedTextKit(
-                      isRepeatingAnimation: false,
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          "full_stack_developer".tr,
-                          textAlign: TextAlign.start,
-                          textStyle: const TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: "UbuntuMono",
-                              fontWeight: FontWeight.w600,
-                              color: Colors.greenAccent),
-                          curve: Curves.decelerate,
-                          speed: const Duration(milliseconds: 180),
-                        ),
-                      ],
-                      totalRepeatCount: 1,
-                      pause: const Duration(milliseconds: 190),
-                      displayFullTextOnTap: false,
-                      stopPauseOnTap: false,
+        padding: const EdgeInsets.only(left: 16.0, top: 16),
+        child: GestureDetector(
+          onTap: () {
+            pageStateCtrl.jumpToPage(animate: false);
+            if (hideDrawer) AppDrawer.of(context).close();
+          },
+          child: Visibility(
+            visible: showMainWidget,
+            replacement: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MouseRegion(
+                  onHover: (event) {
+                    if (amIHovering == false) {
+                      onHover();
+                    }
+                  },
+                  child: Text(
+                    'Denis Germán\nGimenez',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      fontFamily: "NeueMetana",
+                      color: Colors.white,
+                      shadows: amIHovering &&
+                              pageStateCtrl.currentPageIndex != 0
+                          ? const [
+                              Shadow(
+                                blurRadius: 3.0,
+                                color: Colors.white,
+                                offset: Offset(0, 0),
+                              ),
+                            ]
+                          : null,
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: AnimatedTextKit(
+                    isRepeatingAnimation: false,
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        "full_stack_developer".tr,
+                        textAlign: TextAlign.start,
+                        textStyle: const TextStyle(
+                          fontSize: 16.0,
+                          fontFamily: "UbuntuMono",
+                          fontWeight: FontWeight.w600,
+                          color: Colors.greenAccent,
+                        ),
+                        curve: Curves.decelerate,
+                        speed: const Duration(milliseconds: 180),
+                      ),
+                    ],
+                    totalRepeatCount: 1,
+                    pause: const Duration(milliseconds: 190),
+                    displayFullTextOnTap: false,
+                    stopPauseOnTap: false,
+                  ),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: AnimatedTextKit(
+                isRepeatingAnimation: false,
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Denis Germán\nGimenez',
+                    textAlign: TextAlign.center,
+                    textStyle: const TextStyle(
+                      fontSize: 32.0,
+                      fontFamily: "NeueMetana",
+                      color: Colors.white,
+                    ),
+                    curve: Curves.decelerate,
+                    speed: const Duration(milliseconds: 180),
                   ),
                 ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: AnimatedTextKit(
-                  isRepeatingAnimation: false,
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                      'Denis Germán\nGimenez',
-                      textAlign: TextAlign.center,
-                      textStyle: const TextStyle(
-                          fontSize: 32.0,
-                          fontFamily: "NeueMetana",
-                          color: Colors.white),
-                      curve: Curves.decelerate,
-                      speed: const Duration(milliseconds: 180),
-                    ),
-                  ],
-                  totalRepeatCount: 1,
-                  pause: const Duration(milliseconds: 190),
-                  displayFullTextOnTap: false,
-                  stopPauseOnTap: false,
-                  onFinished: () {
-                    setState(() {
-                      showMainWidget = false;
-                    });
-                  },
-                ),
+                totalRepeatCount: 1,
+                pause: const Duration(milliseconds: 190),
+                displayFullTextOnTap: false,
+                stopPauseOnTap: false,
+                onFinished: () {
+                  if (!mounted) return;
+
+                  setState(() {
+                    showMainWidget = false;
+                  });
+                },
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -489,11 +541,16 @@ class ItemTime extends StatefulWidget {
 class _ItemTimeState extends State<ItemTime> {
   bool amIHovering = false;
 
-  void onHover() async {
+  void onHover() {
+    if (!mounted) return;
+
     setState(() {
       amIHovering = true;
     });
+
     Future.delayed(const Duration(milliseconds: 500)).then((value) {
+      if (!mounted) return;
+
       setState(() {
         amIHovering = false;
       });
@@ -503,126 +560,111 @@ class _ItemTimeState extends State<ItemTime> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      onHover: (event) => {
-        if (amIHovering == false) {onHover()}
+      onHover: (event) {
+        if (amIHovering == false) {
+          onHover();
+        }
       },
       child: GetBuilder<PageStateController>(
-          id: "pageIndex",
-          builder: (controller) {
-            double screenWidth = MediaQuery.of(context).size.width;
-            bool isWebOnMobile = (kIsWeb &&
-                (defaultTargetPlatform == TargetPlatform.iOS ||
-                    defaultTargetPlatform == TargetPlatform.android));
+        id: "pageIndex",
+        builder: (controller) {
+          final double screenWidth = MediaQuery.of(context).size.width;
 
-            final bool hideDrawer = (isWebOnMobile || screenWidth < 600);
+          final bool isWebOnMobile = kIsWeb &&
+              (defaultTargetPlatform == TargetPlatform.iOS ||
+                  defaultTargetPlatform == TargetPlatform.android);
 
-            return InkWell(
-              onTap: () {
-                controller.jumpToPage(
-                    pageItem: widget.pageItem, animate: false);
-                if (hideDrawer) AppDrawer.of(context).close();
-              },
-              child: SizedBox(
-                width: 325,
-                height: 100,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 25.0,
+          final bool hideDrawer = isWebOnMobile || screenWidth < 600;
+
+          return InkWell(
+            onTap: () {
+              controller.jumpToPage(
+                pageItem: widget.pageItem,
+                animate: false,
+              );
+
+              if (hideDrawer) AppDrawer.of(context).close();
+            },
+            child: SizedBox(
+              width: 325,
+              height: 100,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 25.0,
+                ),
+                child: TimelineTile(
+                  hasIndicator: true,
+                  isLast: widget.index == PageItem.values.length - 1,
+                  axis: TimelineAxis.vertical,
+                  alignment: TimelineAlign.start,
+                  lineXY: 0.2,
+                  beforeLineStyle: LineStyle(
+                    color: amIHovering
+                        ? widget.startLineHover
+                        : widget.startLine,
+                    thickness: 2,
                   ),
-                  child: TimelineTile(
-                    hasIndicator: true,
-                    // isFirst: widget.index == 0,
-                    isLast: widget.index == PageItem.values.length - 1,
-                    axis: TimelineAxis.vertical,
-                    alignment: TimelineAlign.start,
-                    lineXY: 0.2,
-                    beforeLineStyle: LineStyle(
-                        color: (amIHovering)
-                            ? widget.startLineHover
-                            : widget.startLine,
-                        thickness: 2),
-                    afterLineStyle: LineStyle(
-                        color: (amIHovering)
-                            ? widget.endLineHover
-                            : widget.endLine,
-                        thickness: 2),
-                    indicatorStyle: IndicatorStyle(
-                      iconStyle: IconStyle(
-                          iconData: Icons.circle,
-                          fontSize: 14,
-                          color: Colors.greenAccent),
-                      drawGap: true,
-                      width: 15,
-                      color: (controller.currentPageIndex - 1 == widget.index)
-                          ? Colors.greenAccent
-                          : (amIHovering)
-                              ? widget.dotHover
-                              : widget.dot,
+                  afterLineStyle: LineStyle(
+                    color: amIHovering
+                        ? widget.endLineHover
+                        : widget.endLine,
+                    thickness: 2,
+                  ),
+                  indicatorStyle: IndicatorStyle(
+                    iconStyle:  IconStyle(
+                      iconData: Icons.circle,
+                      fontSize: 14,
+                      color: Colors.greenAccent,
                     ),
-                    endChild: Padding(
-                      padding: const EdgeInsets.all(
-                        8.0,
-                      ),
-                      child: Container(
-                        color: Colors.transparent,
-                        child: TweenAnimationBuilder<double>(
-                          duration: const Duration(milliseconds: 300),
-                          tween:
-                              (controller.currentPageIndex - 1 == widget.index)
-                                  ? Tween<double>(begin: 18, end: 22)
-                                  : Tween<double>(begin: 22, end: 18),
-                          builder: (_, size, __) => Text(
-                              widget.pageItem.keyName.tr,
-                              style: TextStyle(
-                                  fontSize: size,
-                                  shadows: (amIHovering)
-                                      ? [
-                                          const Shadow(
-                                            blurRadius: 3.0,
-                                            color: Colors.greenAccent,
-                                            offset: Offset(0, 0),
-                                          ),
-                                        ]
-                                      : null,
-                                  color: (controller.currentPageIndex - 1 ==
-                                          widget.index)
+                    drawGap: true,
+                    width: 15,
+                    color: controller.currentPageIndex - 1 == widget.index
+                        ? Colors.greenAccent
+                        : amIHovering
+                            ? widget.dotHover
+                            : widget.dot,
+                  ),
+                  endChild: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: Colors.transparent,
+                      child: TweenAnimationBuilder<double>(
+                        duration: const Duration(milliseconds: 300),
+                        tween: controller.currentPageIndex - 1 == widget.index
+                            ? Tween<double>(begin: 18, end: 22)
+                            : Tween<double>(begin: 22, end: 18),
+                        builder: (_, size, __) {
+                          return Text(
+                            widget.pageItem.keyName.tr,
+                            style: TextStyle(
+                              fontSize: size,
+                              shadows: amIHovering
+                                  ? const [
+                                      Shadow(
+                                        blurRadius: 3.0,
+                                        color: Colors.greenAccent,
+                                        offset: Offset(0, 0),
+                                      ),
+                                    ]
+                                  : null,
+                              color:
+                                  controller.currentPageIndex - 1 == widget.index
                                       ? Colors.greenAccent
                                       : Colors.white,
-                                  fontFamily: "UbuntuMono",
-                                  fontWeight: FontWeight.w700)),
-                        ),
-
-                        //     color:
-                        //         (controller.currentPageIndex - 1 == widget.index)
-                        //             ? Colors.greenAccent
-                        //             : (amIHovering)
-                        //                 ? widget.textHover
-                        //                 : widget.text,
-
-                        //  Text(
-                        //   widget.pageItem.keyName.tr,
-                        //   style: TextStyle(
-                        //     color:
-                        //         (controller.currentPageIndex - 1 == widget.index)
-                        //             ? Colors.greenAccent
-                        //             : (amIHovering)
-                        //                 ? widget.textHover
-                        //                 : widget.text,
-                        //     fontSize:
-                        //         (controller.currentPageIndex - 1 == widget.index)
-                        //             ? 18
-                        //             : 16.0,
-                        //     fontFamily: "UbuntuMono",
-                        //     fontWeight: FontWeight.w600,
-                        //   ),
-                        // ),
+                              fontFamily: "UbuntuMono",
+                              fontWeight: FontWeight.w700,
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
                 ),
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }

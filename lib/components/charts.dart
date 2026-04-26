@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:multi_charts/multi_charts.dart';
 
 class RadarChartProgramming extends StatelessWidget {
-   const RadarChartProgramming({
+  const RadarChartProgramming({
     super.key,
   });
 
@@ -14,61 +14,32 @@ class RadarChartProgramming extends StatelessWidget {
     return GetBuilder<ChartControl>(
       id: "ChartProgOptions",
       builder: (controller) {
-      
-       return switch  (controller.currentChartProgOption) {
-         ChartProgOptions.languages =>
-           SizedBox(
-            width: 400,
-            height: 400,
-            //Radar Chart
-            child: RadarChart(
-              labelColor: Colors.white,
-              strokeColor: Colors.white,
+        return switch (controller.currentChartProgOption) {
+          ChartProgOptions.languages => _SafeRadarChart(
               values: ChartProgLanguages.values.map((e) => e.level).toList(),
               labels: ChartProgLanguages.values.map((e) => e.name).toList(),
-              maxValue: 10,
               fillColor: Colors.blue.withOpacity(0.5),
-              chartRadiusFactor: 0.7,
             ),
-          ),
-
-         ChartProgOptions.queryLanguages =>
-           SizedBox(
-            width: 400,
-            height: 400,
-            //Radar Chart
-            child: RadarChart(
-              labelColor: Colors.white,
-              strokeColor: Colors.white,
-              values: ChartProgQueryLanguages.values.map((e) => e.level).toList(),
+          ChartProgOptions.queryLanguages => _SafeRadarChart(
+              values:
+                  ChartProgQueryLanguages.values.map((e) => e.level).toList(),
               labels: ChartProgQueryLanguages.values.map((e) => e.name).toList(),
-              maxValue: 10,
               fillColor: Colors.green.withOpacity(0.5),
-              chartRadiusFactor: 0.7,
             ),
-          ),
-         ChartProgOptions.paradigms =>
-           SizedBox(
-            width: 400,
-            height: 400,
-            //Radar Chart
-            child: RadarChart(
-              labelColor: Colors.white,
-              strokeColor: Colors.white,
+          ChartProgOptions.paradigms => _SafeRadarChart(
               values: ChartProgParadigms.values.map((e) => e.level).toList(),
-              labels: ChartProgParadigms.values.map((e) => e.keyName.tr).toList(),
-              maxValue: 10,
+              labels:
+                  ChartProgParadigms.values.map((e) => e.keyName.tr).toList(),
               fillColor: Colors.greenAccent.withOpacity(0.5),
-              chartRadiusFactor: 0.7,
             ),
-          ),
-      };
-    });
+        };
+      },
+    );
   }
 }
 
 class RadarChartFullStack extends StatelessWidget {
-   const RadarChartFullStack({
+  const RadarChartFullStack({
     super.key,
   });
 
@@ -77,69 +48,96 @@ class RadarChartFullStack extends StatelessWidget {
     return GetBuilder<ChartControl>(
       id: "ChartFullStack",
       builder: (controller) {
-       return switch  (controller.currentChartFullStack) {
-         null =>
-           SizedBox(
-            width: 400,
-            height: 400,
-            //Radar Chart
-            child: RadarChart(
-              labelColor: Colors.white,
-              strokeColor: Colors.white,
+        return switch (controller.currentChartFullStack) {
+          null => _SafeRadarChart(
               values: ChartFullStack.values.map((e) => e.level).toList(),
               labels: ChartFullStack.values.map((e) => e.keyName.tr).toList(),
-              maxValue: 10,
               fillColor: Colors.redAccent.withOpacity(0.5),
-              chartRadiusFactor: 0.7,
             ),
-          ),
-         ChartFullStack.backend =>
-           SizedBox(
-            width: 400,
-            height: 400,
-            //Radar Chart
-            child: RadarChart(
-              labelColor: Colors.white,
-              strokeColor: Colors.white,
+          ChartFullStack.backend => _SafeRadarChart(
               values: ChartBackEnd.values.map((e) => e.level).toList(),
               labels: ChartBackEnd.values.map((e) => e.keyName.tr).toList(),
-              maxValue: 10,
               fillColor: Colors.blue.withOpacity(0.5),
-              chartRadiusFactor: 0.7,
             ),
-          ),
-
-         ChartFullStack.frontend =>
-           SizedBox(
-            width: 400,
-            height: 400,
-            //Radar Chart
-            child: RadarChart(
-              labelColor: Colors.white,
-              strokeColor: Colors.white,
+          ChartFullStack.frontend => _SafeRadarChart(
               values: ChartFrontEnd.values.map((e) => e.level).toList(),
               labels: ChartFrontEnd.values.map((e) => e.keyName.tr).toList(),
-              maxValue: 10,
               fillColor: Colors.green.withOpacity(0.5),
-              chartRadiusFactor: 0.7,
             ),
-          ),
-         ChartFullStack.deploymentManagement =>
-           SizedBox(
-            width: 400,
-            height: 400,
-            //Radar Chart
-            child: RadarChart(
-              labelColor: Colors.white,
-              strokeColor: Colors.white,
-              values: ChartDeploymentManagement.values.map((e) => e.level).toList(),
-              labels: ChartDeploymentManagement.values.map((e) => e.keyName.tr).toList(),
-              maxValue: 10,
+          ChartFullStack.deploymentManagement => _SafeRadarChart(
+              values: ChartDeploymentManagement.values
+                  .map((e) => e.level)
+                  .toList(),
+              labels: ChartDeploymentManagement.values
+                  .map((e) => e.keyName.tr)
+                  .toList(),
               fillColor: Colors.greenAccent.withOpacity(0.5),
-              chartRadiusFactor: 0.7,
+            ),
+        };
+      },
+    );
+  }
+}
+
+class _SafeRadarChart extends StatelessWidget {
+  final List<double> values;
+  final List<String> labels;
+  final Color fillColor;
+
+  const _SafeRadarChart({
+    required this.values,
+    required this.labels,
+    required this.fillColor,
+  });
+
+  bool get _hasValidData {
+    if (values.isEmpty || labels.isEmpty) return false;
+    if (values.length != labels.length) return false;
+    if (values.any((value) => value.isNaN || value.isInfinite)) return false;
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_hasValidData) {
+      return const SizedBox.shrink();
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxWidth = constraints.hasBoundedWidth
+            ? constraints.maxWidth
+            : 400.0;
+
+        final maxHeight = constraints.hasBoundedHeight
+            ? constraints.maxHeight
+            : 400.0;
+
+        final availableSize = maxWidth < maxHeight ? maxWidth : maxHeight;
+        final chartSize = availableSize.clamp(220.0, 400.0);
+
+        if (chartSize.isNaN || chartSize.isInfinite || chartSize < 120) {
+          return const SizedBox.shrink();
+        }
+
+        return Center(
+          child: SizedBox(
+            width: chartSize,
+            height: chartSize,
+            child: RepaintBoundary(
+              child: RadarChart(
+                labelColor: Colors.white,
+                strokeColor: Colors.white,
+                values: values,
+                labels: labels,
+                maxValue: 10,
+                fillColor: fillColor,
+                chartRadiusFactor: 0.7,
+              ),
             ),
           ),
-      };
-    });
+        );
+      },
+    );
   }
 }

@@ -15,38 +15,70 @@ class ElectronicFrame extends StatefulWidget {
 
 class _ElectronicFrameState extends State<ElectronicFrame>
     with TickerProviderStateMixin {
-  late Animation<double> animationFrame;
-  late AnimationController animationCrltFrame;
-  late Animation<double> animationImages;
-  late AnimationController animationCrltImages;
-  late ScrollController scrollController;
+  late final Animation<double> animationFrame;
+  late final AnimationController animationCrltFrame;
+
+  late final Animation<double> animationImages;
+  late final AnimationController animationCrltImages;
+
+  late final ScrollController scrollController;
+
   bool visibleCarusel = false;
+
   @override
   void initState() {
     super.initState();
+
     animationCrltFrame = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
-    scrollController = ScrollController();
-    animationFrame =
-        CurvedAnimation(parent: animationCrltFrame, curve: Curves.easeIn);
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    animationFrame = CurvedAnimation(
+      parent: animationCrltFrame,
+      curve: Curves.easeIn,
+    );
 
     animationCrltImages = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
 
-    animationImages =
-        CurvedAnimation(parent: animationCrltImages, curve: Curves.easeIn);
+    animationImages = CurvedAnimation(
+      parent: animationCrltImages,
+      curve: Curves.easeIn,
+    );
+
+    scrollController = ScrollController();
+
+    animationCrltFrame.forward();
   }
 
   @override
   void dispose() {
-    super.dispose();
     animationCrltFrame.dispose();
     animationCrltImages.dispose();
+    scrollController.dispose();
+
+    super.dispose();
+  }
+
+  void showCarousel() {
+    if (!mounted) return;
+
+    if (visibleCarusel) {
+      return;
+    }
+
+    setState(() {
+      visibleCarusel = true;
+    });
+
+    animationCrltImages.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    animationCrltFrame.forward();
     return FadeTransition(
       opacity: animationFrame,
       child: RawScrollbar(
@@ -56,83 +88,83 @@ class _ElectronicFrameState extends State<ElectronicFrame>
         radius: const Radius.circular(4),
         thumbColor: Colors.greenAccent.withOpacity(0.5),
         thumbVisibility: true,
-        child:  SingleChildScrollView(
+        child: SingleChildScrollView(
           controller: scrollController,
           scrollDirection: Axis.vertical,
           child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left:25.0, right: 25),
-              child: Text(
-                'electronic'.tr,
-                style: const TextStyle(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0, right: 25),
+                child: Text(
+                  'electronic'.tr,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 35,
                     fontFamily: "UbuntuMono",
-                    fontWeight: FontWeight.w600),
-                textAlign: TextAlign.center,
-              ),
-            ),
-              Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.asset(
-                            "/images/electronics.svg",
-                            // ignore: deprecated_member_use
-                            color: Colors.greenAccent.withOpacity(0.5),
-                            width: 150,
-                          ),
-                    ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 25, right: 25, top: 40, bottom: 40),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: AnimatedTextKit(
-                  isRepeatingAnimation: false,
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                      "electronic_text".tr,
-                      textAlign: TextAlign.start,
-                      textStyle: const TextStyle(
-                        fontSize: 19,
-                        leadingDistribution: TextLeadingDistribution.proportional,
-                        color: Colors.white,
-                        fontFamily: "UbuntuMono",
-                      ),
-                      curve: Curves.easeIn,
-                      speed: const Duration(milliseconds: 5),
-                    ),
-                  ],
-                  totalRepeatCount: 1,
-                  pause: const Duration(milliseconds: 10),
-                  displayFullTextOnTap: true,
-                  onTap: () {
-                    setState(() {
-                      visibleCarusel = true;
-                      animationCrltImages.forward();
-                    });
-                  },
-                  onFinished: () {
-                    setState(() {
-                      visibleCarusel = true;
-                      animationCrltImages.forward();
-                    });
-                  },
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-            Visibility(
-              visible: visibleCarusel,
-              child: FadeTransition(
-                opacity: animationImages,
-                child: Padding(
-                  padding: const EdgeInsets.only(left:25.0, right: 25,bottom: 25),
-                  child: CarouselSlider(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  "/images/electronics.svg",
+                  // ignore: deprecated_member_use
+                  color: Colors.greenAccent.withOpacity(0.5),
+                  width: 150,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 25,
+                  right: 25,
+                  top: 40,
+                  bottom: 40,
+                ),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: AnimatedTextKit(
+                    isRepeatingAnimation: false,
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        "electronic_text".tr,
+                        textAlign: TextAlign.start,
+                        textStyle: const TextStyle(
+                          fontSize: 19,
+                          leadingDistribution:
+                              TextLeadingDistribution.proportional,
+                          color: Colors.white,
+                          fontFamily: "UbuntuMono",
+                        ),
+                        curve: Curves.easeIn,
+                        speed: const Duration(milliseconds: 5),
+                      ),
+                    ],
+                    totalRepeatCount: 1,
+                    pause: const Duration(milliseconds: 10),
+                    displayFullTextOnTap: true,
+                    onTap: showCarousel,
+                    onFinished: showCarousel,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: visibleCarusel,
+                child: FadeTransition(
+                  opacity: animationImages,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 25.0,
+                      right: 25,
+                      bottom: 25,
+                    ),
+                    child: CarouselSlider(
                       items: [
                         Image.asset("images/1.webp"),
                         Image.asset("images/2.webp"),
                         Image.asset("images/3.webp"),
-                        Image.asset("images/4.webp")
+                        Image.asset("images/4.webp"),
                       ],
                       options: CarouselOptions(
                         height: 150,
@@ -148,15 +180,17 @@ class _ElectronicFrameState extends State<ElectronicFrame>
                         autoPlayCurve: Curves.fastOutSlowIn,
                         enlargeCenterPage: true,
                         enlargeFactor: 0.3,
-                        onPageChanged: (a, f) {},
+                        onPageChanged: (index, reason) {},
                         scrollDirection: Axis.horizontal,
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),)
+      ),
     );
   }
 }

@@ -164,9 +164,10 @@ class _CarouselProjectsState extends State<CarouselProjects> {
 
   @override
   void dispose() {
-    super.dispose();
     controller.changeCurrentItem(0);
     controller.autoPlay = true;
+        super.dispose();
+
   }
 
   @override

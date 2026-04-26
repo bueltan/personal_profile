@@ -70,6 +70,7 @@ class PageStateController extends GetxController {
   @override
   void onClose() {
     html.window.removeEventListener('beforeunload', _beforeUnloadListener);
+    pageController.dispose();
     super.onClose();
   }
 
