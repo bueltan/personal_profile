@@ -30,6 +30,50 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="manifest" href="manifest.json">
 
+  <!-- ==================== URL → Page routing ==================== -->
+  <!--
+    Flutter Web (CanvasKit / HTML renderer) does NOT handle the browser's
+    History API automatically when the user types a URL directly.
+    This script reads the path on first load, stores the intended deep-link
+    in sessionStorage, and after Flutter boots it reads that value so
+    PageStateController.jumpToPage() can restore the right page.
+
+    Supported paths:
+      /              → page 0  (Welcome)
+      /about         → page 1  (About Me)
+      /knowledge     → page 2  (Knowledge)
+      /experience    → page 3  (Experience)
+      /projects      → page 4  (Projects)
+      /contact       → page 5  (Contact)
+  -->
+  <script>
+    (function () {
+      var pathMap = {
+        '/':          0,
+        '/about':     1,
+        '/knowledge': 2,
+        '/experience':3,
+        '/projects':  4,
+        '/contact':   5,
+      };
+
+      var path = window.location.pathname.replace(/\/$/, '') || '/';
+      var page = pathMap[path];
+
+      if (page !== undefined && page !== 0) {
+        // Store deep-link target so Flutter can read it after boot
+        sessionStorage.setItem('initialPage', String(page));
+      }
+
+      // Expose a helper Flutter JS can call via js.context['setFlutterPage']
+      window.getInitialPage = function () {
+        var p = sessionStorage.getItem('initialPage');
+        sessionStorage.removeItem('initialPage');
+        return p !== null ? parseInt(p, 10) : 0;
+      };
+    })();
+  </script>
+
   <style>
     body {
       margin: 0;
@@ -57,7 +101,7 @@
     .wave:nth-child(5) { animation-delay: 0.4s; }
     @keyframes wave {
       0%, 100% { transform: scaleY(0.3); }
-      50% { transform: scaleY(1); }
+      50%       { transform: scaleY(1); }
     }
   </style>
 </head>
@@ -71,17 +115,17 @@
     <div class="wave"></div>
   </div>
 
-  <!-- Flutter Bootstrap (IMPORTANTE) -->
+  <!-- Flutter Bootstrap -->
   <script src="flutter.js" defer></script>
   <script>
     {{flutter_js}}
     {{flutter_build_config}}
 
-    window.addEventListener('load', function(ev) {
+    window.addEventListener('load', function () {
       _flutter.loader.load({
         serviceWorker: null,
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
+        onEntrypointLoaded: function (engineInitializer) {
+          engineInitializer.initializeEngine().then(function (appRunner) {
             appRunner.runApp();
           });
         }
