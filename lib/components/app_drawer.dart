@@ -56,8 +56,7 @@ class AppDrawerState extends State<AppDrawer>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
 
-      // Regression-safe drawer fix:
-      // start closed, without shifting the page to the right.
+      // Start closed, without shifting the page to the right.
       pageStateCtrl.expandPage();
       _controller.value = 0.0;
     });
@@ -241,56 +240,48 @@ class _CustomDrawerState extends State<CustomDrawer> {
               GetBuilder<PageStateController>(
                 id: "PageState",
                 builder: (pageStateCtrl) {
-                  return AnimatedOpacity(
-                    duration: const Duration(milliseconds: 500),
-                    opacity: pageStateCtrl.expanded ? 0 : 1,
-                    child: Builder(
-                      builder: (context) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            const Header(),
-                            Expanded(
-                              child: AnimationLimiter(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 100.0),
-                                  child: ListView.builder(
-                                    itemCount: PageItem.values.length,
-                                    itemBuilder: (
-                                      BuildContext context,
-                                      int index,
-                                    ) {
-                                      return AnimationConfiguration
-                                          .staggeredList(
-                                        position: index,
-                                        delay:
-                                            const Duration(milliseconds: 200),
-                                        duration:
-                                            const Duration(milliseconds: 2000),
-                                        child: SlideAnimation(
-                                          verticalOffset: 150.0,
-                                          child: FadeInAnimation(
-                                            child: ItemTime(
-                                              pageItem:
-                                                  PageItem.values.firstWhere(
-                                                (item) => item.index == index,
-                                              ),
-                                              index: index,
-                                            ),
-                                          ),
+                  if (pageStateCtrl.expanded) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Header(),
+                      Expanded(
+                        child: AnimationLimiter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 100.0),
+                            child: ListView.builder(
+                              itemCount: PageItem.values.length,
+                              itemBuilder: (
+                                BuildContext context,
+                                int index,
+                              ) {
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  delay: const Duration(milliseconds: 200),
+                                  duration: const Duration(milliseconds: 2000),
+                                  child: SlideAnimation(
+                                    verticalOffset: 150.0,
+                                    child: FadeInAnimation(
+                                      child: ItemTime(
+                                        pageItem: PageItem.values.firstWhere(
+                                          (item) => item.index == index,
                                         ),
-                                      );
-                                    },
+                                        index: index,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
-                            const ChangeLocate(),
-                          ],
-                        );
-                      },
-                    ),
+                          ),
+                        ),
+                      ),
+                      const ChangeLocate(),
+                    ],
                   );
                 },
               ),
@@ -301,7 +292,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
     );
   }
 }
-
 class ChangeLocate extends StatefulWidget {
   const ChangeLocate({
     super.key,

@@ -2,171 +2,84 @@
 <html>
 <head>
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
 
-  <!-- Primary SEO -->
+  <!-- ==================== SEO (completo) ==================== -->
   <title>Denis Germán Giménez | Python Backend & Automation Engineer</title>
-  <meta
-    name="description"
-    content="Personal portfolio of Denis Germán Giménez, Python Backend Engineer focused on automation platforms, microservices, API design, DCC pipeline tools, Flutter apps, and IoT projects."
-  >
-  <meta
-    name="keywords"
-    content="Denis Gimenez, Denis Germán Giménez, Python Backend Engineer, Backend Developer, Automation Engineer, Flutter Developer, DCC Pipeline Tools, Microservices, API Design, Argentina Developer"
-  >
+  <meta name="description" content="Personal portfolio of Denis Germán Giménez, Python Backend Engineer focused on automation platforms, microservices, API design, DCC pipeline tools, Flutter apps, and IoT projects.">
+  <meta name="keywords" content="Denis Gimenez, Denis Germán Giménez, Python Backend Engineer, Backend Developer, Automation Engineer, Flutter Developer, DCC Pipeline Tools, Microservices, API Design, Argentina Developer">
   <meta name="author" content="Denis Germán Giménez">
   <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
   <meta name="theme-color" content="#000000">
 
-  <!-- Responsive -->
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
-  >
-
-  <!-- Canonical URL -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <link rel="canonical" href="https://www.denisgimenez.com/">
 
-  <!-- Open Graph / LinkedIn / WhatsApp / Facebook -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.denisgimenez.com/">
   <meta property="og:title" content="Denis Germán Giménez | Python Backend & Automation Engineer">
-  <meta
-    property="og:description"
-    content="Python Backend Engineer focused on automation platforms, microservices, API design, DCC pipeline tools, Flutter apps, and IoT/embedded projects."
-  >
-  <meta property="og:site_name" content="Denis Germán Giménez Portfolio">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:locale:alternate" content="es_AR">
-
-  <!-- Replace this image with your real preview image -->
+  <meta property="og:description" content="Python Backend Engineer focused on automation platforms, microservices, API design, DCC pipeline tools, Flutter apps, and IoT projects.">
   <meta property="og:image" content="https://www.denisgimenez.com/og-image.png">
-  <meta property="og:image:alt" content="Denis Germán Giménez portfolio preview">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://www.denisgimenez.com/">
-  <meta name="twitter:title" content="Denis Germán Giménez | Python Backend & Automation Engineer">
-  <meta
-    name="twitter:description"
-    content="Python Backend Engineer focused on automation platforms, microservices, API design, DCC pipeline tools, Flutter apps, and IoT projects."
-  >
-  <meta name="twitter:image" content="https://www.denisgimenez.com/og-image.png">
-
-  <!-- iOS / PWA -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Denis Giménez">
 
   <!-- Icons -->
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
   <link rel="icon" type="image/png" href="favicon.png">
-
-  <!-- Manifest -->
   <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+
   <style>
- 
-    bodY {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      background: #000;
+      overflow: hidden;
     }
     .center {
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #000;
     }
     .wave {
-      width: 5px;
+      width: 6px;
       height: 100px;
-      background: linear-gradient(45deg, black, green);
-      margin: 10px;
-      animation: wave 1s linear infinite;
+      background: linear-gradient(45deg, #00ff9d, #00cc77);
+      margin: 8px;
+      animation: wave 1.2s linear infinite;
       border-radius: 20px;
     }
-    .wave:nth-child(2) {
-      animation-delay: 0.1s;
-    }
-    .wave:nth-child(3) {
-      animation-delay: 0.2s;
-    }
-    .wave:nth-child(4) {
-      animation-delay: 0.3s;
-    }
-    .wave:nth-child(5) {
-      animation-delay: 0.4s;
-    }
-    .wave:nth-child(6) {
-      animation-delay: 0.5s;
-    }
-    .wave:nth-child(7) {
-      animation-delay: 0.6s;
-    }
-    .wave:nth-child(8) {
-      animation-delay: 0.7s;
-    }
-    .wave:nth-child(9) {
-      animation-delay: 0.8s;
-    }
-    .wave:nth-child(10) {
-      animation-delay: 0.9s;
-    }
-    
+    .wave:nth-child(2) { animation-delay: 0.1s; }
+    .wave:nth-child(3) { animation-delay: 0.2s; }
+    .wave:nth-child(4) { animation-delay: 0.3s; }
+    .wave:nth-child(5) { animation-delay: 0.4s; }
     @keyframes wave {
-      0% {
-        transform: scale(0);
-      }
-      50% {
-        transform: scale(1);
-      }
-      100% {
-        transform: scale(0);
-      }
+      0%, 100% { transform: scaleY(0.3); }
+      50% { transform: scaleY(1); }
     }
-    
-    #copyright {
-        position: absolute;
-        bottom: 0;
-        color:white;
-    }
-      </style>
+  </style>
 </head>
 <body>
+  <!-- Loading Screen -->
   <div class="center">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
   </div>
-  
 
+  <!-- Flutter Bootstrap (IMPORTANTE) -->
+  <script src="flutter.js" defer></script>
   <script>
-    const serviceWorkerVersion = "{flutter_service_worker_version}";
+    {{flutter_js}}
+    {{flutter_build_config}}
 
     window.addEventListener('load', function(ev) {
-      // Download main.dart.js
       _flutter.loader.load({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
+        serviceWorker: null,
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
             appRunner.runApp();
@@ -175,6 +88,5 @@
       });
     });
   </script>
-  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
